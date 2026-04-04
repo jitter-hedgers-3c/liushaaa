@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安保部 - 洋栖中学</title>
+    <style>
+        /* 全局样式（和全站100%统一，仅调整排班表图片最大宽度实现放大，其余无任何修改） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        /* 古早搜索框（右上角悬浮） */
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        /* 搜索结果区（统一样式） */
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        /* 导航栏（统一样式） */
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #ffd700;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        /* 内容区样式 */
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        /* 原有模块类名保留不变 */
+        .flower-link-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .flower-link-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        .flower-link-item {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        .flower-link-item a {
+            color: #0000ee;
+            font-size: 15px;
+            text-decoration: underline;
+        }
+        .flower-link-item a:hover {
+            color: #dd0000;
+            font-weight: bold;
+        }
+        .flower-link-item p {
+            margin: 5px 0 0 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        /* 底部样式（排版完全正常） */
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+            line-height: 1.5;
+        }
+        .footer p {
+            margin: 6px 0;
+            padding: 0;
+        }
+        /* ========== 第一个模块样式（仅放大图片max-width，其余不变） ========== */
+        .notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .notice-img {
+            max-width: 900px; /* 放大图片，适配容器宽度，保证清晰 */
+            width: 100%;
+            border: 2px solid #999;
+            display: block;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .notice-section {
+            margin-bottom: 15px;
+        }
+        .notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .notice-section p, .notice-section li {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .notice-section ul {
+            margin: 0;
+            padding-left: 4em;
+        }
+        .notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        /* ========== 第二个模块样式（完全保留不变） ========== */
+        .trim-notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .trim-notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .trim-notice-section {
+            margin-bottom: 15px;
+        }
+        .trim-notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .trim-notice-section p {
+            text-indent: 0; /* 取消首行缩进，让条例更清晰 */
+            margin: 8px 0;
+        }
+        .trim-notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部（带搜索框，全站统一，无修改） -->
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+        <!-- 搜索结果区（无修改） -->
+        <div class="search-result" id="searchResult"></div>
+        <!-- 导航栏：修改为安保部 相关信息 -->
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="flower.html" class="active">安保部 相关信息</a>
+        </div>
+        
+        <!-- 核心内容区：修改为安保部相关，无发布时间 -->
+        <div class="content">
+            <h2 class="content-title">安保部相关信息</h2>
+            
+            <div class="flower-link-box">
+                <h3>安保部相关工作信息</h3>
+                
+                <!-- 链接1：安保部排班表 -->
+                <div class="flower-link-item">
+                    <a href="javascript:void(0);" id="flower-festival-link">安保部排班表</a>
+                    <p>发布部门：学校教务处</p>
+                </div>
+                <!-- 链接2：洋栖学院安保部学生出入管理规定 -->
+                <div class="flower-link-item">
+                    <a href="javascript:void(0);" id="flower-trim-link">洋栖学院安保部学生出入管理规定</a>
+                    <p>发布部门：学校教务处</p>
+                </div>
+            </div>
+            <!-- 第一个模块：安保部排班表（仅留大图pb.jpg，无任何文字） -->
+            <div id="flower-festival-notice" class="notice-box" style="display: none;">
+                <div class="notice-title">安保部排班表</div>
+                <!-- 仅保留放大的排班表图片，无其他内容 -->
+                <img src="pb.jpg" alt="洋栖中学安保部排班表" class="notice-img">
+            </div>
+            <!-- 第二个模块：学生出入管理规定（无图片，仅指定文字，排版清晰） -->
+            <div id="flower-trim-notice" class="trim-notice-box" style="display: none;">
+                <div class="trim-notice-title">洋栖学院安保部学生出入管理规定</div>
+                
+                <div class="trim-notice-section">
+                    <p>1. 本规定由学院安保部负责执行，安保部负责人为丁伟强（YQAB90727），全体学生、安保人员需严格遵守。</p>
+                    <p>2. 学生离校签到<br>学生非假期私自外出、离校，必须到校门安保执勤点主动登记，填写姓名、班级、离校时间、返校时间，完成签到后方可离校，禁止未签到擅自离校。</p>
+                    <p>3. 请假离校查验<br>学生请假离校，需持班主任/辅导员签字审批的有效请假单，到安保执勤点交由安保人员检查核对，以工号登陆“管理员登陆“界面后记录，信息无误后登记放行，无请假单一律不准离校。</p>
+                    <p>4. 返校登记<br>学生外出、请假结束返校，需到安保执勤点登记返校时间，请假学生需上交请假单完成销假。</p>
+                    <p>5. 违规处理<br>未签到离校、无假条离校、使用假假条的学生，安保部将登记备案并上报学院处理；安保人员需严格按规定执行，负责人丁伟强（YQAB90727）全程监督管理。</p>
+                </div>
+                
+                <div class="trim-notice-signature">
+                    <p>洋栖学院安保部</p>
+                    <p>2007年2月10日</p>
+                </div>
+            </div>
+        </div>
+        <!-- 底部（完全未修改） -->
+        <div class="footer">
+            <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+            <p>技术支持：洋栖中学信息技术组</p>
+        </div>
+    </div>
+    <!-- 搜索功能 + 链接点击显示内容逻辑（完全未修改，ID不变保证交互正常） -->
+    <script src="puzzle-keywords.js"></script>
+    <script>
+        // 搜索功能（全站统一逻辑）
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+        function doSearch() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+            if (matchedUrl) {
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+            } else {
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+        // 链接点击逻辑（ID未变，交互完全保留）
+        const flowerFestivalLink = document.getElementById('flower-festival-link');
+        const flowerTrimLink = document.getElementById('flower-trim-link');
+        const flowerFestivalNotice = document.getElementById('flower-festival-notice');
+        const flowerTrimNotice = document.getElementById('flower-trim-notice');
+        // 点击安保部排班表链接
+        flowerFestivalLink.addEventListener('click', function() {
+            flowerTrimNotice.style.display = 'none';
+            flowerFestivalNotice.style.display = 'block';
+            flowerFestivalNotice.scrollIntoView({ behavior: 'smooth' });
+        });
+        // 点击学生出入管理规定链接
+        flowerTrimLink.addEventListener('click', function() {
+            flowerFestivalNotice.style.display = 'none';
+            flowerTrimNotice.style.display = 'block';
+            flowerTrimLink.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

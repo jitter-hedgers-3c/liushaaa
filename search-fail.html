@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>搜索结果 - 盛夏浏览器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", "微软雅黑", Arial, sans-serif;
+        }
+        body {
+            background: #f2f2f2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .browser-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .browser-toolbar {
+            background: #e9e9e9;
+            padding: 6px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 4px;
+            border: 1px solid #999;
+        }
+        .btn-close { background: #ff6666; }
+        .btn-min { background: #ffff66; }
+        .btn-max { background: #66ff66; }
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            display: flex;
+            border: 1px solid #b8b8b8;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-btn {
+            background: #3366cc;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-left: 1px solid #2d59aa;
+        }
+        .search-btn:hover {
+            background: #2d59aa;
+        }
+        .fail-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .fail-icon {
+            font-size: 60px;
+            color: #ff6666;
+            margin-bottom: 20px;
+        }
+        .fail-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .fail-desc {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .suggest-list {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        .suggest-list li {
+            margin-bottom: 8px;
+            list-style: none;
+        }
+        .browser-status {
+            background: #e9e9e9;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <div class="browser-toolbar">
+            <div class="window-controls">
+                <div class="window-btn btn-close"></div>
+                <div class="window-btn btn-min"></div>
+                <div class="window-btn btn-max"></div>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容">
+            <button class="search-btn" onclick="searchPage()">搜索</button>
+        </div>
+        <div class="fail-container">
+            <div class="fail-icon">❌</div>
+            <div class="fail-title">抱歉，未找到相关结果</div>
+            <!-- 动态显示搜索的关键词 -->
+            <div class="fail-desc" id="failKeyword">未找到与「XXX」相关的页面，请检查输入是否正确</div>
+            <ul class="suggest-list">
+                <li>✓ 检查关键词是否有拼写错误</li>
+                <li>✓ 尝试使用更简单的关键词</li>
+                <li>✓ 更换近义词或相关关键词搜索</li>
+            </ul>
+        </div>
+        <div class="browser-status" id="statusText">搜索失败</div>
+    </div>
+    <script src="puzzle-seek.js"></script>
+    <script>
+        // 解析URL参数，显示搜索的关键词
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyword = urlParams.get('keyword') || '输入的内容';
+            document.getElementById('failKeyword').textContent = `未找到与「${keyword}」相关的页面，请检查输入是否正确`;
+            // 把关键词填充到搜索框
+            document.getElementById('searchInput').value = keyword;
+        }
+
+        // 统一的搜索逻辑
+        function searchPage() {
+            const input = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusText');
+            if (!input) {
+                status.textContent = "请输入搜索内容";
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+                return;
+            }
+            if (puzzleSeek.hasOwnProperty(input)) {
+                const targetUrl = puzzleSeek[input];
+                status.textContent = `正在跳转至：${targetUrl}`;
+                window.location.href = targetUrl;
+            } else {
+                status.textContent = `未找到「${input}」的相关页面`;
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+            }
+        }
+
+        // 回车触发搜索
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') searchPage();
+        });
+    </script>
+</body>
+</html>

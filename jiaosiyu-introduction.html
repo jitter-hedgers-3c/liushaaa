@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>焦思雨个人档案 - 洋栖中学</title>
+    <style>
+        /* 全局古早风格（和所有页面完全一致） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        /* 古早搜索框（右上角悬浮，和所有页面统一） */
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        /* 搜索结果区（统一复古样式） */
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        /* 导航栏（高亮当前页） */
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #ffd700;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        /* 内容区样式 */
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .info-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        /* 通用表格样式（复古边框，贴合学校档案表） */
+        .common-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+        }
+        .common-table th {
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            padding: 8px;
+            border: 1px solid #999;
+            font-size: 14px;
+            color: #333;
+            text-align: center;
+            font-weight: normal;
+        }
+        .common-table td {
+            padding: 8px;
+            border: 1px solid #dddddd;
+            vertical-align: middle;
+        }
+        /* 证件照样式：固定尺寸+自动填充+不出框 */
+        .id-photo {
+            width: 120px; /* 档案证件照标准宽度 */
+            height: 160px; /* 档案证件照标准高度 */
+            border: 2px solid #999;
+            margin: 0 auto 15px;
+            display: block;
+            object-fit: cover; /* 自动填充，不变形 */
+            object-position: center; /* 居中显示 */
+            background-color: #f0f0f0; /* 图片加载失败时的兜底背景 */
+        }
+        /* 仅最后一行最后一列的备注大留白（学校档案式备注栏） */
+        .final-remark-cell {
+            height: 120px; /* 学校档案标准备注栏高度 */
+            vertical-align: top;
+            padding: 10px !important;
+        }
+        /* 修复底部格式错乱：标准化学校档案底部样式 */
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+            line-height: 1.5; /* 统一行高，避免错乱 */
+            margin-top: 20px; /* 和内容区隔开，排版整齐 */
+        }
+        .footer p {
+            margin: 0; /* 清除默认边距，避免换行错乱 */
+            padding: 2px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部（带搜索框，和所有页面统一） -->
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+
+        <!-- 搜索结果区 -->
+        <div class="search-result" id="searchResult"></div>
+
+        <!-- 导航栏（高亮“焦思雨个人档案”） -->
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="jiaosiyu.html">焦思雨 相关信息</a>
+            <a href="jiaosiyu-introduction.html" class="active"></a>
+        </div>
+
+        <!-- 核心内容区（完全贴合学校官方档案风格） -->
+        <div class="content">
+            <h2 class="content-title">学生个人档案</h2>
+            <p style="color:#666; font-size:13px; margin-bottom:20px;">档案编号：YX200503119 | 建档日期：2005年9月1日 | 档案类别：高中学生档案</p>
+
+            <!-- 基础信息模块（删除外貌/性格特征，新增证件照） -->
+            <div class="info-box">
+                <h3>一、基础信息</h3>
+                <!-- 证件照区域：固定尺寸+自动填充+居中 -->
+                <img src="jiaosiyu.jpg" alt="焦思雨证件照" class="id-photo">
+                <table class="common-table" style="margin-bottom:0;">
+                    <tr>
+                        <td width="15%"><strong>姓名</strong></td>
+                        <td width="10%">焦思雨</td>
+                        <td width="15%"><strong>性别</strong></td>
+                        <td width="10%">女</td>
+                        <td width="15%"><strong>血型</strong></td>
+                        <td width="10%">A型</td>
+                        <td width="15%"><strong>出生日期</strong></td>
+                        <td width="10%">1990.01.01</td>
+                    </tr>
+                    <tr>
+                        <td><strong>籍贯</strong></td>
+                        <td colspan="3">浙江省湘水市</td>
+                        <td><strong>学籍号</strong></td>
+                        <td colspan="3">YXGZ200503043</td>
+                    </tr>
+                    <tr>
+                        <td><strong>就读年级</strong></td>
+                        <td>高中</td>
+                        <td><strong>班级</strong></td>
+                        <td>高二年级（3）班</td>
+                        <td><strong>同桌</strong></td>
+                        <td colspan="3">刘岚</td>
+                    </tr>
+                    <tr>
+                        <td><strong>联系电话</strong></td>
+                        <td colspan="3">无</td>
+                        <td><strong>电子邮箱</strong></td>
+                        <td colspan="3">无</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 家庭背景模块（学校档案式客观表述） -->
+            <div class="info-box">
+                <h3>二、家庭背景</h3>
+                <table class="common-table" style="margin-bottom:0;">
+                    <tr>
+                        <td width="15%"><strong>父亲</strong></td>
+                        <td width="35%">焦远舟</td>
+                        <td width="20%"><strong>职业</strong></td>
+                        <td width="30%">湘水乡卫生院临时护工</td>
+                    </tr>
+                    <tr>
+                        <td><strong>母亲</strong></td>
+                        <td>林听雨</td>
+                        <td><strong>职业</strong></td>
+                        <td>临天崖景区环卫工</td>
+                    </tr>
+                    <tr>
+                        <td><strong>家庭结构</strong></td>
+                        <td colspan="3">父母于2005年送学生入学后失联，更换家庭住址，无有效监护人与联络方式</td>
+                    </tr>
+                    <tr>
+                        <td><strong>经济状况</strong></td>
+                        <td colspan="3">家庭贫困，已申请校内助学金；因监护人失联，学生无固定居所，长期留校居住</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 在校住宿/离校情况（学校政教处标准记录） -->
+            <div class="info-box">
+                <h3>三、在校住宿及离校管理</h3>
+                <p><strong>住宿类型：</strong>校内常住住校生（节假日无离校记录）</p>
+                <p><strong>离校安排：</strong>2007年6月起申请每日走读（此前无离校记录）</p>
+                <p><strong>离校去向：</strong>因监护人失联、无固定住所，走读后仍在校内周边活动；2006年10月18日因同寝室刘岚违规使用电器引发小型火灾，该生右半脸受外伤</p>
+            </div>
+
+            <!-- 教师评价模块（班主任官方评语格式） -->
+            <div class="info-box">
+                <h3>四、班主任评价（2006-2007学年）</h3>
+                <table class="common-table" style="margin-bottom:0;">
+                    <tr>
+                        <td width="15%"><strong>评价教师</strong></td>
+                        <td width="20%">刘芳</td>
+                        <td width="15%"><strong>职称</strong></td>
+                        <td width="20%">中学一级教师</td>
+                        <td width="15%"><strong>任教科目</strong></td>
+                        <td width="15%">英语</td>
+                    </tr>
+                    <tr>
+                        <td><strong>学业表现</strong></td>
+                        <td colspan="5">成绩中上游，学习踏实认真；2006年10月因火灾受伤事件影响，成绩大幅下滑，无优势学科</td>
+                    </tr>
+                    <tr>
+                        <td><strong>行为表现</strong></td>
+                        <td colspan="5">遵守校规校纪，尊敬师长，团结同学，无违纪记录；性格内向回避，遇事敏感脆弱，心理承受能力较弱</td>
+                    </tr>
+                    <tr>
+                        <td><strong>个人爱好</strong></td>
+                        <td colspan="5">无特殊兴趣爱好，以学业为主，目标考取大学，日常刻苦读书</td>
+                    </tr>
+                    <tr>
+                        <td><strong>综合评语</strong></td>
+                        <td colspan="5">该生性格内向温和，学习踏实认真，遵守纪律，尊敬师长，团结同学。但遇事较为敏感脆弱，心理承受能力较弱，需多加关心与引导。</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- 综合评分表格（学校成绩档案表，仅最后一行最后一列留大备注框） -->
+            <div class="info-box">
+                <h3>五、学期综合评分记录（满分100分）</h3>
+                <table class="common-table">
+                    <tr>
+                        <th>学年学期</th>
+                        <th>综合评分</th>
+                        <th>备注</th>
+                    </tr>
+                    <tr>
+                        <td align="center">2005-2006学年上学期</td>
+                        <td align="center">67</td>
+                        <td align="center">——</td>
+                    </tr>
+                    <tr>
+                        <td align="center">2005-2006学年下学期</td>
+                        <td align="center">86</td>
+                        <td align="center">——</td>
+                    </tr>
+                    <tr>
+                        <td align="center">2006-2007学年上学期</td>
+                        <td align="center">15</td>
+                        <td align="center">——</td>
+                    </tr>
+                    <tr>
+                        <td align="center">2006-2007学年下学期</td>
+                        <td align="center">未参评</td>
+                        <td class="final-remark-cell"></td> <!-- 仅此处留大备注框 -->
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 底部（格式完全修复，学校官方版权样式） -->
+        <div class="footer">
+            <p>版权所有 © 1988-2008 湘水市洋栖中学 保留所有权利</p>
+            <p>档案管理：洋栖中学政教处 | 技术支持：洋栖中学信息技术组</p>
+            <p>档案查阅须知：仅限校内教职工凭工作证查阅，严禁外泄</p>
+        </div>
+    </div>
+
+    <!-- 搜索功能（和所有页面统一的解谜逻辑） -->
+    <script src="puzzle-keywords.js"></script>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+
+        function doSearch() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+
+            if (matchedUrl) {
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+            } else {
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+    </script>
+</body>
+</html>

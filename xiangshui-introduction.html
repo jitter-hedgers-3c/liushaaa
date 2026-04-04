@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>湘水市概况</title>
+    <style>
+        /* 核心保留老式盒模型+2006年主流样式 */
+        * {
+            box-sizing: content-box; /* 还原老式盒模型（关键） */
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: "宋体", SimSun, "仿宋_GB2312", serif; /* 2006年主流宋体 */
+            line-height: 1.6; /* 优化行高，保留紧凑感但更易读 */
+            color: #000000; /* 纯黑文字，古早特征 */
+            background-color: #ffffff; /* 纯白背景 */
+            padding: 15px 0; /* 优化页面上下边距 */
+            font-size: 14px; /* 老式网页默认字号 */
+        }
+        /* 固定宽度容器，居中，优化边框和内边距 */
+        .news-container {
+            width: 770px; /* 适配800x600分辨率的经典宽度 */
+            margin: 0 auto; /* 页面居中 */
+            border: 1px solid #cccccc; /* 浅灰边框，古早标配 */
+            padding: 25px 20px; /* 优化内边距，避免内容贴边 */
+            background: #ffffff;
+            box-shadow: 0 2px 3px #eeeeee; /* 轻量阴影，2006年后期常见效果 */
+        }
+        /* 标题优化：居中+分隔线更协调 */
+        .news-title {
+            font-size: 26px; /* 略微放大，提升标题层级 */
+            text-align: center;
+            color: #333333;
+            margin-bottom: 15px;
+            font-weight: bold;
+            border-bottom: 2px solid #999999; /* 稍粗分隔线，更醒目 */
+            padding-bottom: 10px;
+            letter-spacing: 1px; /* 增加字间距，标题更舒展 */
+        }
+        /* 发布信息优化：间距+样式更协调 */
+        .news-info {
+            text-align: center;
+            color: #666666;
+            font-size: 12px; /* 小号字体，古早特征 */
+            margin-bottom: 25px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #cccccc; /* 虚线分隔，2006年常见 */
+        }
+        /* 正文优化：段落间距+缩进更舒适 */
+        .news-content {
+            font-size: 14px;
+        }
+        .news-content p {
+            margin-bottom: 18px; /* 优化段落间距，避免拥挤 */
+            text-indent: 2em; /* 首行缩进2字符，老式新闻必备 */
+            text-align: justify; /* 两端对齐，古早网页特征 */
+            line-height: 1.7; /* 正文行高优化，提升可读性 */
+        }
+        /* 图片容器：古早居中方式（text-align），优化间距 */
+        .img-wrap {
+            text-align: center; /* 老式图片居中，不用flex */
+            margin: 25px 0; /* 图片上下间距优化 */
+        }
+        /* 古早图片样式：实线边框+固定尺寸+浅灰边框色 */
+        .news-img {
+            width: 730px; /* 适配容器宽度 */
+            height: auto; /* 保持图片比例，避免变形 */
+            border: 1px solid #999999; /* 老式实线边框 */
+            /* 古早图片hover效果（可选，2006年后期常见） */
+            cursor: pointer;
+        }
+        .news-img:hover {
+            border-color: #666666; /* hover变深，古早交互效果 */
+        }
+        /* 安全提示：保留老式样式，优化内边距和间距 */
+        .safety-tip {
+            background-color: #ffffe0; /* 浅黄背景，警示色 */
+            border: 1px solid #ffcc00; /* 实线边框，无圆角（关键） */
+            padding: 12px 10px; /* 优化内边距 */
+            margin: 20px 0; /* 上下间距优化 */
+        }
+        .safety-tip h4 {
+            color: #cc0000; /* 老式警示红 */
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="news-container">
+        <!-- 新闻标题 -->
+        <h1 class="news-title">湘水市概况</h1>
+        
+        <!-- 新闻发布信息 -->
+        <div class="news-info">发布时间：2008年5月14日 小编：陆苗</div>
+        
+        <!-- 新闻正文 -->
+        <div class="news-content">
+            <p>湘水市地处浙江省境内，全市山区面积占比高达56%，地形以连绵的山地、丘陵为主，平坦土地极少。这种地理条件让当地搞基础建设难度特别大——公路只能依山而修，弯多坡陡，不少乡镇之间还要靠山路连通；水电、网络等设施也没法像大城市那样全覆盖，很多村子得靠自备发电机应急。</p>
+
+            <!-- 图片容器：古早居中方式，修复语法错误 -->
+            <div class="img-wrap">
+                <img src="xs1.jpg" alt="湘水市外观" class="news-img">
+            </div>
+
+            <p>由于耕地少，农业种植条件一直很差，只能在陡坡上开垦零星梯田，种些红薯、玉米、土豆这类耐贫瘠的作物，产量不高，很难支撑稳定收入。当地工业基础薄弱，像样的工厂很少，居民收入普遍不高，整体受教育程度偏低——山里孩子上学要走几小时山路，学校规模小、设备简陋，很多孩子读到初中就不得不辍学，帮家里干活或外出打工。</p>
+
+            <!-- 图片容器：修复未闭合的img标签 -->
+            <div class="img-wrap">
+                <img src="xs2.jpg" alt="湘水市小孩玩耍" class="news-img">
+            </div>
+
+            <p>2008年的湘水市，经济发展相对滞后，但自然风光保留着原生态的样子。市内有几处景区，其中临天崖景区是名气最大的3A级景区。这里山势险峻，崖壁陡峭，常年云雾缭绕，站在观景台能俯瞰整座山城，景色十分壮观。不过景区交通不便，只有少数游客专程前来，大多是本地人和偶尔的驴友。</p>
+
+            <!-- 图片容器：修复未闭合的img标签 -->
+            <div class="img-wrap">
+                <img src="xs3.jpg" alt="湘水市山景观" class="news-img">
+            </div>
+
+            <!-- 安全提示模块：优化间距 -->
+            <div class="safety-tip">
+                <h4>重要安全提醒</h4>
+                <p>湘水市雨季多泥石流。每年5—9月是当地雨季，雨水多且集中，加上山地土层疏松、植被覆盖有限，很容易引发泥石流。如果有人想来旅游，一定要避开雨季，出行前先打听当地天气；若恰逢雨季，千万不要贸然前往深山或景区，尽量选择平坦区域活动，同时听从当地向导的提醒，注意安全。</p>
+            </div>
+
+            <p>总的来说，2008年的湘水市，是一个山多路差、经济落后，但山水原生态、风景独特的山区小城，只是雨季安全风险较高，出行需格外留意。</p>
+        </div>
+    </div>
+</body>
+</html>

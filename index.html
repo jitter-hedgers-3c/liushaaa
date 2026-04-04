@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流沙 - 游戏开始界面</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* 游戏UI专属动画：淡入上浮 */
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(25px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        /* 游戏氛围感背景 - 深色渐变+纹理，营造悬疑游戏氛围 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #0a0a18 0%, #1a1a2e 50%, #16213e 100%);
+            color: #fff;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-attachment: fixed;
+        }
+        /* 游戏核心容器 - 入场动画 */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(10, 10, 24, 0.85);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 0 50px rgba(0, 110, 255, 0.2), 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(100, 149, 237, 0.3);
+            backdrop-filter: blur(8px);
+            animation: fadeUp 0.7s ease-out forwards;
+        }
+        /* 游戏标题 - 居中+动画 */
+        h1 {
+            text-align: center;
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 30px;
+            font-weight: 800;
+            text-shadow: 0 0 15px rgba(0, 191, 255, 0.7), 0 2px 5px rgba(0, 0, 0, 0.5);
+            letter-spacing: 3px;
+            position: relative;
+            padding-bottom: 15px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.1s forwards;
+        }
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00bfff, transparent);
+        }
+        /* 游戏封面图 - 动画 */
+        .game-img {
+            display: block;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            margin: 0 auto 40px;
+            object-fit: cover;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(100, 149, 237, 0.5);
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.2s forwards;
+        }
+        /* 正文段落 - 左对齐+动画（文字完全不变） */
+        .text-box {
+            font-size: 18px;
+            color: #e0e0e0;
+            margin-bottom: 35px;
+            text-align: left;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.3s forwards;
+        }
+        /* 新增：制作者信息样式 【核心修改】 */
+        .maker {
+            font-size: 14px; /* 字体缩小，可根据需求调整 */
+            opacity: 0.6;    /* 透明度降低，0-1之间可微调 */
+            display: block;  /* 独占一行，保持排版整洁 */
+            margin-top: 10px;/* 与上一行拉开间距，更美观 */
+        }
+        /* 工具区域 - 左对齐+动画（文字完全不变） */
+        .tool {
+            font-size: 17px;
+            margin-bottom: 45px;
+            padding: 20px;
+            background-color: rgba(26, 26, 46, 0.7);
+            border-radius: 12px;
+            text-align: left;
+            border: 1px solid rgba(100, 149, 237, 0.2);
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.4s forwards;
+        }
+        /* 开始游戏按钮 - 核心动画 */
+        .start-btn {
+            display: block;
+            width: 220px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            background: linear-gradient(90deg, #0099ff, #00bfff);
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            border-radius: 30px;
+            margin: 0 auto 40px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 153, 255, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.5s forwards;
+        }
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(0, 153, 255, 0.6);
+            background: linear-gradient(90deg, #0077cc, #0099ff);
+        }
+        /* 链接样式 - 适配深色背景 */
+        a {
+            color: #4fc3f7;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        a:hover {
+            color: #81d4fa;
+            text-decoration: underline;
+        }
+        /* 免责声明 - 左对齐+动画（文字完全不变） */
+        .notice {
+            color: #ff6b6b;
+            font-size: 15px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.8;
+            text-align: left;
+            opacity: 0;
+            animation: fadeUp 0.7s ease-out 0.6s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 游戏标题 -->
+        <h1>流沙</h1>
+        <!-- 游戏封面图 -->
+        <img src="open.jpg" alt="游戏封面" class="game-img">
+        <!-- 剧情介绍（原文一字未改） -->
+        <div class="text-box">
+            2008年7月10日，深夜浏览<a href="liusha.html">流沙论坛</a>的你发现了一个诡异帖子<br>
+            帖主向大家公开了一个邮箱号，是她和她的网络笔友在线上聊天时共同使用的，但诡异的是她的笔友好像失踪了，一切都只能从这个学校的官网查起。<br>
+	    （或许可以试着先猜猜主角的姓名哦）<br>
+	    <!-- 核心修改：给制作者信息包裹专属样式类 -->
+	    <span class="maker">制作者：QZWLY  穿马丁靴的冒失鬼</span>
+        </div>
+        <!-- 核心：开始游戏按钮（原文一字未改） -->
+        <a href="liusha.html" class="start-btn">开始游戏</a>
+        <!-- 工具链接（原文一字未改） -->
+        <div class="tool">
+            游戏工具：<a href="safari.html">盛夏浏览器</a>
+        </div>
+        <!-- 免责声明（原文一字未改） -->
+        <div class="notice">
+            本游戏内容中所有出现的人名、校名、区名、地名均为虚构，请勿带入现实。该作品剧情为原创，但是由于工作量较大，部分文字与全部图片为ai生成，请自行排雷。<br>
+            本游戏为追求沉浸式体验，有大量文字阅读内容，但并非所有文字都是有用的哟，请玩家仔细甄别！图片中可能有文字错误，以规避与现实重合。
+        </div>
+    </div>
+</body>
+</html>

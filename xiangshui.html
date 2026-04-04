@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>湘水市_盛夏浏览器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", "微软雅黑", Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f2f2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .browser-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .browser-toolbar {
+            background: #e9e9e9;
+            padding: 6px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 4px;
+            border: 1px solid #999;
+        }
+        .btn-close { background: #ff6666; }
+        .btn-min { background: #ffff66; }
+        .btn-max { background: #66ff66; }
+
+        /* 搜索框区域（和主页样式统一） */
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            display: flex;
+            border: 1px solid #b8b8b8;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-btn {
+            background: #3366cc;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-left: 1px solid #2d59aa;
+        }
+        .search-btn:hover {
+            background: #2d59aa;
+        }
+
+        /* 搜索结果区域 */
+        .result-container {
+            flex: 1;
+            padding: 0 30px;
+            overflow-y: auto;
+        }
+        .result-count {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        /* 统一的词条标题样式（可点击/假链接保持一致） */
+        .result-title {
+            font-size: 18px;
+            color: #0000cc;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .result-title:hover {
+            color: #cc0000;
+        }
+        /* 可点击词条样式 */
+        .clickable-result {
+            margin-bottom: 25px;
+        }
+        .clickable-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .clickable-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+        /* 假链接词条样式（仅外观一致，点击无反应） */
+        .fake-link-result {
+            margin-bottom: 25px;
+        }
+	 .fake-link-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+	}
+        .fake-link-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        /* 复古翻页样式（不可点击） */
+        .pagination {
+            margin: 30px 0;
+            padding: 10px 0;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .page-btn {
+            padding: 4px 10px;
+            color: #0000cc;
+            border: 1px solid #cccccc;
+            border-radius: 2px;
+            cursor: not-allowed; /* 不可点击光标 */
+            background: #f9f9f9;
+        }
+        .page-btn.disabled {
+            color: #999999;
+            border-color: #e5e5e5;
+            background: #f2f2f2;
+        }
+        .page-num {
+            padding: 4px 8px;
+            color: #000;
+            background: #3366cc;
+            color: #fff;
+            border: 1px solid #2d59aa;
+            border-radius: 2px;
+        }
+
+        .browser-status {
+            background: #e9e9e9;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <!-- 顶部工具栏 -->
+        <div class="browser-toolbar">
+            <div class="window-controls">
+                <div class="window-btn btn-close"></div>
+                <div class="window-btn btn-min"></div>
+                <div class="window-btn btn-max"></div>
+            </div>
+        </div>
+
+        <!-- 搜索框（和主页功能一致） -->
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容" value="湘水市">
+            <button class="search-btn" onclick="searchPage()">搜索</button>
+        </div>
+
+        <!-- 搜索结果区 -->
+        <div class="result-container">
+            <div class="result-count">为您找到约 128,000 条关于湘水市的结果</div>
+
+            <!-- 可点击词条1：湘水市简介 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='xiangshui-introduction.html'">湘水市 - 百科百科_湘水市行政区划/人口/地理环境全解析</div>
+                <div class="url">xiangshui.gov.cn/intro - 官方网站 - 湘水市政府</div>
+                <div class="desc">湘水市位于江南丘陵地带，下辖3区2县，常住人口约86万，属亚热带季风气候，年平均气温18.2℃，境内河流密布，自然资源丰富，是省内重要的生态旅游城市。</div>
+            </div>
+
+            <!-- 可点击词条2：临天崖3A景区简介 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='3A-introduction.html'">临天崖景区 - 湘水市3A级旅游景区官方介绍_门票/开放时间/游玩攻略</div>
+                <div class="url">xiangshuitour.com/3a/lintianya - 湘水市文旅局</div>
+                <div class="desc">临天崖景区坐落于湘水市西郊，1990年获评国家3A级旅游景区，以奇峻的崖壁、清澈的溪流和原生态的山林景观著称，景区面积约12平方公里，年均接待游客超50万人次。</div>
+            </div>
+
+            <!-- 可点击词条3：雨季泥石流警告 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='rainfall.html'">湘水市应急管理局发布雨季安全预警：谨防泥石流/河道湍急引发意外</div>
+                <div class="url">xiangshui.gov.cn/emergency/200806 - 政务公告 - 2008年6月发布</div>
+                <div class="desc">进入汛期后，湘水市多地出现强降雨天气，临天崖周边、南部山区易发生泥石流、山体滑坡，境内湘水干流、支流流速激增，市应急局提醒市民切勿前往河道、山谷等危险区域。</div>
+            </div>
+
+            <!-- 假链接词条（外观和可点击一致，点击无反应） -->
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市2008年一季度GDP同比增长5.2% 文旅产业成增长主力</a>
+		<div class="url">shuiqi.cn/travel/190 - 水汽传媒</div>
+                <div class="desc">湘水市统计局近日发布数据，2008年一季度全市实现地区生产总值89.6亿元，同比增长5.2%，其中旅游收入占比达18%，临天崖景区贡献显著。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市教育局：2008年春季新增3所公办幼儿园 缓解入学压力</a>
+		<div class="url">xiangshui.edu.cn/kid/200802 - 湘水市教育局</div>
+                <div class="desc">为解决学前教育资源紧张问题，湘水市今年将完成3所公办幼儿园的建设，预计9月正式招生，可新增学位1200个。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市公交集团：4月1日起调整3条公交线路 覆盖临天崖景区</a>
+		<div class="url">xiangshui.trans.cn/transformation/200801 -湘水市公交集团</div>
+                <div class="desc">为方便市民前往临天崖景区，湘水市公交集团将优化调整102路、208路、315路公交线路，新增站点5个，首末班时间延长至早7点至晚8点。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市非遗名录新增「湘水竹编」 传统手艺获官方保护</a>
+		<div class="url">xiaoxiong.media.cn/news - 小雄新闻</div>
+                <div class="desc">近日，湘水市竹编技艺成功入选省级非物质文化遗产代表性项目名录，当地将设立传承基地，培养年轻传承人。</div>
+            </div>
+
+            <!-- 复古不可用翻页组件 -->
+            <div class="pagination">
+                <div class="page-btn disabled">上一页</div>
+                <div class="page-num">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <div class="page-btn">4</div>
+                <div class="page-btn">5</div>
+                <div class="page-btn">6</div>
+                <div class="page-btn">7</div>
+                <div class="page-btn">8</div>
+                <div class="page-btn">9</div>
+                <div class="page-btn">10</div>
+                <div class="page-btn">下一页</div>
+                <div style="margin-left: 15px; color: #666;">共128页&nbsp;&nbsp;到第<input type="text" style="width: 30px; height: 20px; text-align: center;" value="1">页&nbsp;&nbsp;<span class="page-btn disabled">确定</span></div>
+            </div>
+        </div>
+
+        <!-- 底部状态栏 -->
+        <div class="browser-status" id="statusText">就绪</div>
+    </div>
+
+    <!-- 导入关键词数据 -->
+    <script src="puzzle-seek.js"></script>
+    <script>
+        // 和主页一致的搜索逻辑
+        function searchPage() {
+            const input = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusText');
+
+            if (!input) {
+                status.textContent = "请输入搜索内容";
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+                return;
+            }
+
+            if (puzzleSeek.hasOwnProperty(input)) {
+                const targetUrl = puzzleSeek[input];
+                status.textContent = `正在跳转至：${targetUrl}`;
+                window.location.href = targetUrl;
+            } else {
+                status.textContent = `未找到「${input}」的相关页面`;
+                // 跳搜索失败页，携带关键词
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+            }
+        }
+
+        // 回车触发搜索
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') searchPage();
+        });
+
+        // 翻页按钮全部设为不可点击（防止误操作）
+        window.onload = function() {
+            const pageBtns = document.querySelectorAll('.page-btn');
+            pageBtns.forEach(btn => {
+                btn.onclick = function(e) {
+                    e.preventDefault(); // 阻止默认行为
+                    return false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

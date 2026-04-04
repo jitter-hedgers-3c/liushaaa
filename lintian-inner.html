@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>【新闻速递】父亲节悲剧：临天崖景区发生坠崖事件</title>
+<style>
+body{font-family:"宋体",SimSun;background:#fff;margin:0;padding:15px;font-size:14px;color:#000;}
+.news-box{width:760px;margin:0 auto;border:1px solid #999;padding:20px;background:#fff;}
+.news-tip{font-size:12px;color:#cc0000;text-align:center;margin-bottom:5px;}
+.news-title{font-size:22px;font-weight:bold;text-align:center;color:#c00;margin:10px 0;line-height:1.4;}
+.news-time{text-align:center;font-size:12px;color:#666;border-bottom:1px dashed #ccc;padding-bottom:10px;margin-bottom:20px;}
+.news-content p{text-indent:2em;line-height:1.7;margin-bottom:15px;}
+.news-end{text-align:right;font-size:12px;color:#666;margin-top:20px;}
+/* 视频播放区域样式：固定尺寸，不超框 */
+.video-box{width:700px;/* 比容器窄，不超框 */height:400px;margin:20px auto;border:1px solid #666;text-align:center;}
+/* 视频封面图：固定尺寸，填满容器 */
+.video-cover{width:700px;height:400px;display:block;cursor:pointer;/* 鼠标手型，提示可点击 */}
+/* 播放失败提示：和封面同尺寸，居中显示 */
+.play-fail{width:700px;height:400px;line-height:400px;/* 垂直居中 */font-size:18px;color:#cc0000;background:#f5f5f5;border:none;display:none;/* 默认隐藏 */}
+</style>
+</head>
+<body>
+<div class="news-box">
+    <div class="news-tip">【新闻速递】</div>
+    <h1 class="news-title">父亲节悲剧：【临天崖景区】发生【坠崖事件】，遗体面目全非身份难辨</h1>
+    <div class="news-time">2007年6月17日（周日） 讯</div>
+    <div class="news-content">
+        <p>今日正值父亲节，临天崖景区发生一起令人扼腕的坠崖事故。一名花季少女在游览过程中不慎从海拔约300米的观景台坠落，因落差巨大且崖壁多岩角，遗体发现时已面目全非，现场无法确认其身份。</p>
+        <p>据景区管理处通报，事故发生在上午10时15分左右。景区应急救援队接报后迅速下到谷底搜救，于11时许找到坠落者，但已无生命体征。</p>
+        <p>“面部损伤非常严重，随身物品也没有发现手机或能直接证明身份的证件。”一名参与救援的工作人员透露，死者身着白色衬衫与灰色长裤，口袋内无其他物品。</p>
+        <p>由于今日恰逢父亲节，景区内家庭出游者众多，不少游客在听闻事故后自发停留在警戒线外，神情沉重。有游客低声议论：“家人该多绝望……”</p>
+        <p>目前，警方已介入调查，正展开身份排查。遗体已移交殡仪馆，法医将进行进一步检验以确认身份。</p>
+        <p>临天崖景区事发后已关闭事发区域，进行全线安全检查。景区负责人表示将全力配合调查，并做好善后工作。</p>
+    </div>
+
+    <!-- 视频播放区域 -->
+    <div class="video-box">
+        <!-- 视频封面图：点击后触发播放失败 -->
+        <img id="videoCover" class="video-cover" src="lintian-video.jpg" alt="视频播放" onclick="playVideo()">
+        <!-- 播放失败提示：默认隐藏 -->
+        <div id="playFail" class="play-fail">播放失败</div>
+    </div>
+
+    <div class="news-end">（本报将持续关注事件进展）</div>
+</div>
+
+<!-- 基础JS：点击封面切换为播放失败 -->
+<script>
+// 2007年风格的简易JS，无复杂语法
+function playVideo() {
+    // 隐藏封面图
+    document.getElementById("videoCover").style.display = "none";
+    // 显示播放失败提示
+    document.getElementById("playFail").style.display = "block";
+}
+</script>
+</body>
+</html>

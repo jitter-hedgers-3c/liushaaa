@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>洋栖中学-李建国管理中心</title>
+    <style>
+        /* 古早官方灰色风格 | 纯兼容老式布局 无错位 版权固定 */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial;
+        }
+        html,body {
+            height: 100%;
+            background-color: #E8E8E8;
+            padding: 0;
+            position: relative;
+        }
+        /* 主容器 固定居中 无定位冲突 */
+        .container {
+            width: 750px;
+            margin: 30px auto;
+            background: #FFFFFF;
+            border: 3px solid #666666;
+            padding: 25px;
+            box-shadow: 2px 2px 4px #999;
+        }
+        /* 顶部标题 */
+        .top-title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #333333;
+            border-bottom: 2px solid #999;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        /* 导航按钮 */
+        .nav-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .nav-btn {
+            width: 130px;
+            height: 36px;
+            background: #888888;
+            border: 1px solid #555;
+            color: #FFF;
+            font-size: 14px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .nav-btn:hover {
+            background: #666666;
+        }
+        /* 内容区域 */
+        .content-box {
+            min-height: 450px;
+            padding: 15px;
+            border: 1px solid #999;
+            background: #F9F9F9;
+        }
+        /* 空内容提示 */
+        .empty-tip {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            line-height: 400px;
+        }
+        /* 交流对话样式 */
+        .chat-box {
+            font-size: 14px;
+            line-height: 26px;
+            padding: 10px;
+        }
+        .chat-date {
+            font-weight: bold;
+            color: #222;
+            margin: 15px 0 8px;
+            border-bottom: 1px dashed #999;
+            padding-bottom: 5px;
+        }
+        .chat-seller {
+            color: #003366;
+            margin-left: 1em;
+        }
+        .chat-staff {
+            color: #660033;
+            margin-left: 1em;
+        }
+        .chat-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* 二级密码弹窗 老式绝对定位+负margin居中 无错位 */
+        #mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ccc;
+            opacity: 0.6;
+            z-index: 888;
+        }
+        #pwdModal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 420px;
+            height: 240px;
+            margin-left: -210px;
+            margin-top: -120px;
+            background: #f0f0f0;
+            border: 4px solid #666;
+            padding: 25px;
+            box-shadow: 3px 3px 8px #777;
+            z-index: 999;
+        }
+        .modal-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #222;
+        }
+        .question {
+            font-size: 14px;
+            line-height: 22px;
+            margin-bottom: 15px;
+            color: #000;
+        }
+        .input-bar {
+            text-align: center;
+            margin: 15px 0;
+        }
+        .sec-input {
+            width: 200px;
+            height: 24px;
+            border: 1px solid #666;
+            padding: 2px 5px;
+            font-size: 14px;
+        }
+        .btn-bar {
+            text-align: center;
+        }
+        .sec-btn {
+            width: 80px;
+            height: 28px;
+            background: #777;
+            color: #fff;
+            border: 1px solid #444;
+            cursor: pointer;
+        }
+        .tip {
+            font-size: 12px;
+            color: red;
+            text-align: center;
+            margin-top: 8px;
+            display: none;
+        }
+
+        /* 🔥 核心修复：版权固定在底部 永不上浮 */
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 二级密码弹窗（默认显示） -->
+    <div id="mask"></div>
+    <div id="pwdModal">
+        <div class="modal-title">安全验证 - 二级密码</div>
+        <div class="question">
+            台阶从下往上数依次编号为1，2，3……n，选手投两颗骰子，若点数之和大于等于10则可以跳2级台阶，点数之和小于10则只能跳一级，初始位置记为0，请问跳到3的概率是多少？<br>
+            （答案请用分数形式输入，如4/5）
+        </div>
+        <div class="input-bar">
+            <input type="text" id="secondPwd" class="sec-input" placeholder="请输入二级密码">
+        </div>
+        <div class="btn-bar">
+            <button class="sec-btn" onclick="checkSecPwd()">确认</button>
+        </div>
+        <div class="tip" id="errTip">密码错误，请重新输入！</div>
+    </div>
+
+    <div class="container">
+        <!-- 主页面内容（默认隐藏） -->
+        <div id="mainPage" style="display:none;">
+            <div class="top-title">洋栖中学-李建国管理中心</div>
+
+            <!-- 功能导航 -->
+            <div class="nav-box">
+                <button class="nav-btn" onclick="showContent('log')">工作日志</button>
+                <button class="nav-btn" onclick="showContent('chat')">交流对话</button>
+                <button class="nav-btn" onclick="window.location.href='excellent.html'">优秀学生</button>
+                <button class="nav-btn" onclick="showContent('file')">详细档案</button>
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="content-box">
+                <!-- 工作日志：空 -->
+                <div id="log" style="display:block;">
+                    <div class="empty-tip">暂无工作日志记录</div>
+                </div>
+
+                <!-- 交流对话：完整内容 -->
+                <div id="chat" style="display:none;">
+                    <div class="chat-box">
+                        <div class="chat-date">2007年3月10日</div>
+                        <div class="chat-seller">售货员：新一批“victories”将于3月12日早上到货，是最新研究品种，效果更强、产出翻倍。你立刻安排3月12日“亲花节”全部事宜，流程、人员、现场管控全部落实到位，不许出任何问题。</div>
+                        <div class="chat-staff">秩序检修员：明白，我现在就召集教育处开会，今天把所有方案定下来。</div>
+                        <div class="chat-seller">售货员：必须盯死每一个环节，出一点乱子，你负全责。</div>
+                        <div class="chat-staff">秩序检修员：是！保证不出任何差错，严格按您的要求执行到位。</div>
+
+                        <div class="chat-date">2007年4月15日</div>
+                        <div class="chat-seller">售货员：升级版“vitamin”营养药前天已经全部入仓，清点无误。你马上组织计划内全体学生，分班级、分时段有序领取，全程监管，做好登记，不准漏领、不准混乱。</div>
+                        <div class="chat-staff">秩序检修员：收到，我现在就通知各班主任，今天内完成领取和登记。</div>
+                        <div class="chat-seller">售货员：动作要快，纪律要严，不许出任何纰漏。</div>
+                        <div class="chat-staff">是，我亲自到场监督，确保全部规范完成。</div>
+
+                        <div class="chat-date">2007年5月10日</div>
+                        <div class="chat-seller">售货员：<a href='blog-l.html' class='chat-link'>点击进入</a></div>
+                        <div class="chat-seller">售货员：这是我校学生刘岚，长期综合评分低下，多次在网上发表针对学校的负面言论，已列入危险人物清除清单。</div>
+                        <div class="chat-staff">秩序检修员：我马上处理此事。</div>
+                        <div class="chat-seller">售货员：从今天起，你必须加强校内舆论管控，重点监控该生动向，严格管束学生网络言论，立刻处理，绝不允许再出现类似情况。</div>
+                        <div class="chat-staff">秩序检修员：是！我立刻发布相关警告，加强全校思想管控，坚决堵住负面舆论，绝不姑息。</div>
+                    </div>
+                </div>
+
+                <!-- 详细档案 -->
+                <div id="file" style="display:none;">
+                    <div class="empty-tip">仅校长可查看</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部版权（永久固定在页面最下方） -->
+    <div class="footer">洋栖中学 校内管理系统 </div>
+
+    <script>
+        // 二级密码验证
+        function checkSecPwd() {
+            let pwd = document.getElementById("secondPwd").value.trim();
+            let errTip = document.getElementById("errTip");
+            
+            // 正确密码：185/216
+            if (pwd === "185/216") {
+                document.getElementById("pwdModal").style.display = "none";
+                document.getElementById("mask").style.display = "none";
+                document.getElementById("mainPage").style.display = "block";
+                alert("欢迎您，亲爱的秩序检修员！");
+            } else {
+                errTip.style.display = "block";
+                document.getElementById("secondPwd").value = "";
+            }
+        }
+
+        // 模块切换
+        function showContent(id) {
+            document.getElementById('log').style.display = 'none';
+            document.getElementById('chat').style.display = 'none';
+            document.getElementById('file').style.display = 'none';
+            document.getElementById(id).style.display = 'block';
+        }
+    </script>
+</body>
+</html>

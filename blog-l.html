@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青笺博客 - 孔雀蓝的个人主页</title>
+    <style>
+        /* 古早QQ空间基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", SimSun, sans-serif;
+        }
+        body {
+            background-color: #f8f0f8;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAQElEQVQYlWNgYGD4z8j/YWBg1AAFMwZcDwD8gMMYwB6AeEQAgxgkGkAGIU4QwB6AeEQAgxgkGkAGIU4QwB6AeEQDwAAA1Jz9W1sAAAAASUVORK5CYII=);
+            padding: 20px;
+            color: #333;
+        }
+        /* 顶部标题 */
+        .blog-header {
+            text-align: center;
+            padding: 10px;
+            background: #f1d1f1;
+            border: 2px solid #d99cd9;
+            margin-bottom: 15px;
+        }
+        .blog-title {
+            font-size: 22px;
+            color: #993399;
+            font-weight: bold;
+            text-shadow: 1px 1px 0px #fff;
+        }
+        .login-tip {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        /* 备忘录模块 */
+        .memo-box {
+            border: 2px dashed #d99cd9;
+            padding: 8px;
+            background: #fff;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        .memo-box a {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+        .memo-box a:hover {
+            color: #ff33cc;
+        }
+        /* 标签栏 */
+        .tab-bar {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+        .tab-btn {
+            padding: 5px 15px;
+            border: 2px solid #d99cd9;
+            background: #f1d1f1;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #993399;
+        }
+        .tab-btn.active {
+            background: #d99cd9;
+            color: #fff;
+        }
+        /* 内容容器 */
+        .content-box {
+            border: 2px solid #d99cd9;
+            background: #fff;
+            padding: 15px;
+            min-height: 500px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.show {
+            display: block;
+        }
+        /* 通用博客条目样式（统一公开/密码博客） */
+        .blog-item {
+            border-bottom: 1px dotted #ccc;
+            padding: 10px 0;
+            margin-bottom: 10px;
+        }
+        .blog-title-item {
+            font-size: 16px;
+            color: #993399;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .blog-time {
+            font-size: 12px;
+            color: #666;
+            margin: 3px 0;
+        }
+        .blog-content {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 5px;
+            white-space: pre-line;
+        }
+        .blog-del {
+            color: #ff3333;
+            font-style: italic;
+        }
+        .blog-interact {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        /* 密码博客入口样式（精致化） */
+        .pwd-blog-entry {
+            display: inline-block;
+            padding: 8px 15px;
+            background: linear-gradient(to bottom, #f9e6f9, #f1d1f1);
+            border: 2px solid #d99cd9;
+            border-radius: 6px;
+            color: #993399;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            margin: 10px 5px 15px 0;
+            box-shadow: 2px 2px 0 #e8c0e8;
+        }
+        .pwd-blog-entry:hover {
+            background: linear-gradient(to bottom, #f1d1f1, #e8c0e8);
+            transform: translateY(-1px);
+        }
+        /* 密码验证区域样式 */
+        .pwd-verify-box {
+            border: 2px solid #d99cd9;
+            background: #fef7fe;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            display: none;
+        }
+        .pwd-verify-box.show {
+            display: block;
+        }
+        .pwd-label {
+            font-size: 14px;
+            color: #993399;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .pwd-input {
+            padding: 3px 5px;
+            border: 1px solid #d99cd9;
+            font-size: 14px;
+            width: 200px;
+            margin-right: 8px;
+        }
+        .pwd-btn {
+            padding: 3px 10px;
+            border: 1px solid #d99cd9;
+            background: #f1d1f1;
+            color: #993399;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .pwd-btn:hover {
+            background: #d99cd9;
+            color: #fff;
+        }
+        /* 关闭按钮样式 */
+        .close-btn {
+            margin-top: 10px;
+            padding: 3px 10px;
+            border: 1px solid #d99cd9;
+            background: #f1d1f1;
+            color: #993399;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .close-btn:hover {
+            background: #d99cd9;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部标题 -->
+    <div class="blog-header">
+        <div class="blog-title">青笺博客</div>
+        <div class="login-tip">未登录状态｜正在查看：孔雀蓝 的个人主页</div>
+    </div>
+
+    <!-- 备忘录 -->
+    <div class="memo-box">
+        【备忘录】她的主页：<a href="blog-j.html" target="_blank">小雨浠沥沥</a>
+	洋栖讨论组：<a href="talk.html" target="_blank">洋栖讨论组</a>
+
+    </div>
+
+    <!-- 标签栏 -->
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(0)">Ta的小秘密</button>
+        <button class="tab-btn" onclick="switchTab(1)">Ta想说的话</button>
+        <button class="tab-btn" onclick="switchTab(2)">Ta的收藏夹</button>
+    </div>
+
+    <!-- 内容区 -->
+    <div class="content-box">
+        <!-- Ta的小秘密 -->
+        <div class="tab-content show" id="tab0">
+            <!-- 密码博客入口（精致化） -->
+            <div class="pwd-blog-entry" onclick="showPwdVerify(1)">🔒 随心小记</div>
+            <div class="pwd-blog-entry" onclick="showPwdVerify(2)">🔒 ？</div>
+
+            <!-- 密码验证区域1 -->
+            <div id="pwdVerify1" class="pwd-verify-box">
+                <span class="pwd-label">密码问题：我最想查明的事？</span>
+                <input type="text" id="pwdInput1" class="pwd-input" placeholder="请输入密码">
+                <button class="pwd-btn" onclick="checkPwd(1)">验证密码</button>
+            </div>
+
+            <!-- 密码验证区域2 -->
+            <div id="pwdVerify2" class="pwd-verify-box">
+                <span class="pwd-label">密码问题：我们说好一起去？</span>
+                <input type="text" id="pwdInput2" class="pwd-input" placeholder="请输入密码">
+                <button class="pwd-btn" onclick="checkPwd(2)">验证密码</button>
+            </div>
+
+            <!-- 密码博客1内容（统一格式） -->
+            <div id="pwdContent1" style="display:none;">
+                <div class="blog-item">
+                    <div class="blog-title-item">一切都很讨厌</div>
+                    <div class="blog-time">2006年05月14日</div>
+                    <div class="blog-content">我恼的不是那个处分。我恼的是那张纸条被拿走了，拿走了还不算，还要拿给另一个人看，被当成一个什么东西，摊在办公桌上，被两个成年人翻来覆去地看。那上面画的是焦思雨。我不知道为什么这个念头让我觉得脸上发烫，像做了一件很丢人的事，比上课睡觉、迟到、旷课加起来都丢人。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">我想死</div>
+                    <div class="blog-time">2006年10月29日</div>
+                    <div class="blog-content">从那之后她在医院待了三天。回学校的时候右脸上贴着一块纱布，从颧骨一直盖到耳根。她走进教室，坐到座位上，拿出课本，翻开，开始看书。没有看我一眼。不是故意不看的，就是没看。
+我想跟她道歉。排练了无数遍，每次话到嘴边就咽回去。不是不敢说，是觉得说什么都没有用。
+后来有一天在操场上，她叫了我一声，就说了一声让我别再拿那种东西。我想死，唉。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">想让她戴一辈子</div>
+                    <div class="blog-time">2007年03月25日</div>
+                    <div class="blog-content">在县城那条街上看到的。一个小饰品店，橱窗里挂着一个发圈，孔雀蓝的，丝绒质地，上头缀着几颗暗色的小珠子，八块。不知道为什么就想到她了。
+回学校之后我上楼去找她。她坐在床沿上看书，我把发圈递过去，说给你。她看了看，没接。我说逛的时候看见了，顺手买的。她接过去了，套在手腕上试了试，看了半天褪下来搁在枕头边上。
+后来她每天都戴。上课的时候套在手腕上，写字的时候它会滑下来，她就用另一只手把它推上去。有一次她把发圈弄丢了，在教室里找了好久，趴在地上看桌底，头发垂下来拖在地上。我在她书包的夹层里找到了，不知道什么时候掉进去的，她就说“我没丢，我知道在书包里”。她就是这样，什么都不承认。
+那个发圈现在起毛了，颜色也没以前亮了，她还戴着。每天晚上放在枕头边上，早上再套回手腕上。嘿嘿，我们是不是很熟了啊？</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">画画</div>
+                    <div class="blog-time">2007年04月01日</div>
+                    <div class="blog-content">我家地板上。两个人盘腿坐着，一人一支笔。那盒彩色铅笔只有十二色，好几支都秃了。
+她画了一棵树。树冠画成了一个绿色的圆形，树干画成了两根平行的直线。我说你笑什么，她说画得太丑了。我说比我画的强多了。她说你画一个。我画了一个火柴人，旁边画了一棵树，树比人大三倍。她说你的树是棕色的。我说这叫艺术。
+她在我画的火柴人旁边又画了一个火柴人，个子矮一点，头发画了几根短线，代表短发。两个火柴人站在一起，头顶上是那棵比人大三倍的树。
+我问这是谁，她说不知道。呵呵。
+那天傍晚我们画了很久。画到窗外的天从灰蓝变成深紫，再从深紫变成漆黑。她画了一只猫，猫的胡子画了六根，左右不对称。她画了一朵云，云下面画了一道歪歪扭扭的雨。她画了一个太阳，太阳长了一张笑脸，笑得嘴巴咧到了耳根。
+我说你画的东西都长得好开心。然后画了一条河，河面上画了几道波纹，河岸边画了两棵歪歪扭扭的梧桐树。
+她问这是什么河。我说湘水。她说湘水不是干的吗。我说，在我心里没干。
+她看了我一眼，在我的河上面加了两只鸟。很小的两只，飞得很低，翅膀挨着翅膀。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">她想走出去</div>
+                    <div class="blog-time">2007年04月08日</div>
+                    <div class="blog-content">她说想考大学，考出去，去一个大一点的城市，有山有水的那种，不是这种灰扑扑的山，是青的，绿的。有水的那种，不是干掉的河沟，是真正的河，有水的。
+我可以陪她吗？</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">花圃？</div>
+                    <div class="blog-time">2007年05月06日</div>
+                    <div class="blog-content">去他妈的花圃。
+我前两天又站在操场边上看了很久。铁丝网后面那些花开了，紫红色的，一大片，风一吹就晃，晃得人头晕。李建国蹲在里面浇水，浇得仔细，跟伺候祖宗似的。一个教数学的，什么时候改行当园丁了。
+我回去查了。不是虞美人。虞美人的茎上有毛，它的茎上也有毛，但虞美人的果实是圆形的，它的果实在顶上有一个扁平的盘。我在一本旧杂志上见过照片，黑白的，糊得看不清，但那个形状我记得。
+我折了一根。茎断的时候流出白色的汁液，黏糊糊的，沾在手上有一股苦味。洗了两遍手，味还在。
+我把那根茎夹在课本里带回来了。现在它就躺在我的桌面上，已经干了，皱巴巴的，像一根枯掉的草。但我知道它是什么。
+一群罪人，一群罪人，什么狗屁营养药。
+她状态越来越不好了，我想让这些人付出代价。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">又没了</div>
+                    <div class="blog-time">2007年05月13日</div>
+                    <div class="blog-content">第二篇。发出去十分钟就没了。
+我换了个标题，没写“罂粟”两个字，只写了花的样子、位置、谁在管。没用。还是被删了。连账号都收到了警告，说再发就封号。
+所以是真的。如果是假的，谁会这么紧张。
+我把那些话拆成好几段，发在评论区里，一条一条的。不知道有没有人看。浏览量涨了，从十几个变成几百个，但没有人转发。大概都怕。
+我也怕。但怕归怕，字还是要写。
+我不知道这些会不会发生。但这是我唯一能做的事。</div>
+                </div>
+                <button class="close-btn" onclick="closePwdContent()">关闭密码博客内容</button>
+            </div>
+
+            <!-- 密码博客2内容（统一格式） -->
+            <div id="pwdContent2" style="display:none;">
+                <div class="blog-item">
+                    <div class="blog-title-item">无题</div>
+                    <div class="blog-time">2007年07月02日</div>
+                    <div class="blog-content">我是焦思雨。
+你的账号我登得上来。密码是我生日，900101。你什么都用这个密码，银行卡，博客，邮箱，全都是一样的。你大概觉得没有人会去试，大概觉得没有人会知道她的密码是我生日。
+你留的那张卡里有四千三百二十块钱。我去银行查了，柜员问我是不是本人，我说是，是我姐的卡，她让我来取。柜员看了我一眼，把钱给我了。四千三百二十块。我不知道你攒了多久。
+手机卡我也办了。买了一个二手手机，诺基亚的，屏幕上有两道划痕，但能用。我把SIM卡插进去的时候手在抖。不是因为手机，是因为那张卡是你办的。
+我想到你会站在邮政局的柜台前面，把身份证递过去，说“我要办一张手机卡”。
+那个画面我想了很多遍，想到最后我蹲在宿舍的床铺前面哭了。我没有出声，把脸埋在枕头里，眼泪把枕巾洇湿了一块。舍友问我怎么了，我说感冒了。
+我今天去了你家。水泥厂后面的宿舍楼，四楼，楼梯间的灯是坏的，跺脚也不亮。门锁要往上提一下才能拧开。我拧了很久才打开。屋子里很暗，窗帘拉着。我在地上坐了很久。坐到窗外的天黑了，坐到对面楼的灯一盏一盏亮起来。
+你不等我了。
+你走后我查了很多东西，用陈敬山的邮箱登上了他的管理号，那些真相血淋淋地摆在我面前，你的魂灵就这样拽着我往前踯躅。
+我要去找陈敬山。
+我知道你为什么死。你写了那些博客，把学校的事情全写出来了。你以为用自己的一条命能换所有人的命吗？？你这个傻子！！！你不知道这个世界不是这样运转的，死一个人，在这个地方，就像河沟里多了一块石头，没有人会多看一眼！！！
+但我不一样。我不是去死的，我是去要他死的。我要站在陈敬山面前问他，那些花是什么，那些药是什么，那些消失的学生去了哪里，刘岚为什么会从临天崖上掉下来。我要他亲口说。我要他当着我的面说。我要他说的时候看着我，看着我的脸——这片疤，就是你们种的那些东西，就是你们发的那些药，就是你们要的这条命。
+如果他不说，如果我死了，我就让他记住我这张脸。让他以后每天晚上闭上眼睛的时候都看见这张脸。让他永远都忘不掉。
+我写完这篇东西就会把它设成私密，密码只有我自己知道。不会有人看到。等他们找到我的时候，大概会删掉这篇东西，就像删掉她的那些博客一样。但我不在乎。写下来就够了。写下来，至少我自己知道，这个世界上曾经有过一个人，她叫刘岚，她十七岁，她画了一年的火柴人，她留了一张银行卡，她办了一张手机卡，她把密码设成了我的生日。她从来不说，但她全都做了。
+她以为她什么都没留住。但她留住了我。
+我去找他了。</div>
+                </div>
+                <button class="close-btn" onclick="closePwdContent()">关闭密码博客内容</button>
+            </div>
+        </div>
+
+        <!-- Ta想说的话（公开博客） -->
+        <div class="tab-content" id="tab1">
+            <div class="blog-item">
+                <div class="blog-title-item">这个好像还挺好玩的</div>
+                <div class="blog-time">2005年03月27日</div>
+                <div class="blog-content">我叫刘岚。一九八九年冬天生的，属蛇，十一月二十四号，射手座，血型B。over</div>
+                <div class="blog-interact">点赞：2 评论：3</div>
+            </div>
+            <div class="blog-item">
+                <div class="blog-title-item">随笔一则</div>
+                <div class="blog-time">2005年12月04日</div>
+                <div class="blog-content">湘水市云川县这个地方，说大不大，说小不小，四面都是山，山不高的，灰扑扑的，像蹲着的一排老人。洋栖中学在县城东边，挨着一条干涸的河沟，校门口两棵梧桐树，歪歪扭扭的，叶子一到九月就黄了半边。</div>
+                <div class="blog-interact">点赞：19 评论：1</div>
+            </div>
+            <div class="blog-item">
+                <div class="blog-title-item">洋栖中学在种什么</div>
+                <div class="blog-content blog-del">本文因“涉嫌传播不实信息”已被删除，您可以在回收站中查看原文或申诉。
+系统通知： 您的文章《洋栖中学在种什么》因违反《互联网信息服务管理办法》相关规定，已被删除。如有疑问，请联系客服。</div>
+                <div class="blog-interact">点赞：？？？ 评论：？？？</div>
+            </div>
+        </div>
+
+        <!-- Ta的收藏夹 -->
+        <div class="tab-content" id="tab2">
+            <div class="blog-item">
+                <div class="blog-title-item">趣味语言学：字母相近，意隔千里</div>
+                <div class="blog-time">2005年03月09日 作者：趣味语言学</div>
+                <div class="blog-content">
+拉丁文单词中，<b>victima</b> 意为「祭品、牺牲者」，<b>victory</b> 意为「胜利」，<b>vitamin</b> 意为「维生素」。
+三个单词字母排列高度相似，词义却天差地别，从献祭的悲怆到胜利的荣光，再到生命的养分，短短字母变换，藏着语言的奇妙反差。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 标签切换
+        function switchTab(index) {
+            // 移除所有激活状态
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('show'));
+            // 激活当前标签
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
+            document.querySelectorAll('.tab-content')[index].classList.add('show');
+            // 切换标签时重置密码相关区域
+            resetPwdVerify();
+        }
+
+        // 显示对应密码验证区域
+        function showPwdVerify(type) {
+            // 先隐藏所有验证区域和密码内容
+            resetPwdVerify();
+            // 显示当前验证区域
+            if (type === 1) {
+                document.getElementById('pwdVerify1').classList.add('show');
+                document.getElementById('pwdInput1').focus(); // 自动聚焦
+            } else if (type === 2) {
+                document.getElementById('pwdVerify2').classList.add('show');
+                document.getElementById('pwdInput2').focus(); // 自动聚焦
+            }
+        }
+
+        // 密码验证逻辑
+        function checkPwd(type) {
+            let answer = '';
+            if (type === 1) {
+                answer = document.getElementById('pwdInput1').value.trim().toLowerCase();
+                if (answer === "victories") {
+                    document.getElementById('pwdVerify1').classList.remove('show');
+                    document.getElementById('pwdContent1').style.display = 'block';
+                } else if (answer === "") {
+                    alert("请输入密码！");
+                } else {
+                    alert("密码错误！");
+                    document.getElementById('pwdInput1').value = '';
+                    document.getElementById('pwdInput1').focus();
+                }
+            } else if (type === 2) {
+                answer = document.getElementById('pwdInput2').value.trim();
+                if (answer === "临天崖") {
+                    document.getElementById('pwdVerify2').classList.remove('show');
+                    document.getElementById('pwdContent2').style.display = 'block';
+                } else if (answer === "") {
+                    alert("请输入密码！");
+                } else {
+                    alert("密码错误！");
+                    document.getElementById('pwdInput2').value = '';
+                    document.getElementById('pwdInput2').focus();
+                }
+            }
+        }
+
+        // 关闭密码内容
+        function closePwdContent() {
+            document.getElementById('pwdContent1').style.display = 'none';
+            document.getElementById('pwdContent2').style.display = 'none';
+            resetPwdVerify();
+        }
+
+        // 重置所有密码验证区域
+        function resetPwdVerify() {
+            document.getElementById('pwdVerify1').classList.remove('show');
+            document.getElementById('pwdVerify2').classList.remove('show');
+            document.getElementById('pwdInput1').value = '';
+            document.getElementById('pwdInput2').value = '';
+            document.getElementById('pwdContent1').style.display = 'none';
+            document.getElementById('pwdContent2').style.display = 'none';
+        }
+
+        // 回车触发密码验证
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                if (document.getElementById('pwdVerify1').classList.contains('show')) {
+                    checkPwd(1);
+                } else if (document.getElementById('pwdVerify2').classList.contains('show')) {
+                    checkPwd(2);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

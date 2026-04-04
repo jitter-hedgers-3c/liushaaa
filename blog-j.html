@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青笺博客 - 小雨浠沥沥的个人主页</title>
+    <style>
+        /* 古早自定义装扮博客风格 淡蓝浅紫少女风 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", SimSun, "微软雅黑", sans-serif;
+        }
+        body {
+            background-color: #f0f8ff;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjarY6xSsNQhEMXzUqSQMdQwCohMVIrKZqKIiDpyA1kC6iDiZDHL6Ay4iBKIoOBXqEgq4gJ+QkLm5+Wa/18L9zvnPO/0JkQm+VQw0GzTfvLxoF77iHGDq2jGz+E5i4mPjU5j+6pM1fVq4E9cAPDOL2Iz7eE7u+L7u9Q74i9yPgGQVhM3A7AqOvQ7i01mPqL4n1F4i9yPgGQVhM3A7AqOvQ7i01mPqL4n1F4i9yPgGQVhM3A7AqOvQ7i01mPqL4n1F0wAAAABJRU5ErkJggg==);
+            padding: 25px;
+            color: #333;
+            background-attachment: fixed;
+        }
+        /* 顶部博客标题栏 花边边框 */
+        .blog-header {
+            text-align: center;
+            padding: 15px;
+            background: #e6e6fa;
+            border: 3px double #9370db;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 3px 3px 0 #d8bfd8;
+        }
+        .blog-title {
+            font-size: 24px;
+            color: #483d8b;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #fff;
+            letter-spacing: 2px;
+        }
+        .login-tip {
+            font-size: 13px;
+            color: #6959cd;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        /* 备忘录 复古卡片样式 */
+        .memo-box {
+            border: 2px dotted #9370db;
+            padding: 10px 12px;
+            background: #fffaf0;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            color: #483d8b;
+        }
+        .memo-box a {
+            color: #4169e1;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .memo-box a:hover {
+            color: #ff1493;
+            text-decoration: none;
+        }
+        /* 标签栏 复古按钮样式 */
+        .tab-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 6px 18px;
+            border: 2px solid #9370db;
+            background: linear-gradient(to bottom, #f8f8ff, #e6e6fa);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: #483d8b;
+            border-radius: 6px;
+            box-shadow: 2px 2px 0 #d8bfd8;
+        }
+        .tab-btn.active {
+            background: linear-gradient(to bottom, #9370db, #6a5acd);
+            color: #fff;
+            box-shadow: none;
+        }
+        .tab-btn:hover {
+            background: linear-gradient(to bottom, #d8bfd8, #e6e6fa);
+        }
+        /* 内容容器 复古相框样式 */
+        .content-box {
+            border: 3px double #9370db;
+            background: #fff;
+            padding: 20px;
+            min-height: 550px;
+            border-radius: 8px;
+            box-shadow: 4px 4px 0 #d8bfd8;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.show {
+            display: block;
+        }
+        /* 博客条目 统一格式 古早排版 */
+        .blog-item {
+            border-bottom: 1px dashed #d8bfd8;
+            padding: 12px 0;
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+        .blog-title-item {
+            font-size: 16px;
+            color: #483d8b;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .blog-time {
+            font-size: 12px;
+            color: #808080;
+            margin: 5px 0;
+            font-style: italic;
+        }
+        .blog-content {
+            font-size: 14px;
+            line-height: 1.8;
+            margin-top: 8px;
+            white-space: pre-line;
+            color: #333;
+        }
+        .blog-interact {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+        /* 密码博客入口 精致装扮样式 */
+        .pwd-blog-entry {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(to bottom, #fffaf0, #f5f5ff);
+            border: 2px solid #9370db;
+            border-radius: 8px;
+            color: #483d8b;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+            margin: 12px 8px 18px 0;
+            box-shadow: 2px 2px 0 #d8bfd8;
+        }
+        .pwd-blog-entry:hover {
+            background: linear-gradient(to bottom, #e6e6fa, #d8bfd8);
+            transform: translateY(-1px);
+        }
+        /* 密码验证区域 复古输入框 */
+        .pwd-verify-box {
+            border: 2px solid #9370db;
+            background: #f8f8ff;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 6px;
+            display: none;
+            box-shadow: 2px 2px 0 #d8bfd8;
+        }
+        .pwd-verify-box.show {
+            display: block;
+        }
+        .pwd-label {
+            font-size: 14px;
+            color: #483d8b;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .pwd-input {
+            padding: 5px 8px;
+            border: 1px solid #9370db;
+            font-size: 14px;
+            width: 220px;
+            margin-right: 10px;
+            border-radius: 4px;
+            background: #fff;
+        }
+        .pwd-btn {
+            padding: 5px 12px;
+            border: 1px solid #9370db;
+            background: #e6e6fa;
+            color: #483d8b;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+        .pwd-btn:hover {
+            background: #9370db;
+            color: #fff;
+        }
+        /* 关闭按钮 复古样式 */
+        .close-btn {
+            margin-top: 15px;
+            padding: 5px 12px;
+            border: 1px solid #9370db;
+            background: #f5f5ff;
+            color: #483d8b;
+            cursor: pointer;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .close-btn:hover {
+            background: #9370db;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部标题 -->
+    <div class="blog-header">
+        <div class="blog-title">青笺博客</div>
+        <div class="login-tip">未登录状态｜正在查看：小雨浠沥沥 的个人主页</div>
+    </div>
+
+    <!-- 备忘录 -->
+    <div class="memo-box">
+        【备忘录】我最喜欢的城市是罗马。
+    </div>
+
+    <!-- 标签栏 -->
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="switchTab(0)">Ta的小秘密</button>
+        <button class="tab-btn" onclick="switchTab(1)">Ta想说的话</button>
+        <button class="tab-btn" onclick="switchTab(2)">Ta的收藏夹</button>
+    </div>
+
+    <!-- 内容区 -->
+    <div class="content-box">
+        <!-- Ta的小秘密 -->
+        <div class="tab-content show" id="tab0">
+            <!-- 密码博客入口 -->
+            <div class="pwd-blog-entry" onclick="showPwdVerify(1)">🔒 胡言乱语</div>
+
+            <!-- 密码验证区域 -->
+            <div id="pwdVerify1" class="pwd-verify-box">
+                <span class="pwd-label">密码问题：洋栖中学的计划是？</span>
+                <input type="text" id="pwdInput1" class="pwd-input" placeholder="请输入密码">
+                <button class="pwd-btn" onclick="checkPwd(1)">验证密码</button>
+            </div>
+
+            <!-- 密码博客内容（焦思雨 所有日记 时间已隐藏） -->
+            <div id="pwdContent1" style="display:none;">
+                <div class="blog-item">
+                    <div class="blog-title-item">嗯</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">她又带了一个鸡蛋给我，搁在我餐盘里。我说你不用每天都给我打。她说我不爱吃鸡蛋。我说你每次都说不爱吃鸡蛋。她说那就是每次都不爱吃。她走后我旁边的女生跟我说，你同桌对你真好。我说嗯。其实我想说的不是嗯。但我不知道该说什么。她对我好，我知道。她给我打饭，帮我占座，我值日的时候她留下来擦黑板。她给我买了一个孔雀蓝的发圈，说顺手买的。她给我买了一盒彩色铅笔，说捡的。她把鸡蛋放在我餐盘里，说不爱吃。她什么都说是顺手。什么都说不爱吃。我不知道怎么接。我怕我说了什么，她就不做了。我想起我的生日是一月一日，元旦，阖家团圆的日子却没有人为了我的存在而感到幸福，但她好像不太一样。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">唉</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">晚自习停电了。整个教学楼黑了一片，有人在走廊上尖叫，有人在教室里拍桌子。我坐在座位上，忽然很怕。不是怕黑，是怕很多东西叠在一起的那种怕。我吸了一下鼻子。她听见了，问我怎么了。我说没事。她没有再问。然后我感觉到她的手摸过来了，在黑暗里找到了我的手背。她的手很热，握住我冰凉的手指，没有松开。电来了之后她把手收回去了。我低下头，脸很烫，我没有看她，但我不怕了。唉，有些事情就是在那样的时刻长出来的。像墙角的苔藓，不需要阳光，不需要人浇水，就在潮湿的阴影里一寸一寸地蔓延，等你想起来去看的时候，已经铺了满满一片（写到这里又觉得矫情了）</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">有点难受</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">我说我要出去，她说那我跟你一起。我说你又考不上大学。说完我就后悔了。这句话太重了。但她没有生气，她说考不上就考不上呗，我可以在大学旁边租个房子，打工挣钱，你下课了就来找我，我们还画画。她说我以后不画火柴人了，我画你。我没有接这句话。我低下头去捡地上的彩色铅笔。一支一支捡起来，按颜色排好。红的橙的黄的一排，绿的蓝的紫的一排。放进盒子里的时候每一支都对准了卡槽才按下去，咔嗒一声，咔嗒一声。我需要那个声音盖住我的心跳。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">下雨了</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">下雨了。湘水经常下雨，下得我时常烦躁。我们站在教学楼的走廊里，看着雨从屋檐上淌下来，在地上溅起一圈一圈的水花。她说有我在她都更喜欢下雨天了。我想告诉她我也是，但我没有说。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">掌心热</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">她又迟到了。李建国在走廊上训她，声音很大，我在教室里都听见了。她站在那里，歪着头，一副无所谓的样子。我知道她不是无所谓。她只是不会在那个人面前表现出来。下课之后我走出去。她靠着墙站着，看见我，说你怎么在这。我说路过。我把手里的水递给她。她接过去喝了一口，说你是不是专门等我的。我说不是。她笑了一下。很小的一个笑，嘴角只翘起来一点点。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">你去哪了</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">你已经一周没来上学了。班主任说你请了事假，家里有事。我问她什么事，她说不知道。我问她你什么时候回来，她说不知道。她回答得太快了，像提前准备好的。
+我去你家了。水泥厂后面的宿舍楼，四楼，楼梯间的灯还是坏的。门锁着，我敲了很久，没有人开。
+我站在门口站了很久。手指上沾了铁锈，是敲门的时候蹭上去的。我把手插进口袋里，指尖碰到了一张卡。你给我的那张卡。你说密码是我生日。你说卡里有钱，够我用一阵子。你说手机卡在信封里，让我买个手机插上就能用。你说不要用学校的座机打电话，不要跟任何人提起你。
+你说这些话的时候像在交代后事。我那时候就应该知道的。但我没有问。我问不出口。我只会问你什么时候回来，你说你没有回答。你转身走了，走了十几步，我叫了你一声，你没有回头。
+我去了邮政局旁边的网吧。我不会上网，网管帮我开了机子，问我查什么。我说查一个人。他看了我一眼，大概觉得我是来找网友的。我没有解释。我在搜索栏里打了你的名字。刘岚。刘岚。刘岚。
+没有。什么都没有。像你这个人从来没有存在过一样。
+我又打了洋栖中学。跳出来很多条，大部分是招生广告。翻到第三页的时候看到一条博客链接，点进去，页面是灰色的，标题写着“洋栖中学花圃调查”。我往下翻，越翻手越抖。
+那些花。那些药。那些消失的学生。你说过花圃里的花不对劲。你说过那个药不要吃了。你说过如果有一天有人问我认不认识你，就说不认识。你说这些话的时候我为什么没有追问。
+临天崖。那是我们说好一起去的地方。你说要带我去看真正的山，真正的水。你说要在大学旁边租一个房子，我们还在里面画画。你说要画到我，不再画火柴人了。
+你为什么要自己去。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">无题</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">你是被他们杀死的。那些花，那些药，那个特招，那些消失的学生。你查到了，所以他们杀了你。你说你爸根本不关心你，常年不在家，回来倒头就睡，连话都不跟你说几句。你说他连你上几年级都搞不清楚。这样的人，怎么可能在你失踪三个小时之内就出现在临天崖底下认领尸体？他们通知他的。他们早就准备好了。你死了，他们需要一个人来把这件事盖住。一个不关心女儿的父亲，给点钱就闭嘴了。我会继续查。你写过的那些东西，我都会重新写一遍。你发不出去的，我替你发。你查不到的，我替你查。你不知道那些消失的学生去了哪里，我会找到。你不知道那些药里面是什么，我会弄明白。你不知道那些花最后变成了什么，我会查清楚。我现在走读了，但没法再见到你。。。
+你做了你能做的一切。现在轮到我了。</div>
+                </div>
+                <div class="blog-item">
+                    <div class="blog-title-item">victima</div>
+                    <div class="blog-time">发布时间：已隐藏</div>
+                    <div class="blog-content">只有他们是victories，我们都是victima1992。</div>
+                </div>
+                <button class="close-btn" onclick="closePwdContent()">关闭私密日记</button>
+            </div>
+        </div>
+
+        <!-- Ta想说的话（公开空白 古早风占位） -->
+        <div class="tab-content" id="tab1">
+            <div class="blog-item">
+                <div class="blog-title-item">暂无公开日记</div>
+                <div class="blog-time">发布时间：已隐藏</div>
+                <div class="blog-content">主人很懒，还没有写下公开的心情哦~</div>
+            </div>
+        </div>
+
+        <!-- Ta的收藏夹（古早风占位） -->
+        <div class="tab-content" id="tab2">
+            <div class="blog-item">
+                <div class="blog-title-item">收藏夹为空</div>
+                <div class="blog-time">发布时间：已隐藏</div>
+                <div class="blog-content">还没有收藏任何内容~</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 标签切换
+        function switchTab(index) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('show'));
+            document.querySelectorAll('.tab-btn')[index].classList.add('active');
+            document.querySelectorAll('.tab-content')[index].classList.add('show');
+            resetPwdVerify();
+        }
+
+        // 显示密码验证区域
+        function showPwdVerify(type) {
+            resetPwdVerify();
+            document.getElementById('pwdVerify1').classList.add('show');
+            document.getElementById('pwdInput1').focus();
+        }
+
+        // 密码验证
+        function checkPwd(type) {
+            let answer = document.getElementById('pwdInput1').value.trim().toLowerCase();
+            if (answer === "victima") {
+                document.getElementById('pwdVerify1').classList.remove('show');
+                document.getElementById('pwdContent1').style.display = 'block';
+            } else if (answer === "") {
+                alert("请输入密码！");
+            } else {
+                alert("密码错误！");
+                document.getElementById('pwdInput1').value = '';
+                document.getElementById('pwdInput1').focus();
+            }
+        }
+
+        // 关闭密码内容
+        function closePwdContent() {
+            document.getElementById('pwdContent1').style.display = 'none';
+            resetPwdVerify();
+        }
+
+        // 重置验证区域
+        function resetPwdVerify() {
+            document.getElementById('pwdVerify1').classList.remove('show');
+            document.getElementById('pwdInput1').value = '';
+            document.getElementById('pwdContent1').style.display = 'none';
+        }
+
+        // 回车验证
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('pwdVerify1').classList.contains('show')) {
+                checkPwd(1);
+            }
+        });
+    </script>
+</body>
+</html>

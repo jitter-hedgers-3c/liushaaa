@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>湘水市基础教育普及工程_盛夏浏览器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", "微软雅黑", Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f2f2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .browser-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .browser-toolbar {
+            background: #e9e9e9;
+            padding: 6px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 4px;
+            border: 1px solid #999;
+        }
+        .btn-close { background: #ff6666; }
+        .btn-min { background: #ffff66; }
+        .btn-max { background: #66ff66; }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            display: flex;
+            border: 1px solid #b8b8b8;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-btn {
+            background: #3366cc;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-left: 1px solid #2d59aa;
+        }
+        .search-btn:hover {
+            background: #2d59aa;
+        }
+
+        .result-container {
+            flex: 1;
+            padding: 0 30px;
+            overflow-y: auto;
+        }
+        .result-count {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .result-title {
+            font-size: 18px;
+            color: #0000cc;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .result-title:hover {
+            color: #cc0000;
+        }
+        .clickable-result {
+            margin-bottom: 25px;
+        }
+        .clickable-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .clickable-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+        .fake-link-result {
+            margin-bottom: 25px;
+        }
+        .fake-link-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .fake-link-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        .pagination {
+            margin: 30px 0;
+            padding: 10px 0;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .page-btn {
+            padding: 4px 10px;
+            color: #0000cc;
+            border: 1px solid #cccccc;
+            border-radius: 2px;
+            cursor: not-allowed;
+            background: #f9f9f9;
+        }
+        .page-btn.disabled {
+            color: #999999;
+            border-color: #e5e5e5;
+            background: #f2f2f2;
+        }
+        .page-num {
+            padding: 4px 8px;
+            color: #000;
+            background: #3366cc;
+            color: #fff;
+            border: 1px solid #2d59aa;
+            border-radius: 2px;
+        }
+
+        .browser-status {
+            background: #e9e9e9;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <div class="browser-toolbar">
+            <div class="window-controls">
+                <div class="window-btn btn-close"></div>
+                <div class="window-btn btn-min"></div>
+                <div class="window-btn btn-max"></div>
+            </div>
+        </div>
+
+        <!-- 搜索框默认值改为“湘水市基础教育普及工程” -->
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容" value="湘水市基础教育普及工程">
+            <button class="search-btn" onclick="searchPage()">搜索</button>
+        </div>
+
+        <div class="result-container">
+            <div class="result-count">为您找到约 192,233 条关于湘水市基础教育普及工程的结果</div>
+
+            <!-- 第一个可点击链接：严格按要求修改 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='funda-education-inner.html'">特批巨资奠基未来 湘水市基础教育普及工程全面启动</div>
+                <div class="url">xiangshui.gov.cn/education/20070202 - 湘水市政府官网 - 2007年2月2日发布</div>
+                <div class="desc">（转1993年1月28日湘水电）经市政府批准，一项旨在全面提升青少年受教育水平的“基础教育普及工程”即日起在全市范围内铺开。</div>
+            </div>
+
+            <!-- 其余不可点击链接：时间均控制在2006年及以前，全部替换内容 -->
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市基础教育现状调研报告 2006年版</a>
+                <div class="url">xiangshui-edu.cn/report/20061115 - 湘水市教育局 - 2006年11月15日</div>
+                <div class="desc">湘水市教育局发布2006年度基础教育现状调研报告，指出全市农村小学硬件设施落后、师资力量不足、辍学率偏高等核心问题，为后续普及工程立项提供核心数据支撑。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市人大代表提案：加快推进基础教育均衡发展</a>
+                <div class="url">xiangshui-rd.gov.cn/proposal/20060809 - 湘水市人大常委会 - 2006年8月9日</div>
+                <div class="desc">2006年市人大会议期间，多位人大代表联名提案，呼吁市政府加大基础教育投入，缩小城乡教育差距，推进教育资源均衡分配，该提案成为普及工程的重要政策铺垫。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市农村义务教育经费缺口统计 2005年度</a>
+                <div class="url">xiangshui-finance.gov.cn/stat/20051220 - 湘水市财政局 - 2005年12月20日</div>
+                <div class="desc">湘水市财政局发布2005年度农村义务教育经费审计报告，数据显示全市农村义务教育年度经费缺口达8700万元，主要集中在校舍维修、教学设备采购及教师补贴等方面。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市基础教育普及工程前期规划研讨会纪要</a>
+                <div class="url">xiangshui-edu.cn/meeting/20060518 - 湘水市教育局规划科 - 2006年5月18日</div>
+                <div class="desc">2006年5月，湘水市教育局组织教育专家、区县代表召开专题研讨会，就基础教育普及工程的实施范围、资金筹措、时间节点等核心问题达成初步共识，形成规划草案。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市2004-2006年基础教育发展白皮书</a>
+                <div class="url">xiangshui.gov.cn/whitepaper/20061230 - 湘水市政府发展研究中心 - 2006年12月30日</div>
+                <div class="desc">《湘水市2004-2006年基础教育发展白皮书》系统梳理了近三年全市基础教育发展成果与短板，明确提出2007年启动普及工程的政策方向，成为工程立项的核心文件。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市调研：农村小学生均校舍面积仅达国标60%</a>
+                <div class="url">xiangshui-stat.gov.cn/survey/20050905 - 湘水市统计局 - 2005年9月5日</div>
+                <div class="desc">2005年湘水市统计局专项调研显示，全市农村小学生均校舍面积仅为3.2平方米，不足国家最低标准的60%，其中18所偏远村小存在D级危房，亟待改造。</div>
+            </div>
+
+            <div class="pagination">
+                <div class="page-btn disabled">上一页</div>
+                <div class="page-num">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <div class="page-btn">4</div>
+                <div class="page-btn">5</div>
+                <div class="page-btn">6</div>
+                <div class="page-btn">7</div>
+                <div class="page-btn">8</div>
+                <div class="page-btn">9</div>
+                <div class="page-btn">10</div>
+                <div class="page-btn">下一页</div>
+                <div style="margin-left: 15px; color: #666;">共89页&nbsp;&nbsp;到第<input type="text" style="width: 30px; height: 20px; text-align: center;" value="1">页&nbsp;&nbsp;<span class="page-btn disabled">确定</span></div>
+            </div>
+        </div>
+
+        <div class="browser-status" id="statusText">就绪</div>
+    </div>
+
+    <script src="puzzle-seek.js"></script>
+    <script>
+        function searchPage() {
+            const input = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusText');
+
+            if (!input) {
+                status.textContent = "请输入搜索内容";
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+                return;
+            }
+
+            if (puzzleSeek.hasOwnProperty(input)) {
+                const targetUrl = puzzleSeek[input];
+                status.textContent = `正在跳转至：${targetUrl}`;
+                window.location.href = targetUrl;
+            } else {
+                status.textContent = `未找到「${input}」的相关页面`;
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') searchPage();
+        });
+
+        window.onload = function() {
+            const pageBtns = document.querySelectorAll('.page-btn');
+            pageBtns.forEach(btn => {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

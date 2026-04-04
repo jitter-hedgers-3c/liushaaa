@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洋栖中学_盛夏浏览器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", "微软雅黑", Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f2f2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .browser-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .browser-toolbar {
+            background: #e9e9e9;
+            padding: 6px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 4px;
+            border: 1px solid #999;
+        }
+        .btn-close { background: #ff6666; }
+        .btn-min { background: #ffff66; }
+        .btn-max { background: #66ff66; }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            display: flex;
+            border: 1px solid #b8b8b8;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-btn {
+            background: #3366cc;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-left: 1px solid #2d59aa;
+        }
+        .search-btn:hover {
+            background: #2d59aa;
+        }
+
+        .result-container {
+            flex: 1;
+            padding: 0 30px;
+            overflow-y: auto;
+        }
+        .result-count {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .result-title {
+            font-size: 18px;
+            color: #0000cc;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .result-title:hover {
+            color: #cc0000;
+        }
+        .clickable-result {
+            margin-bottom: 25px;
+        }
+        .clickable-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .clickable-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+        .fake-link-result {
+            margin-bottom: 25px;
+        }
+        .fake-link-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .fake-link-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        .pagination {
+            margin: 30px 0;
+            padding: 10px 0;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .page-btn {
+            padding: 4px 10px;
+            color: #0000cc;
+            border: 1px solid #cccccc;
+            border-radius: 2px;
+            cursor: not-allowed;
+            background: #f9f9f9;
+        }
+        .page-btn.disabled {
+            color: #999999;
+            border-color: #e5e5e5;
+            background: #f2f2f2;
+        }
+        .page-num {
+            padding: 4px 8px;
+            color: #000;
+            background: #3366cc;
+            color: #fff;
+            border: 1px solid #2d59aa;
+            border-radius: 2px;
+        }
+
+        .browser-status {
+            background: #e9e9e9;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <div class="browser-toolbar">
+            <div class="window-controls">
+                <div class="window-btn btn-close"></div>
+                <div class="window-btn btn-min"></div>
+                <div class="window-btn btn-max"></div>
+            </div>
+        </div>
+
+        <!-- 搜索框默认值：洋栖中学 -->
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容" value="洋栖中学">
+            <button class="search-btn" onclick="searchPage()">搜索</button>
+        </div>
+
+        <div class="result-container">
+            <div class="result-count">为您找到约 189 条关于洋栖中学的结果</div>
+
+            <!-- 可点击链接1：严格按要求设置 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='yangqi.html'">洋栖中学-学校官网</div>
+                <div class="url">yangqizhongxue.com/official/20050619 - 学校官方站点 - 2005年6月19日发布</div>
+                <div class="desc">洋栖中学官方门户网站，包含学校概况、师资力量、招生信息、教学动态、校园公告等核心内容，是了解洋栖中学办学情况的权威平台。</div>
+            </div>
+
+            <!-- 可点击链接2：严格按要求设置 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='yq111.html'">实拍洋栖中学：育人育德，这所校园满是朝气</div>
+                <div class="url">xiangshui-edu.com/photo/20060416 - 湘水教育视觉网 - 2006年4月16日发布</div>
+                <div class="desc">实拍洋栖中学校园日常，从课堂教学、课间活动到社团建设，全方位展现学校“育人育德”的办学理念，校园里处处洋溢着学生的青春朝气。</div>
+            </div>
+
+            <!-- 可点击链接3：严格按要求设置 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='yq222.html'">洋栖中学关于终止办学并宣告破产的通告</div>
+                <div class="url">yangqizhongxue.com/notice/20060315 - 洋栖中学校务委员会 - 2002年3月15日发布</div>
+                <div class="desc">（重置1992年报道）因办学资金链断裂、办学场地租赁纠纷等问题，洋栖中学正式发布终止办学通告，宣告民办阶段破产，相关学籍转接、教职工安置工作同步启动。</div>
+            </div>
+
+            <!-- 可点击链接4：严格按要求设置 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='yq333.html'">洋栖中学改制公办 整修竣工今秋如期招生开学</div>
+                <div class="url">xiangshui-gov.cn/edu/20060820 - 湘水市政府教育专栏 - 2006年8月20日发布</div>
+                <div class="desc">（转载自1993年9月7日讯）湘水市政府正式批复洋栖中学改制为公办学校，由市教育局统筹管理，校园整修工程已全面竣工，确定2006年秋季如期开展公办阶段首次招生。</div>
+            </div>
+
+            <!-- 可点击链接5：严格按要求设置 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='yq444.html'">【爆料】扒一扒湘水洋栖中学，看着公办实则乱象一堆！</div>
+                <div class="url">xiangshui-min.cn/expose/20070215 - 湘水民生爆料平台 - 2007年2月15日发布</div>
+                <div class="desc">网友爆料改制公办后的洋栖中学存在诸多乱象，引发本地家长广泛关注。</div>
+            </div>
+
+            <!-- 以下为不可点击链接，时间均2007年前，全新内容 -->
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">洋栖中学2004年初中招生计划及录取标准公布</a>
+                <div class="url">middle-school.cn/enroll/20040520 - 全国中学招生网 - 2004年5月20日</div>
+                <div class="desc">洋栖中学发布2004年民办阶段初中招生计划，计划招收新生240人，含实验班40人，明确文化课录取分数线及面试考核要求。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">洋栖中学获评2003年度湘水市民办教育示范校</a>
+                <div class="url">xiangshui-edu.gov.cn/award/20031218 - 湘水市教育局 - 2003年12月18日</div>
+                <div class="desc">凭借优质的教学质量和规范的办学管理，洋栖中学被湘水市教育局授予“2003年度民办教育示范校”称号，成为本地中学标杆。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">洋栖中学2005年中考再创佳绩 升学率居区域前列</a>
+                <div class="url">zhongkao-info.com/result/20050712 - 高考资讯网 - 2005年7月12日</div>
+                <div class="desc">2005年湘水市高考成绩公布，洋栖中学各项指标均居区域民办中学前列。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">洋栖中学举办2002年校园文化艺术节 展学子风采</a>
+                <div class="url">campus-art.cn/activity/20021125 - 校园文化网 - 2002年11月25日</div>
+                <div class="desc">洋栖中学首届校园文化艺术节顺利举办，涵盖文艺汇演、书画比赛、科技小发明展等多个板块，充分展现了全校学子的综合素质与艺术风采。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">洋栖中学与湘水市实验中学开展教学交流合作</a>
+                <div class="url">edu-coop.cn/exchange/20040905 - 教育教学合作网 - 2004年9月5日</div>
+                <div class="desc">洋栖中学与湘水市实验中学正式建立教学交流合作关系，双方将开展师资互派、教研共建、联考同步等合作，提升双方教学水平。</div>
+            </div>
+
+            <!-- 翻页组件：保持原有样式，不可点击 -->
+            <div class="pagination">
+                <div class="page-btn disabled">上一页</div>
+                <div class="page-num">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <div class="page-btn">4</div>
+                <div class="page-btn">5</div>
+                <div class="page-btn">6</div>
+                <div class="page-btn">7</div>
+                <div class="page-btn">8</div>
+                <div class="page-btn">9</div>
+                <div class="page-btn">10</div>
+                <div class="page-btn">下一页</div>
+                <div style="margin-left: 15px; color: #666;">共19页&nbsp;&nbsp;到第<input type="text" style="width: 30px; height: 20px; text-align: center;" value="1">页&nbsp;&nbsp;<span class="page-btn disabled">确定</span></div>
+            </div>
+        </div>
+
+        <div class="browser-status" id="statusText">就绪</div>
+    </div>
+
+    <script src="puzzle-seek.js"></script>
+    <script>
+        function searchPage() {
+            const input = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusText');
+
+            if (!input) {
+                status.textContent = "请输入搜索内容";
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+                return;
+            }
+
+            if (puzzleSeek.hasOwnProperty(input)) {
+                const targetUrl = puzzleSeek[input];
+                status.textContent = `正在跳转至：${targetUrl}`;
+                window.location.href = targetUrl;
+            } else {
+                status.textContent = `未找到「${input}」的相关页面`;
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') searchPage();
+        });
+
+        window.onload = function() {
+            const pageBtns = document.querySelectorAll('.page-btn');
+            pageBtns.forEach(btn => {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

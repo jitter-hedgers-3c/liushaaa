@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李建国 - 洋栖中学</title>
+    <style>
+        /* 全局样式（和全站100%统一） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        /* 古早搜索框（右上角悬浮） */
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        /* 搜索结果区（统一样式） */
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        /* 导航栏（统一样式） */
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #ffd700;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        /* 内容区样式 */
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        /* 花圃相关链接模块（类名保留不变） */
+        .flower-link-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .flower-link-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        .flower-link-item {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        .flower-link-item a {
+            color: #0000ee;
+            font-size: 15px;
+            text-decoration: underline;
+        }
+        .flower-link-item a:hover {
+            color: #dd0000;
+            font-weight: bold;
+        }
+        .flower-link-item p {
+            margin: 5px 0 0 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        /* 底部样式（排版完全正常） */
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+            line-height: 1.5;
+        }
+        .footer p {
+            margin: 6px 0;
+            padding: 0;
+        }
+        /* ========== 亲花节公告子页面样式（带图）- 类名保留不变 ========== */
+        .notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .notice-img {
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid #999;
+            display: block;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .notice-section {
+            margin-bottom: 15px;
+        }
+        .notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .notice-section p, .notice-section li {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .notice-section ul {
+            margin: 0;
+            padding-left: 4em;
+        }
+        .notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        /* ========== 花圃修整通知子页面样式 - 类名保留不变 ========== */
+        .trim-notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .trim-notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .trim-notice-section {
+            margin-bottom: 15px;
+        }
+        .trim-notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .trim-notice-section p {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .trim-notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部（带搜索框，全站统一） -->
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+        <!-- 搜索结果区 -->
+        <div class="search-result" id="searchResult"></div>
+        <!-- 导航栏（修改为李建国相关信息） -->
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="flower.html" class="active">李建国 相关信息</a>
+        </div>
+        
+        <!-- 核心内容区（修改为李建国相关，删除所有发布时间） -->
+        <div class="content">
+            <h2 class="content-title">李建国相关信息</h2>
+            
+            <div class="flower-link-box">
+                <h3>李建国相关信息与学校通告</h3>
+                
+                <!-- 链接1：李建国-个人简介 -->
+                <div class="flower-link-item">
+                    <a href="javascript:void(0);" id="flower-festival-link">李建国-个人简介</a>
+                    <p>发布部门：学校教务处</p>
+                </div>
+                <!-- 链接2：关于没收学生学习无关物品的通告 -->
+                <div class="flower-link-item">
+                    <a href="javascript:void(0);" id="flower-trim-link">关于没收学生学习无关物品的通告</a>
+                    <p>发布部门：学校教务处</p>
+                </div>
+            </div>
+            <!-- 李建国个人简介（原亲花节公告容器，样式保留，修改内容/图片） -->
+            <div id="flower-festival-notice" class="notice-box" style="display: none;">
+                <div class="notice-title">李建国-个人简介</div>
+                
+                <!-- 证件照片 -->
+                <img src="ljg.jpg" alt="李建国证件照" class="notice-img">
+                
+                <p style="text-indent: 2em;">李建国，男，现任洋栖中学教育处主任、数学学科骨干教师，1992年起在校任教，1993年学校改制公办后担任教育处管理职务至今。</p>
+                <p style="text-indent: 2em;">李主任长期深耕教学与学生管理一线，专业功底扎实，教学风格严谨细致，擅长以逻辑思维引导学生，深受师生认可。担任教育处主任以来，全面负责学校教学常规管理、学籍管理、课程安排、学风建设、纪律督查、校园安全及学生行为规范等工作，严格执行学校军事化管理要求，落实男女生分班教学与校园行为管理规定，全力维护正常教育教学秩序。</p>
+                <p style="text-indent: 2em;">工作中，李主任坚持原则、作风务实，重视学生品德养成与纪律教育，积极配合校长陈敬山推进学校各项制度落地，牵头落实“victories”综合评分、学生资助与奖学金发放、营养物资发放、亲花节组织等重点工作，同时负责学校官网“数学天地”栏目日常维护，每日更新高考数学练习题，为学生提供免费学习资源。</p>
+                <p style="text-indent: 2em;">多年来，李建国主任始终坚守教育初心，以高度的责任心扎根基层教育，恪尽职守、勤勉务实，为洋栖中学规范化、制度化建设与稳定发展作出持续贡献。</p>
+                <div class="notice-signature">
+                    <p>学校教务处</p>
+                </div>
+            </div>
+            <!-- 没收物品通告（原花圃修整通知容器，样式保留，修改内容/图片） -->
+            <div id="flower-trim-notice" class="trim-notice-box" style="display: none;">
+                <div class="trim-notice-title">关于严肃课堂纪律、严禁课堂把玩物品的警告声明</div>
+                
+                <!-- 配套图片 -->
+                <img src="moshou.jpg" alt="课堂纪律规范宣传图" class="notice-img">
+                
+                <p style="text-indent: 2em;">各位同学：</p>
+                <p style="text-indent: 2em;">近日，教育处联合各年级组、班主任在日常课堂巡查过程中，多次发现有部分学生无视课堂纪律，在上课期间私自把玩各类物品，包括发饰、vitamin营养药及其他小物件，严重扰乱正常课堂教学秩序，分散自身及周边同学听课注意力，违背学校军事化管理、严谨治学的核心要求。</p>
+                <p style="text-indent: 2em;">课堂是学习知识的核心场所，专心听讲是学生最基本的学习准则。在此，教育处郑重声明：</p>
+                <div class="trim-notice-section">
+                    <p>1. 即日起，全校所有学生严禁在课堂上（含自习课）把玩任何非学习用品，包括各类发饰、营养药、小玩具、饰品等一切与课堂学习无关的物品，一经发现，教育处将当场予以没收，统一登记留存，不予私自归还。</p>
+                    <p>2. 即便为学校统一配发的vitamin营养药，也仅可在规定时段、指定区域服用，绝不允许带入课堂、上课期间拿在手中把玩或随意摆弄，违者同样按违纪处理，没收相关药品并予以通报批评。</p>
+                    <p>3. 后续教育处将加大课堂巡查频次与力度，对屡教不改、多次违反课堂纪律的学生，将依规进行校纪处分，并通报至相关监护人，纳入学生日常行为考评。</p>
+                </div>
+                <p style="text-indent: 2em;">我校始终坚持严格规范的教学管理，旨在培养同学们良好的学习习惯与自律意识。望全体学生引以为戒，严格遵守校规校纪，端正学习态度，全身心投入课堂学习，共同维护良好的校园教学秩序。</p>
+                <p style="text-indent: 2em;">特此声明。</p>
+                <div class="trim-notice-signature">
+                    <p>洋栖中学教育处</p>
+                    <p>主任：李建国</p>
+                </div>
+            </div>
+        </div>
+        <!-- 底部（完全未修改） -->
+        <div class="footer">
+            <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+            <p>技术支持：洋栖中学信息技术组</p>
+        </div>
+    </div>
+    <!-- 搜索功能 + 链接点击显示内容逻辑（完全未修改） -->
+    <script src="puzzle-keywords.js"></script>
+    <script>
+        // 搜索功能（全站统一逻辑）
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+        function doSearch() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+            if (matchedUrl) {
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+            } else {
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+        // 链接点击逻辑（id未变，逻辑完全保留）
+        const flowerFestivalLink = document.getElementById('flower-festival-link');
+        const flowerTrimLink = document.getElementById('flower-trim-link');
+        const flowerFestivalNotice = document.getElementById('flower-festival-notice');
+        const flowerTrimNotice = document.getElementById('flower-trim-notice');
+        // 点击个人简介链接
+        flowerFestivalLink.addEventListener('click', function() {
+            flowerTrimNotice.style.display = 'none';
+            flowerFestivalNotice.style.display = 'block';
+            flowerFestivalNotice.scrollIntoView({ behavior: 'smooth' });
+        });
+        // 点击没收物品通告链接
+        flowerTrimLink.addEventListener('click', function() {
+            flowerFestivalNotice.style.display = 'none';
+            flowerTrimNotice.style.display = 'block';
+            flowerTrimLink.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

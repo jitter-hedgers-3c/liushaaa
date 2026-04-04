@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>临天崖_盛夏浏览器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", "微软雅黑", Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f2f2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .browser-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .browser-toolbar {
+            background: #e9e9e9;
+            padding: 6px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 4px;
+            border: 1px solid #999;
+        }
+        .btn-close { background: #ff6666; }
+        .btn-min { background: #ffff66; }
+        .btn-max { background: #66ff66; }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            display: flex;
+            border: 1px solid #b8b8b8;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-btn {
+            background: #3366cc;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-left: 1px solid #2d59aa;
+        }
+        .search-btn:hover {
+            background: #2d59aa;
+        }
+
+        .result-container {
+            flex: 1;
+            padding: 0 30px;
+            overflow-y: auto;
+        }
+        .result-count {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .result-title {
+            font-size: 18px;
+            color: #0000cc;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .result-title:hover {
+            color: #cc0000;
+        }
+        .clickable-result {
+            margin-bottom: 25px;
+        }
+        .clickable-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .clickable-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+        .fake-link-result {
+            margin-bottom: 25px;
+        }
+        .fake-link-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .fake-link-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        .pagination {
+            margin: 30px 0;
+            padding: 10px 0;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .page-btn {
+            padding: 4px 10px;
+            color: #0000cc;
+            border: 1px solid #cccccc;
+            border-radius: 2px;
+            cursor: not-allowed;
+            background: #f9f9f9;
+        }
+        .page-btn.disabled {
+            color: #999999;
+            border-color: #e5e5e5;
+            background: #f2f2f2;
+        }
+        .page-num {
+            padding: 4px 8px;
+            color: #000;
+            background: #3366cc;
+            color: #fff;
+            border: 1px solid #2d59aa;
+            border-radius: 2px;
+        }
+
+        .browser-status {
+            background: #e9e9e9;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <div class="browser-toolbar">
+            <div class="window-controls">
+                <div class="window-btn btn-close"></div>
+                <div class="window-btn btn-min"></div>
+                <div class="window-btn btn-max"></div>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容" value="临天崖">
+            <button class="search-btn" onclick="searchPage()">搜索</button>
+        </div>
+
+        <div class="result-container">
+            <div class="result-count">为您找到约 89,500 条关于临天崖的结果</div>
+
+            <!-- 第一个可点击链接（保留不变） -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='lintian-inner.html'">【新闻速递】父亲节悲剧：临天崖景区发生坠崖事件</div>
+                <div class="url">xiangshui.gov.cn/emergency/20070617 - 政务紧急公告 - 2008年6月15日发布</div>
+                <div class="desc">2007年6月17日（父亲节），湘水市临天崖景区发生一起坠崖悲剧，当地应急、消防部门紧急赶赴现场救援，截至发稿时，该少女已无生命体征。景区已临时关闭涉事区域，并提醒游客严格遵守游览规定。</div>
+            </div>
+
+            <!-- 以下全部改为景区常规内容，日期大幅错开 -->
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">临天崖景区游玩全攻略 最佳游览路线推荐</a>
+                <div class="url">xiangshuitour.com/guide - 湘水旅游网 - 2006年4月2日</div>
+                <div class="desc">这份攻略涵盖临天崖核心观景台、徒步步道、拍照打卡点，标注了一日游/两日游路线，包含开放时间、门票预约、观景最佳时段等实用信息，轻松玩转景区。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">临天崖地理风貌科普 :崖壁形成之谜</a>
+                <div class="url">xiangshui.gov.cn/geology - 市自然资源局 - 2006年11月8日</div>
+                <div class="desc">临天崖经亿万年风化与流水侵蚀形成独特崖壁景观，本文详解地质成因、岩层结构，带你读懂自然鬼斧神工。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">临天崖周边特色美食盘点 本地风味必尝清单</a>
+                <div class="url">shuiqi.cn/food - 云韶美食频道 - 2006年1月20日</div>
+                <div class="desc">景区周边藏着多家本地老字号，山野年糕汤、崖壁烤饼、农家土菜等特色风味十足，游玩之余一站式品尝湘水本地美食。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">【临天崖景区历史传说】 千年崖壁的民间故事</a>
+                <div class="url">xiangshui.gov.cn/culture - 湘水文旅发布 - 2005年9月12日</div>
+                <div class="desc">临天崖流传着千年民间传说，与古代隐士、崖边祈福等故事相关，承载本地民俗文化，是景区人文底蕴的重要组成部分。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">景区出行安全须知 临天崖游览注意事项</a>
+                <div class="url">xiangshui.gov.cn/safety - 应急管理局 - 2005年5月30日</div>
+                <div class="desc">前往临天崖游玩需遵守景区规则，雨天路滑谨慎行走，远离崖边危险区域，爱护自然环境，文明安全出行。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">临天崖交通指南 自驾/公共交通直达路线</a>
+                <div class="url">xiangshui.gov.cn/traffic - 市交通局 - 2005年7月19日</div>
+                <div class="desc">提供自驾导航点位、公交专线、景区接驳车信息，清晰指引不同出行方式直达临天崖景区，出行更便捷。</div>
+            </div>
+
+            <div class="pagination">
+                <div class="page-btn disabled">上一页</div>
+                <div class="page-num">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <div class="page-btn">4</div>
+                <div class="page-btn">5</div>
+                <div class="page-btn">6</div>
+                <div class="page-btn">7</div>
+                <div class="page-btn">8</div>
+                <div class="page-btn">9</div>
+                <div class="page-btn">10</div>
+                <div class="page-btn">下一页</div>
+                <div style="margin-left: 15px; color: #666;">共89页&nbsp;&nbsp;到第<input type="text" style="width: 30px; height: 20px; text-align: center;" value="1">页&nbsp;&nbsp;<span class="page-btn disabled">确定</span></div>
+            </div>
+        </div>
+
+        <div class="browser-status" id="statusText">就绪</div>
+    </div>
+
+    <script src="puzzle-seek.js"></script>
+    <script>
+        function searchPage() {
+            const input = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusText');
+
+            if (!input) {
+                status.textContent = "请输入搜索内容";
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+                return;
+            }
+
+            if (puzzleSeek.hasOwnProperty(input)) {
+                const targetUrl = puzzleSeek[input];
+                status.textContent = `正在跳转至：${targetUrl}`;
+                window.location.href = targetUrl;
+            } else {
+                status.textContent = `未找到「${input}」的相关页面`;
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') searchPage();
+        });
+
+        window.onload = function() {
+            const pageBtns = document.querySelectorAll('.page-btn');
+            pageBtns.forEach(btn => {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

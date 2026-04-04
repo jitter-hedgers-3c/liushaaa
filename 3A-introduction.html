@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>临天崖景区简介</title>
+    <style>
+        /* 2008年古早风格，与湘水市概况区分：稍宽容器、不同分隔线、列表样式 */
+        body {
+            font-family: "宋体", SimSun, "黑体", SimHei, serif; /* 2008年混合宋体/黑体 */
+            line-height: 1.6; /* 比2006版稍宽松一点 */
+            color: #000000;
+            background: #ffffff;
+            margin: 0;
+            padding: 15px;
+            font-size: 14px;
+        }
+        /* 容器宽度稍调整，区分前版 */
+        .scenic-container {
+            width: 780px; 
+            margin: 0 auto;
+            border: 1px solid #999999; /* 稍深边框 */
+            padding: 25px;
+            background: #fff;
+        }
+        /* 标题样式差异化：双下划线+居中 */
+        .main-title {
+            font-size: 26px;
+            text-align: center;
+            color: #000080; /* 藏青（2008年常用标题色） */
+            font-weight: bold;
+            margin-bottom: 8px;
+            padding-bottom: 5px;
+            border-bottom: 2px double #666; /* 双实线分隔，区别前版单实线 */
+        }
+        /* 发布时间样式 */
+        .publish-time {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ccc; /* 虚线分隔，区别前版实线 */
+        }
+        /* 二级标题：左对齐+黑体，区分前版 */
+        .section-title {
+            font-size: 18px;
+            color: #cc0000; /* 暗红标题 */
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            font-family: "黑体", SimHei;
+        }
+        /* 正文与列表：老式缩进+符号 */
+        .content p {
+            text-indent: 2em;
+            margin-bottom: 12px;
+        }
+        .content ul {
+            margin: 10px 0 10px 40px; /* 老式列表缩进 */
+            padding: 0;
+            list-style-type: square; /* 方块列表符，区别前版默认圆点 */
+        }
+        .content li {
+            margin-bottom: 8px;
+        }
+        /* 古早图片样式：稍窄宽度+深边框，适配本页布局 */
+        .scenic-img {
+            width: 720px; /* 适配780容器 */
+            height: auto;
+            border: 1px solid #666; /* 比前版稍深边框 */
+            margin: 15px 0;
+            display: block; /* 居中 */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* 门票信息模块：浅灰底+实线边框，区分前版提示框 */
+        .ticket-info {
+            background: #f5f5f5;
+            border: 1px solid #999;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .ticket-info .section-title {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="scenic-container">
+        <!-- 主标题 -->
+        <h1 class="main-title">临天崖景区简介</h1>
+        <div class="publish-time">2008.3.10</div>
+
+        <div class="content">
+            <p>临天崖景区是浙江省湘水市核心的国家3A级景区，坐落于湘水市西部深山，地处浙西南山地余脉之巅，因崖顶临空接云、可远眺天际而得名，是浙江山地风光与浙西民俗文化交融的代表性景点。</p>
+
+            <!-- 第一板块：区位与概况 -->
+            <h2 class="section-title">区位与概况</h2>
+            <p>景区总面积约12平方公里，山地占比极高，主峰临天崖海拔1120米，崖壁陡峭如削，垂直落差达300余米。植被覆盖率85%，四季景致分明：春日杜鹃漫坡，夏日林海消暑，秋日丹枫似火，冬日雾凇晶莹。山间溪瀑交织，雨季飞瀑垂挂，空气负氧离子含量高，是天然的生态氧吧。</p>
+            
+            <!-- 第一张图片：lt1.jpg（景区全景） -->
+            <img class="scenic-img" src="lt1.jpg" alt="临天崖景区全景">
+
+            <!-- 第二板块：核心景点 -->
+            <h2 class="section-title">核心景点</h2>
+            <ul>
+                <li>望云台：崖顶地标观景台，是观赏日出、云海、晚霞的绝佳点位，晴日可远眺浙西南层峦与湘水市散落的山居村落。</li>
+                <li>凌云栈道：沿悬崖峭壁修建的悬空步道，全长800余米，行走时步步惊心，可近距离观赏崖壁奇石、岩生植被与飞瀑流泉。</li>
+                <li>静心古寺：始建于明末的古刹，藏于崖腰密林间，香火绵延，是祈福静心、欣赏浙派古建的好去处。</li>
+                <li>临崖民俗村：山脚原住民村落，保留浙西山民传统生活方式，可尝腊肉、灰汁团、米豆腐等农家菜，体验竹编、土布纺织、畲族彩带编织等非遗手工。</li>
+            </ul>
+            
+            <!-- 第二张图片：lt2.jpg（核心景点） -->
+            <img class="scenic-img" src="lt2.jpg" alt="临天崖核心景点">
+
+            <!-- 第三板块：游玩贴士 -->
+            <h2 class="section-title">游玩贴士</h2>
+            <ul>
+                <li>开放时间：8:00–17:30（冬季17:00闭园）</li>
+                <li>交通：湘水市客运中心有景区专线班车；自驾沿山区旅游公路可达山脚生态停车场</li>
+                <li>安全提示：栈道、登山步道注意防滑；山区天气多变，备雨具与薄外套</li>
+                <li>周边：可串联湘水市其他3A景区，适合2–3天的浙西南山地生态文化短途游。</li>
+            </ul>
+            
+            <!-- 第三张图片：lt3.jpg（游玩场景） -->
+            <img class="scenic-img" src="lt3.jpg" alt="临天崖游玩场景">
+
+            <!-- 第四板块：文化底蕴 -->
+            <h2 class="section-title">文化底蕴</h2>
+            <p>临天崖流传着诸多浙西山乡传说，当地山民视崖顶为“离天最近之处”，自古有祭祀祈福传统。近代亦有红军游击的红色足迹，景区内设有小型红色文化陈列点，供游客了解那段烽火岁月。</p>
+            <p>临天崖景区，以雄奇的山崖风光、淳朴的民俗风情与深厚的人文底蕴，热忱欢迎八方游客前来探访。</p>
+            
+            <!-- 第四张图片：lt4.jpg（文化相关） -->
+            <img class="scenic-img" src="lt4.jpg" alt="临天崖文化底蕴">
+
+            <!-- 门票信息模块 -->
+            <div class="ticket-info">
+                <h2 class="section-title">浙江省湘水市·临天崖3A级旅游景区 门票信息</h2>
+                
+                <h3 class="section-title" style="font-size:16px;">一、票价信息</h3>
+                <ul>
+                    <li>成人票：60元/人</li>
+                    <li>学生票（凭学生证）：30元/人</li>
+                    <li>儿童票（1.2米–1.5米）：30元/人</li>
+                    <li>1.2米以下儿童、70周岁以上老人：免票</li>
+                </ul>
+
+                <h3 class="section-title" style="font-size:16px;">二、开放时间</h3>
+                <ul>
+                    <li>旺季（4月–10月）：07:30–18:00</li>
+                    <li>淡季（11月–3月）：08:00–17:30</li>
+                    <li>如遇暴雨、台风、泥石流等恶劣天气，景区将临时关闭。</li>
+                </ul>
+
+                <h3 class="section-title" style="font-size:16px;">三、使用说明</h3>
+                <ul>
+                    <li>门票当日有效，一经售出，不予退换。</li>
+                    <li>凭票入园，一人一票，打孔作废。</li>
+                    <li>门票含景区基础游览，不含索道、观光车、讲解等二次消费。</li>
+                </ul>
+
+                <h3 class="section-title" style="font-size:16px;">四、游览须知</h3>
+                <ul>
+                    <li>景区多悬崖、陡坡、栈道，禁止攀爬、翻越护栏。</li>
+                    <li>雨季山路湿滑、易发生落石，请注意脚下安全，听从工作人员引导。</li>
+                    <li>禁止携带易燃易爆物品、大功率电器进入景区。</li>
+                    <li>爱护环境，禁止烟火，保护山林植被。</li>
+                    <li>如遇紧急情况，请拨打景区救援电话。</li>
+                </ul>
+
+                <h3 class="section-title" style="font-size:16px;">五、联系方式</h3>
+                <ul>
+                    <li>景区咨询：057X–XXXX9494</li>
+                    <li>救援电话：057X–XXXX9494</li>
+                    <li>地址：浙江省湘水市临天崖景区</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结局B</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 改为白底黑字基础样式 */
+        body {
+            background-color: #fff; /* 白底 */
+            color: #000; /* 黑字 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            font-family: "宋体", SimSun, serif;
+            font-size: 18px;
+            line-height: 1.8;
+            cursor: pointer;
+            overflow-x: hidden;
+        }
+
+        /* 文字容器样式 */
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* 段落样式 - 流式逐段显示 */
+        .paragraph {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        /* 淡入显示 */
+        .paragraph.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 上一段半透明+上滑 */
+        .paragraph.fade-out {
+            opacity: 0.5;
+            transform: translateY(-20px);
+            transition: all 0.8s ease;
+        }
+
+        /* 半透明高级感结局框（适配白底黑字） */
+        .ending {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.2s ease;
+            margin-top: 60px;
+            text-align: center;
+            font-size: 20px;
+            line-height: 2;
+            /* 适配白底的半透明样式 */
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 16px;
+            padding: 40px 60px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .ending.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 交互感的跳转文字（适配黑字） */
+        .jump-link {
+            color: #000;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .jump-link:hover {
+            opacity: 0.8;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="paragraph">你到临天崖的时候是下午。天阴着，风很大，从崖口灌进来，吹得你站不太稳。观景台的铁栏杆锈迹斑斑，上面挂着几条褪色的许愿带，风一吹就飘起来，像招魂的幡。你站在栏杆边上往下看。崖底很远，公路像一条灰白色的带子，河像一条黄色的线。风从下面往上吹，带着河水的腥味，呛得你咳了一下。</div>
+        <div class="paragraph">你不知道你为什么来这里。你只是知道了一切，一篇一篇地翻完了，然后买了最近的一班火车票。十六个小时，硬座。你坐在车厢里，听着铁轨咣当咣当的声响，看着窗外的山从绿变灰，从灰变绿，变了好几次。邻座的人问你到哪里去，你说湘水。他说湘水有什么好玩的，你说不是去玩。他没有再问了。</div>
+        <div class="paragraph">你在县城住了一晚。旅馆的床单是灰白色的，枕头上有一股洗衣粉的味道，干干的，涩涩的。你躺在床上，听着窗外的车声和狗叫声，很久没有睡着。</div>
+        <div class="paragraph">你不知道什么事情比死更重要，你只是觉得你应该来这里看一眼。</div>
+        <div class="paragraph">观景台上没有人。风把你的头发吹到脸上，你伸手拨了一下，看见栏杆外面的水泥沿上有一道浅浅的划痕，不知道是什么时候留下的，被风雨磨得模糊了。你盯着那道划痕看了一会儿，然后移开了目光。</div>
+        <div class="paragraph">你不知道你在等什么。也许什么都不等。你就是觉得应该站在这里，站一会儿。</div>
+        <div class="paragraph">风小了一点的时候，你低下头，看见栏杆内侧的地上有一个什么东西。你蹲下去看。是一个发圈。孔雀蓝的，丝绒质地，上面缀着几颗暗色的小珠子。丝绒起了一层毛，颜色暗了，珠子也掉了两颗，剩下的一颗松了，晃来晃去。发圈被风吹到了栏杆根部的缝隙里，卡在那里，上面落了一层灰。</div>
+        <div class="paragraph">你知道这是谁的。</div>
+        <div class="paragraph">现在它在你手上了。落了一层灰，卡在栏杆根部的缝隙里，不知道在那里待了多久。风没有把它吹走，雨没有把它冲走，打扫的人没有看见它。它就那么卡在那里，等你来捡。</div>
+        <div class="paragraph">你坐在她站过的位置，看着她看过的风景，风从同一个方向灌进来，吹得你的眼睛发酸。你不知道她下坠的那一刻在想什么。也许什么都没想。也许想了很多，但来不及了。下落的速度很快，快到什么都来不及。</div>
+        <div class="paragraph">你唏嘘着，一夜好梦。</div>
+    </div>
+
+    <!-- 结局区域（适配白底黑字） -->
+    <div class="ending">
+        结局B：来日方长<br>
+        解锁成就：负愧缩壳人<br>
+        解锁文本：<span class="jump-link" onclick="window.location.href='endB-us.html'">我们的故事</span>
+    </div>
+
+    <script>
+        // 核心交互逻辑不变
+        const paragraphs = document.querySelectorAll('.paragraph');
+        const ending = document.querySelector('.ending');
+        let currentIndex = 0;
+
+        paragraphs[currentIndex].classList.add('show');
+
+        document.addEventListener('click', () => {
+            if (currentIndex >= paragraphs.length - 1) {
+                paragraphs[currentIndex].classList.add('fade-out');
+                setTimeout(() => {
+                    ending.classList.add('show');
+                }, 800);
+                return;
+            }
+
+            paragraphs[currentIndex].classList.add('fade-out');
+            currentIndex++;
+            paragraphs[currentIndex].classList.add('show');
+        });
+    </script>
+</body>
+</html>

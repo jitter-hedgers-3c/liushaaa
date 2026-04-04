@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>victories - 洋栖中学</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #ffd700;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .victories-link-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .victories-link-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        .victories-link-item {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        .victories-link-item a {
+            color: #0000ee;
+            font-size: 15px;
+            text-decoration: underline;
+        }
+        .victories-link-item a:hover {
+            color: #dd0000;
+            font-weight: bold;
+        }
+        .victories-link-item p {
+            margin: 5px 0 0 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+            line-height: 1.5;
+        }
+        .footer p {
+            margin: 6px 0;
+            padding: 0;
+        }
+        .notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .notice-img {
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid #999;
+            display: block;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .img-desc {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .notice-section {
+            margin-bottom: 15px;
+        }
+        .notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .notice-section p, .notice-section li {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .notice-section ul {
+            margin: 0;
+            padding-left: 4em;
+        }
+        .notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+        .victories-list-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 2;
+        }
+        .victories-list-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .victories-list-section {
+            margin-bottom: 20px;
+            padding-left: 2em;
+        }
+        .victories-list-section h4 {
+            color: #4a7ba7;
+            font-size: 16px;
+            margin: 0 0 10px 0;
+            font-weight: bold;
+        }
+        .victories-list-section p {
+            margin: 0;
+            font-size: 15px;
+        }
+        .victories-list-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+            padding-right: 2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+        <div class="search-result" id="searchResult"></div>
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="victories.html" class="active">victories 相关信息</a>
+        </div>
+        
+        <div class="content">
+            <h2 class="content-title">victories 相关信息</h2>
+            
+            <div class="victories-link-box">
+                <h3>victories</h3>
+                <div class="victories-link-item">
+                    <a href="javascript:void(0);" id="victories-interview-link">名校联袂 圆梦升学——洋栖中学“victories”政策专题采访</a>
+                    <p>发布时间：2000年6月8日 | 发布部门：教育处</p>
+                </div>
+                <div class="victories-link-item">
+                    <a href="javascript:void(0);" id="victories-report-link">洋栖中学历届“victories”政策升学名单</a>
+                    <p>发布时间：持续更新 | 发布部门：教育处</p>
+                </div>
+            </div>
+
+            <div id="victories-interview-notice" class="notice-box" style="display: none;">
+                <div class="notice-title">解读洋栖中学“victories”特殊升学政策，解锁优质升学新路径</div>
+                <img src="interview.jpg" alt="左1周文彬  中间张志远 右1陈敬山" class="notice-img">
+		        <p class="img-desc">左1周文彬  中间张志远 右1陈敬山</p>
+                <p style="text-indent: 2em;"><strong>采访对象：</strong></p>
+                <p style="text-indent: 2em;">洋栖中学校长 陈敬山</p>
+                <p style="text-indent: 2em;">阳城大学校长 张志远</p>
+                <p style="text-indent: 2em;">湘水市教育部领导 周文彬</p>
+                <p style="text-indent: 2em;"><strong>采访背景：</strong>洋栖中学1999年推出的“victories”升学政策，凭借专属名校特招优势，成为学校特色办学亮点。本次专访聚焦政策细节，为广大考生及家长答疑解惑。</p>
+                <p style="text-indent: 2em;">记者：陈校长，您好！能否先为我们介绍下洋栖中学“victories”政策的核心内容，以及这项政策的设立初衷是什么？</p>
+                <p style="text-indent: 2em;">陈敬山：我和陈校长、周领导都是1984年南城大学的校友，多年来始终关注教育发展，也一直想携手打造特色育人模式。洋栖中学秉承“立德树人、笃学尚行”的办学理念，把复杂的校训浓缩成“【%】声”、“三【#】”、“端庄”、“诚信”等简短口号，易于传播教导学生。洋栖中学办学质量过硬，学生综合素养极高，与阳城大学的育人理念高度契合。我们希望通过“victories”政策，选拔真正全面发展的优质生源，同时也为洋栖学子提供更广阔的升学平台，实现中学与高校的育人联动，让优质教育资源形成良性循环。</p>
+                <p style="text-indent: 2em;">记者：张校长，阳城大学作为湘水市邻市的知名高校，为何会选择与洋栖中学达成这项特招合作呢？</p>
+                <p style="text-indent: 2em;">张志远：我和陈校长、周领导都是1984年南城大学的校友，多年来始终关注教育发展，也一直想携手打造特色育人模式。洋栖中学办学质量过硬，学生综合素养极高，与阳城大学的育人理念高度契合。我们希望通过“victories”政策，选拔真正全面发展的优质生源，同时也为洋栖学子提供更广阔的升学平台，实现中学与高校的育人联动，让优质教育资源形成良性循环。</p>
+                <p style="text-indent: 2em;">记者：周领导，从教育部门的角度来看，您如何评价洋栖中学这项“victories”政策？它对区域教育发展有怎样的意义？</p>
+                <p style="text-indent: 2em;">周文彬：洋栖中学的“victories”政策，是区域教育创新的一次成功探索。这项政策打破了传统升学的单一模式，以综合评分为选拔标准，引导中学教育回归育人本质，助力学生全方位成长，同时也进一步推动了校地、校校合作，优化了区域升学路径。我们教育部门也全程监督政策实施，确保每一次评分、每一次特招都公平、公正、公开，切实保障学生权益，这项政策也为全市特色办学、多元升学提供了很好的借鉴范本。</p>
+                <p style="text-indent: 2em;">记者：陈校长，对于想要报考洋栖中学的学生，您有什么建议？学校又将如何持续优化这项政策呢？</p>
+                <p style="text-indent: 2em;">陈敬山：我想对各位考生说，选择洋栖中学，不仅能收获优质的中学教育，更能拥有“victories”政策带来的宝贵升学机遇。希望大家在学习中不仅要注重学业与综合素养提升，同时注重“外生课堂”的发展努力成为全面发展的人才。未来，学校也会持续优化综合评分体系，让政策选拔更科学、更公平，坚守育人初心，全力为每一位洋栖学子的升学之路保驾护航。学校也有许多保障学生专注学习的补贴，例如“学杂费补贴”、“【*】冷补贴”等。同时我校校园绿化率高达50%，虽然夏季“【@】声”绕耳，但这正好可以磨练学生学习的专注力。
+记者：感谢三位嘉宾的精彩分享，让我们对洋栖中学“victories”政策有了全面深入的了解。相信这项优质政策，也会助力更多学子实现名校梦想！
+</p>
+                <p style="text-indent: 2em;">记者：感谢三位嘉宾的精彩分享，让我们对洋栖中学“victories”政策有了全面深入的了解。相信这项优质政策，也会助力更多学子实现名校梦想！</p>
+                <div class="notice-signature">
+                    <p>记者 潘建</p>
+                    <p>2000年6月8日</p>
+                </div>
+            </div>
+
+            <div id="victories-list-notice" class="victories-list-box" style="display: none;">
+                <div class="victories-list-title">洋栖中学历届“victories”政策升学名单</div>
+                <div class="victories-list-section">
+                    <h4>1999届名单</h4>
+                    <p>代莉、董亚琴、葛亚梅、顾洁、刘亚华</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2000届名单</h4>
+                    <p>何敏、马荣、齐娜、袁薇、白芸</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2001届名单</h4>
+                    <p>冯桂芝、任桂芹、唐芸、姚红、夏波（男）</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2002届名单</h4>
+                    <p>高菲、宋佳佳、王雪、卢晓雨、杨明（男）</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2003届名单</h4>
+                    <p>谢婷、曹颖、袁媛、姜美玲、孙浩栋（男）</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2004届名单</h4>
+                    <p>崔静、薛萌、金玲、任佳、史晓悦</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2005届名单</h4>
+                    <p>魏佳、叶琳、潘悦、汪晓婷、方超</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2006届名单</h4>
+                    <p>陆瑶、石静、毛佳、顾晓颖、江波（男）</p>
+                </div>
+                <div class="victories-list-section">
+                    <h4>2007届名单</h4>
+                    <p>戴琳、孔倩、向薇、龙佳、欧燕</p>
+                </div>
+                <div class="victories-list-signature">
+                    <p>洋栖中学教育处</p>
+                    <p>发布时间：持续更新</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+            <p>技术支持：洋栖中学信息技术组</p>
+        </div>
+    </div>
+
+    <script src="puzzle-keywords.js"></script>
+
+    <script>
+       
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+
+        function doSearch() {
+            // 获取输入的关键词（去除首尾空格，不区分大小写）
+            const keyword = searchInput.value.trim().toLowerCase();
+            // 清空输入框
+            searchInput.value = '';
+
+            // 隐藏结果区（默认）
+            searchResult.style.display = 'none';
+
+            // 如果关键词为空，提示输入
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+
+            // 匹配关键词（不区分大小写）
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+
+            // 展示结果
+            if (matchedUrl) {
+                // 匹配成功：显示带超链接的结果
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+            } else {
+                // 匹配失败：显示无结果（增强解谜沉浸感）
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+
+        // 4. 绑定事件：点击搜索按钮触发
+        searchBtn.addEventListener('click', doSearch);
+
+        // 5. 绑定事件：按回车键触发（更友好的交互）
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+// 获取两个链接和对应的内容块元素
+const interviewLink = document.getElementById('victories-interview-link');
+const reportLink = document.getElementById('victories-report-link');
+const interviewNotice = document.getElementById('victories-interview-notice');
+const reportNotice = document.getElementById('victories-list-notice');
+
+// 点击【专题采访】链接：显示采访内容，隐藏名单内容
+interviewLink.addEventListener('click', function() {
+    interviewNotice.style.display = 'block';
+    reportNotice.style.display = 'none';
+});
+
+// 点击【升学名单】链接：显示名单内容，隐藏采访内容
+reportLink.addEventListener('click', function() {
+    reportNotice.style.display = 'block';
+    interviewNotice.style.display = 'none';
+});
+
+    </script>
+</body>
+</html>

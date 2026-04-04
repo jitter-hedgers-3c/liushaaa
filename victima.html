@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YQ-083号绝密档案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: "SimSun", "STSong", "Microsoft YaHei", serif;
+            color: #9b111e;
+            text-shadow: 0 0 10px #ff1a1a, 0 0 25px #660000;
+            background-image: radial-gradient(circle at center, #110000, #000);
+            padding: 20px;
+        }
+
+        /* 主标题 */
+        .main-title {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: 12px;
+            margin-bottom: 40px;
+            color: #b81818;
+            text-shadow: 0 0 12px #ff4d4d, 0 0 30px #990000;
+            animation: titleFlicker 2.8s infinite alternate;
+        }
+
+        /* 超大PDF预览区域 */
+        #pdf-viewer {
+            width: 100%;
+            height: 70vh;
+            border: 3px solid #990000;
+            box-shadow: 0 0 40px #ff1a1a;
+            margin-bottom: 25px;
+            display: none; /* 默认隐藏 */
+            background: #000;
+        }
+
+        /* 我已确认按钮（默认隐藏） */
+        #confirm-btn {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #e60000;
+            border: 2px solid #990000;
+            padding: 20px 46px;
+            background: rgba(20,0,0,0.5);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 0 15px #330000;
+        }
+
+        #confirm-btn:hover {
+            background-color: #2b0000;
+            color: #ffffff;
+            border-color: #ff3333;
+            box-shadow: 0 0 30px #ff1a1a, 0 0 60px #660000;
+            text-shadow: 0 0 10px #fff;
+        }
+
+        /* 查阅按钮 */
+        .file-link {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            color: #e60000;
+            border: 2px solid #990000;
+            padding: 22px 50px;
+            background: rgba(20,0,0,0.4);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 0 15px #330000;
+        }
+
+        .file-link:hover {
+            background-color: #2b0000;
+            color: #ffffff;
+            border-color: #ff3333;
+            box-shadow: 0 0 30px #ff1a1a, 0 0 60px #660000;
+            text-shadow: 0 0 10px #fff;
+        }
+
+        /* 闪烁动画 */
+        @keyframes titleFlicker {
+            0% { opacity: 1; text-shadow: 0 0 12px #ff4d4d, 0 0 30px #990000; }
+            42% { opacity: 0.85; }
+            63% { opacity: 0.75; text-shadow: 0 0 8px #ff3333, 0 0 20px #660000; }
+            100% { opacity: 1; text-shadow: 0 0 15px #ff6666, 0 0 35px #990000; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1 class="main-title">YQ-083号绝密档案</h1>
+
+    <!-- 超大PDF预览框 -->
+    <embed id="pdf-viewer" src="最终计划.pdf#toolbar=0&navpanes=0" type="application/pdf">
+
+    <!-- 我已确认按钮 -->
+    <button id="confirm-btn" onclick="showAlert()">我已确认</button>
+
+    <!-- 查阅按钮 -->
+    <div id="file-btn" onclick="openFile()" class="file-link">查阅 最终计划.pdf</div>
+
+    <script>
+        // 打开档案：显示PDF + 显示确认按钮 + 隐藏查阅按钮
+        function openFile() {
+            document.getElementById('pdf-viewer').style.display = 'block';
+            document.getElementById('confirm-btn').style.display = 'block';
+            document.getElementById('file-btn').style.display = 'none'; // 👈 新增：自动消失
+        }
+
+        // 点击确认后弹出弹窗
+        function showAlert() {
+            alert('您终于走到了这一步。');
+            
+            setTimeout(() => {
+                let choice = confirm('现在，您的选择是？\n\n【确定】提交举报信\n【取消】不提交举报信');
+                
+                if (choice) {
+                    window.location.href = 'endA.html';
+                } else {
+                    window.location.href = 'endB.html';
+                }
+            }, 600);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洋栖中学 - 学校简介</title>
+    <style>
+        /* ========== 全局通用样式（完整无误） ========== */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+        .nav a.active {
+            color: #ffd700;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        /* 修复：补充简介文本样式 */
+        .intro-text {
+            line-height: 1.8;
+            text-indent: 2em;
+            margin-bottom: 20px;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+        }
+        /* 修复：补充图片模块样式 */
+        .img-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .img-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        /* 修复：补充证件照/肖像图样式（固定尺寸不出框） */
+        .portrait-img {
+            width: 180px;
+            height: 240px;
+            border: 2px solid #999;
+            display: block;
+            margin: 10px auto;
+            object-fit: cover;
+            object-position: center;
+            background: #f0f0f0;
+        }
+        /* 修复：补充校园风光组图样式 */
+        .campus-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .campus-item {
+            width: 32%;
+        }
+        .campus-img {
+            width: 100%;
+            height: 180px;
+            border: 2px solid #999;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .img-desc {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin: 5px 0;
+        }
+        .info-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+        .common-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .common-table th {
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            padding: 10px;
+            border: 1px solid #999;
+            font-size: 15px;
+            color: #333;
+            text-align: center;
+        }
+        .common-table td {
+            padding: 12px;
+            border: 1px solid #dddddd;
+            vertical-align: middle;
+        }
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+        }
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部（通用无误） -->
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+        <!-- 搜索结果区 -->
+        <div class="search-result" id="searchResult"></div>
+        <!-- 修复：导航栏完全正确（标签全闭合、无语法错） -->
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="yangqi-intro.html" class="active">学校简介</a>
+            <a href="yangqi-teacher.html">师资力量</a>
+            <a href="">教学成果</a>
+            <a href="yangqi-rule.html">校园秩序</a>
+            <a href="yangqi-math.html">数学天地</a>
+        </div>
+
+        <!-- 核心内容（排版正常、样式齐全） -->
+        <div class="content">
+            <h2 class="content-title">洋栖中学学校概况</h2>
+ 
+            <div class="intro-text">
+                洋栖中学坐落于湘水市云川县，是一所始建于1988年的全日制公办高中，自创办以来，始终扎根湘水山区教育一线，肩负着推进区域青少年基础教育发展的重要使命。
+            </div>
+            <div class="intro-text">
+                1993年，学校获批纳入重点帮扶项目“湘水市基础教育普及工程”，依托政策扶持，学校持续优化办学条件，秉持低学费、高资助的办学原则，面向湘水及周边山区学子开放办学，学生可申请大额助学金，切实解决山区家庭子女就学难题，全力保障每一位学子的受教育权利。
+            </div>
+            <div class="intro-text">
+                学校推行军事化管理模式，以严管厚爱为育人理念，注重学生行为习惯养成、纪律意识培育与综合素质提升，致力于培养守纪向上、自立自强的新时代青年。办学多年来，学校始终坚守教育初心，深耕基础教育事业，助力湘水市青少年基础教育工程稳步推进，用教育力量为山区发展赋能。校园内校园文化特色浓厚，特色【花圃】数量繁多，引人注目。
+            </div>
+            <div class="intro-text">
+                学校师资力量雄厚，拥有一支师德高尚、业务精湛的教师队伍，李建国、刘芳、张伟、刘秀兰等优秀教师深耕教学一线，秉持匠心育人，助力学子逐梦成长。引入智慧管理系统，可在搜索框内输入“管理员登陆”查阅相关信息。
+            </div>
+            <div class="intro-text">
+                校园后勤保障规范完善，校内食堂仅作为专属就餐区域，每日餐食由专业餐车统一配送入校，经学校安保部严格清点核验后供应，全力保障师生就餐安全与便捷。
+            </div>
+            <div class="intro-text">
+                学校由陈敬山担任校长，在其带领下，洋栖中学坚守办学宗旨，砥砺奋进，不断提升办学质量与育人水平，已然成为湘水市山区基础教育的重要阵地，为区域教育发展与人才培养贡献着坚实力量。
+            </div>
+
+            <!-- 优秀教师照片 -->
+            <div class="img-box">
+                <h3>优秀教师代表</h3>
+                <img src="teacher-best.jpg" alt="优秀教师" class="portrait-img">
+                <p class="img-desc">优秀教师团队代表</p>
+            </div>
+            <!-- 校园风光 -->
+            <div class="img-box">
+                <h3>校园风光一览</h3>
+                <div class="campus-group">
+                    <div class="campus-item">
+                        <img src="campus-1.jpg" alt="校园特色花卉" class="campus-img">
+                        <p class="img-desc">校园特色花卉</p>
+                    </div>
+                    <div class="campus-item">
+                        <img src="campus-2.jpg" alt="校园鸟瞰图" class="campus-img">
+                        <p class="img-desc">校园平面图</p>
+                    </div>
+                    <div class="campus-item">
+                        <img src="campus-3.jpg" alt="校园就餐与学习" class="campus-img">
+                        <p class="img-desc">校园就餐与学习</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 校长照片 -->
+            <div class="img-box">
+                <h3>校长风采</h3>
+                <img src="principal.jpg" alt="校长 陈敬山" class="portrait-img">
+                <p class="img-desc">校长：陈敬山</p>
+            </div>
+        </div>
+
+        <!-- 修复：底部版权统一为1988-2008 -->
+        <div class="footer">
+            <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+            <p>技术支持：洋栖中学信息技术组</p>
+        </div>
+    </div>
+
+    <!-- 搜索逻辑（通用无误） -->
+    <script src="puzzle-keywords.js"></script>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+        function doSearch() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+            if (matchedUrl) {
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="\_blank">${matchedKey}</a>`;
+            } else {
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+    </script>
+</body>
+</html>

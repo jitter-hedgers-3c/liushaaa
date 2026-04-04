@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流沙论坛2007 - 湘水市民间爆料区</title>
+    <style>
+        /* 2007年校外民间论坛风格 + 全新排版 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", SimSun, "Arial", sans-serif;
+        }
+        body {
+            background-color: #F5F5F5;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiDAAAAUVBMVEWFhYWDg4N3d3dtbW17e3t1dXWBgYGHh4d5eXlzc3OLi4ubm5uVlZWPj4+NjY19fX2JiYl/f39ra2uRkZGZmZlpaWmXl5dvb29xcXGTk5NnZ2c4zIwL8wMfAAAARnRSTlMAEBAQHx8gICAuLjAwMDw9PUBAQEpQUFBXV1hgYGBkcHBwcXl8gICAgoiIkJCQlJicnJ2goKCmqK+wsLC4usDAwMjP0NDQ1NbW3Nzg4ODi5+3v8PDw8/T09PX29vb39/f5+fr7+/z8/Pz9/v7+zczCxgAABP0lEQVR4AY3TxXYlMQwF0GjI9GzJzJgEUE2hXsE1UQpdSa5B4dEa9wVrJ22iqirCDHx898959777333/+O+/n9995777/+7v///7n//v3v/7n//v3//7//59///n//59//v//59//v//5//+f//5//+f//4//+P//4//+P//3//+H//3//+H//2//+B//2//+B//1//+A//1//+A///f//9///f//9///v//8///v//8///7//7///7//7///5//5///5//5///3//3///3//3///1//1///1//1//////8f5t5/4nW5P8AAHlCKwGvD4z0AAAAASUVORK5CYII=);
+            padding: 15px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+        /* 论坛头部 - 左对齐排版（区别之前居中） */
+        .forum-header {
+            background: #FFF8DC;
+            border: 2px solid #CD853F;
+            padding: 10px 15px;
+            margin-bottom: 12px;
+            border-radius: 4px; /* 07年小众圆角风格 */
+        }
+        .forum-title {
+            font-size: 20px;
+            color: #8B4513;
+            font-weight: bold;
+            display: inline-block;
+        }
+        .forum-tag {
+            font-size: 11px;
+            color: #A0522D;
+            background: #FFE4B5;
+            padding: 2px 6px;
+            border: 1px solid #CD853F;
+            margin-left: 8px;
+        }
+        .forum-desc {
+            font-size: 11px;
+            color: #696969;
+            margin-top: 4px;
+        }
+        /* 校外论坛导航 - 横向平铺+背景区分 */
+        .forum-nav {
+            background: #DEB887;
+            border: 1px solid #CD853F;
+            padding: 6px 10px;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .forum-nav a {
+            color: #8B4513;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .forum-nav a:hover {
+            color: #FF0000;
+            text-decoration: underline;
+        }
+        .forum-nav .active-nav {
+            font-weight: bold;
+            color: #FF0000;
+        }
+        /* 帖子容器 - 全新卡片式排版 */
+        .post-container {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            background: #FFFFFF;
+            border: 1px solid #D2B48C;
+            box-shadow: 2px 2px 0 #E8D5B7; /* 07年简易阴影 */
+        }
+        /* 帖子标题栏 - 独立背景 */
+        .post-header {
+            background: #F5DEB3;
+            padding: 8px 12px;
+            border-bottom: 1px solid #D2B48C;
+        }
+        .post-title {
+            font-size: 15px;
+            color: #8B4513;
+            font-weight: bold;
+        }
+        .post-meta {
+            font-size: 11px;
+            color: #696969;
+            margin-top: 3px;
+        }
+        /* 楼层区域 - 头像右对齐（核心排版变化） */
+        .floor-list {
+            padding: 10px 12px;
+        }
+        .floor {
+            padding: 10px 8px;
+            border-bottom: 1px dashed #DCDCDC;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column;
+        }
+        /* 楼层头部 - 时间左、用户+头像右 */
+        .floor-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .post-time {
+            font-size: 11px;
+            color: #808080;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .username {
+            font-weight: bold;
+            color: #0000CD;
+            font-size: 12px;
+        }
+        .username.xiaoyu {
+            color: #DC143C;
+            font-weight: bold;
+        }
+        .floor-num {
+            font-size: 11px;
+            color: #999;
+            margin-left: 5px;
+        }
+        .avatar {
+            width: 35px;
+            height: 35px;
+            background: #E6E6E6;
+            border: 1px solid #CCCCCC;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: #777;
+        }
+        /* 楼层内容 */
+        .floor-content {
+            padding-left: 0; /* 取消之前的缩进 */
+            font-size: 13px;
+            line-height: 1.6;
+        }
+        .floor-content span {
+            color: #FF4500;
+            font-weight: bold;
+        }
+        /* 管理员警告样式 */
+        .admin-warning {
+            background: #FFF0F0;
+            border-left: 3px solid #FF0000;
+            padding: 8px 10px;
+            margin: 10px 0;
+            font-size: 12px;
+            color: #FF0000;
+        }
+        /* 最后回复强调 */
+        .last-floor {
+            border-bottom: none;
+            background: #FFF8F0;
+            padding: 12px 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 论坛头部（左对齐+校外定位） -->
+    <div class="forum-header">
+        <div class="forum-title">流沙论坛</div>
+        <span class="forum-tag">2007版</span>
+        <div class="forum-desc">洋栖讨论组 | 2007年6月</div>
+    </div>
+
+    <!-- 校外论坛导航（替换校园类导航） -->
+    <div class="forum-nav">
+        <a href="#">首页</a>
+        <a href="#">杂谈</a>
+        <a href="#">爆料</a>
+        <a href="#">闲聊</a>
+        <a href="#">资讯</a>
+        <a href="#">关于我们</a>
+    </div>
+
+    <!-- 帖子容器（全新卡片式排版） -->
+    <div class="post-container">
+        <!-- 帖子标题栏 -->
+        <div class="post-header">
+            <div class="post-title">【爆料】洋栖中学花圃疑云 + victories政策黑幕？</div>
+            <div class="post-meta">发帖人：别吃豆子d | 浏览：876 | 回复：13 | 置顶：普通帖</div>
+        </div>
+
+        <!-- 楼层列表（头像右对齐+全新布局） -->
+        <div class="floor-list">
+            <!-- 1楼 楼主 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-20 19:15</span>
+                    <div class="user-info">
+                        <span class="username">别吃豆子d</span>
+                        <span class="floor-num">1楼 (楼主)</span>
+                        <div class="avatar">豆子</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    最近听洋栖中学的学生说两件怪事，开贴问问知情的：<br>
+                    1. 学校操场种的花，学生说是罂粟，但学校硬说是虞美人；<br>
+                    2. 那个叫victories的特招政策，说是能保送阳城大学，但是选上的学生下场都不太好？<br>
+                    纯吃瓜，有知道的网友聊聊，别带节奏，理性讨论。
+                </div>
+            </div>
+
+            <!-- 2楼 小雨浠沥沥 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-20 20:08</span>
+                    <div class="user-info">
+                        <span class="username xiaoyu">小雨浠沥沥</span>
+                        <span class="floor-num">2楼</span>
+                        <div class="avatar">小雨</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    我就是洋栖的学生，那花绝对不是虞美人！！！
+                </div>
+            </div>
+
+            <!-- 3楼 匿名网友 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-21 10:22</span>
+                    <div class="user-info">
+                        <span class="username">路喵一只</span>
+                        <span class="floor-num">3楼</span>
+                        <div class="avatar">路喵</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    别瞎说！洋栖中学怎么可能种那东西？victories政策我知道，是校长和阳城大学合作的，每年选前五名保送，我亲戚家孩子就选上了，现在好好的。。
+                </div>
+            </div>
+
+            <!-- 4楼 小雨浠沥沥 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-21 21:45</span>
+                    <div class="user-info">
+                        <span class="username xiaoyu">小雨浠沥沥</span>
+                        <span class="floor-num">4楼</span>
+                        <div class="avatar">小雨</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    你怎么证明你不是洋栖的托？？有保护伞，谁敢轻易让大家知道这破学校的真相？上面有人，上面的上面还有人罢了
+                </div>
+            </div>
+
+            <!-- 5楼 湘水老炮 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-22 14:30</span>
+                    <div class="user-info">
+                        <span class="username">椣檽</span>
+                        <span class="floor-num">5楼</span>
+                        <div class="avatar">椣檽</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    我来爆个料，<span>前两年选上victories的学生，没几个正常的</span>！有个女生被拍到在湘水街头挺着大肚子，早就没去阳城大学了；还有个男生，去年直接没消息了，家里人都不敢闹。
+                </div>
+            </div>
+
+            <!-- 6楼 小雨浠沥沥 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-22 23:10</span>
+                    <div class="user-info">
+                        <span class="username xiaoyu">黄门子弟</span>
+                        <span class="floor-num">6楼</span>
+                        <div class="avatar">黄门</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    我也听说了！那个怀孕的学姐我见过，之前成绩一般，突然就选上victories了；去世的学长更是，学校说是意外，但我们都知道他之前一直在查花圃的事，查着查着就没了。
+                </div>
+            </div>
+
+            <!-- 7楼 吃瓜群众 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-23 09:55</span>
+                    <div class="user-info">
+                        <span class="username">blue是什么意思</span>
+                        <span class="floor-num">7楼</span>
+                        <div class="avatar">意思</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    这么玄乎？那victories政策到底是干嘛的？保送只是幌子？和花圃里的花有关系？
+                </div>
+            </div>
+
+            <!-- 8楼 小雨浠沥沥 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-23 20:02</span>
+                    <div class="user-info">
+                        <span class="username xiaoyu">小雨浠沥沥</span>
+                        <span class="floor-num">8楼</span>
+                        <div class="avatar">小雨</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    肯定有关系，只不过窥得天宫一角是要付出代价的吧。。
+                </div>
+            </div>
+
+            <!-- 9楼 护校党 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-24 11:18</span>
+                    <div class="user-info">
+                        <span class="username">fighting for love</span>
+                        <span class="floor-num">9楼</span>
+                        <div class="avatar">fl</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    楼上就是造谣！我表姐就是victories选上的，现在在阳城大学读大二，成绩优异，你们就是见不得别人好，故意抹黑学校！
+                </div>
+            </div>
+
+            <!-- 10楼 小雨浠沥沥 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-24 21:50</span>
+                    <div class="user-info">
+                        <span class="username xiaoyu">蓝海飞走了</span>
+                        <span class="floor-num">10楼</span>
+                        <div class="avatar">蓝海</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    让你表姐说说，她知不知道学校花圃里种的是什么？知不知道那个选上victories的学长为什么跳了？别拿"成绩优异"糊弄人，真相藏不住的！
+                </div>
+            </div>
+
+            <!-- 11楼 知情者007 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-25 08:40</span>
+                    <div class="user-info">
+                        <span class="username">宝子们我生日</span>
+                        <span class="floor-num">11楼</span>
+                        <div class="avatar">宝子</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    匿了。victories政策确实有问题，具体是什么不能说。
+                </div>
+            </div>
+
+            <!-- 12楼 小雨浠沥沥 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-25 15:25</span>
+                    <div class="user-info">
+                        <span class="username xiaoyu">小雨浠沥沥</span>
+                        <span class="floor-num">12楼</span>
+                        <div class="avatar">小雨</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    果然！这政策是陷阱！那些消失的人，那些莫名其妙的"意外"！！！！
+                </div>
+            </div>
+
+            <!-- 13楼 论坛管理员 -->
+            <div class="floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-25 17:00</span>
+                    <div class="user-info">
+                        <span class="username" style="color:#FF0000">流沙论坛管理员</span>
+                        <span class="floor-num">13楼</span>
+                        <div class="avatar">管理</div>
+                    </div>
+                </div>
+                <div class="floor-content admin-warning">
+                    警告：本帖涉及不实信息及恶意诋毁，违反《流沙论坛管理条例》第6条，限1小时内删除敏感内容，否则将关闭帖子并封禁相关账号！
+                </div>
+            </div>
+
+            <!-- 14楼 小雨浠沥沥（最后回复，特殊样式） -->
+            <div class="floor last-floor">
+                <div class="floor-top">
+                    <span class="post-time">2007-06-25 22:18</span>
+                    <div class="user-info">
+                        <span class="username xiaoyu">小雨浠沥沥</span>
+                        <span class="floor-num">14楼 (最后回复)</span>
+                        <div class="avatar">小雨</div>
+                    </div>
+                </div>
+                <div class="floor-content">
+                    封贴封号都没用，我已经把所有证据存好了。洋栖中学的victories是假胜利，我们都是被牺牲的victima，这个真相，我会一直说下去！
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

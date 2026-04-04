@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水谷邮箱 - 笔友信件集</title>
+    <style>
+        /* 全局复古样式 + 精致化优化 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", SimSun, "微软雅黑", Microsoft YaHei, sans-serif;
+        }
+        body {
+            background-color: #e6e6e6;
+            background-image: linear-gradient(to bottom, #e6e6e6, #d9d9d9);
+            color: #333;
+            font-size: 14px;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        /* 容器：轻阴影+浅圆角+渐变，保留古早感不浮夸 */
+        .container {
+            width: 920px;
+            margin: 40px auto;
+            background-color: #fff;
+            background-image: linear-gradient(to top, #f9f9f9, #fff);
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-shadow: 3px 3px 8px #999, 0 0 3px #ccc inset;
+            overflow: hidden;
+            min-height: 620px;
+            position: relative;
+        }
+        /* 顶部栏：用户信息+功能按钮区（核心新增） */
+        .email-topbar {
+            height: 40px;
+            background-color: #f0f0f0;
+            background-image: linear-gradient(to top, #e9e9e9, #f5f5f5);
+            border-bottom: 1px solid #ccc;
+            padding: 0 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 2px #eee;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+        }
+        /* 左侧不可用功能按钮（核心新增） */
+        .email-func-btn {
+            display: flex;
+            gap: 10px;
+        }
+        .func-btn {
+            padding: 5px 12px;
+            background-color: #f5f5f5;
+            background-image: linear-gradient(to top, #eef2f7, #f8fafc);
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            color: #666;
+            cursor: not-allowed; /* 不可点击状态 */
+            font-size: 13px;
+            opacity: 0.7; /* 置灰效果 */
+        }
+        .func-btn:hover {
+            background-color: #f5f5f5; /* 无hover变化，强化不可用 */
+            border-color: #ccc;
+        }
+        /* 右侧用户信息展示（核心新增） */
+        .user-info {
+            font-size: 13px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .user-info span {
+            color: #005ea5;
+            font-weight: 500;
+        }
+        .logout-btn {
+            padding: 3px 8px;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: #e9e9e9;
+        }
+        /* 登录页样式 */
+        .login-box {
+            width: 420px;
+            margin: 100px auto;
+            padding: 35px;
+            background-color: #f5f5f5;
+            background-image: linear-gradient(to top, #f0f0f0, #f5f5f5);
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-shadow: 2px 2px 5px #aaa;
+            text-align: center;
+        }
+        .login-box h2 {
+            margin-bottom: 25px;
+            color: #005ea5;
+            font-weight: normal;
+            font-size: 18px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .login-box .input-item {
+            margin: 18px 0;
+            text-align: left;
+            padding-left: 10px;
+        }
+        .login-box label {
+            display: inline-block;
+            width: 80px;
+            margin-left: 10px;
+            color: #444;
+        }
+        .login-box input {
+            width: 220px;
+            height: 30px;
+            padding: 0 8px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            outline: none;
+            box-shadow: 0 0 2px #eee inset;
+        }
+        .login-box input:focus {
+            border-color: #005ea5;
+            box-shadow: 0 0 3px #b3d1f3;
+        }
+        .login-box button {
+            width: 120px;
+            height: 32px;
+            background-color: #005ea5;
+            background-image: linear-gradient(to top, #004a8a, #005ea5);
+            color: #fff;
+            border: 1px solid #004a8a;
+            border-radius: 2px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .login-box button:hover {
+            background-color: #004a8a;
+            background-image: linear-gradient(to top, #003d72, #004a8a);
+        }
+        .error-tip {
+            color: #d8000c;
+            margin-top: 10px;
+            display: none;
+            font-size: 13px;
+        }
+        /* 邮箱主页面 */
+        .email-main {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding-top: 40px; /* 给顶部栏留空间 */
+        }
+        /* 左侧导航 */
+        .email-left {
+            float: left;
+            width: 190px;
+            height: calc(100% - 40px); /* 减去顶部栏高度 */
+            background-color: #f0f0f0;
+            background-image: linear-gradient(to right, #e9e9e9, #f5f5f5);
+            border-right: 1px solid #ccc;
+            padding-top: 20px;
+            position: absolute;
+            top: 40px; /* 顶部栏下方 */
+            left: 0;
+            box-shadow: 1px 0 3px #eee;
+        }
+        .email-left ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+        .email-left li {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            margin: 2px 0;
+            border-radius: 0 2px 2px 0;
+            color: #333;
+        }
+        .email-left li:hover {
+            background-color: #e0e0e0;
+            border-left-color: #005ea5;
+            background-image: linear-gradient(to right, #d9d9d9, #e6e6e6);
+        }
+        .email-left li.active {
+            background-color: #dce8f5;
+            border-left-color: #005ea5;
+            background-image: linear-gradient(to right, #d0e0f2, #dce8f5);
+            font-weight: 500;
+        }
+        /* 右侧内容区 */
+        .email-right {
+            margin-left: 190px;
+            width: calc(100% - 190px);
+            height: calc(100% - 40px); /* 减去顶部栏高度 */
+            padding: 25px 30px;
+            overflow-y: auto;
+            background-color: #fff;
+            position: absolute;
+            top: 40px; /* 顶部栏下方 */
+            right: 0;
+        }
+        .email-right h3 {
+            color: #005ea5;
+            font-weight: normal;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+        /* 邮件列表 */
+        .mail-list {
+            margin-bottom: 30px;
+        }
+        .mail-item {
+            border: 1px solid #ccc;
+            margin-bottom: 18px;
+            background-color: #fafafa;
+            background-image: linear-gradient(to top, #f8f8f8, #fff);
+            cursor: pointer;
+            border-radius: 2px;
+            box-shadow: 0 1px 2px #eee;
+            transition: all 0.2s ease;
+        }
+        .mail-item:hover {
+            background-color: #f5f9fd;
+            box-shadow: 0 2px 4px #e0e8f0;
+            border-color: #b3d1f3;
+            transform: translateY(-1px);
+        }
+        /* 邮件标题栏 */
+        .mail-header {
+            background-color: #f5f5f5;
+            background-image: linear-gradient(to top, #eef2f7, #f8fafc);
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+            font-weight: 500;
+            color: #222;
+            border-radius: 2px 2px 0 0;
+            line-height: 1.8;
+        }
+        /* 折叠邮件样式 */
+        .mail-fold {
+            color: #666;
+            text-align: center;
+            padding: 12px;
+            border: 1px dashed #ccc;
+            margin: 15px 0;
+            background-color: #f9f9f9;
+            border-radius: 2px;
+            font-size: 13px;
+        }
+        .mail-empty {
+            color: #666;
+            text-align: center;
+            padding: 60px 0;
+            border: 1px dashed #ccc;
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+        /* 邮件弹窗 */
+        .mail-modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.55);
+            display: none;
+            z-index: 999;
+            backdrop-filter: blur(1px);
+        }
+        .mail-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 720px;
+            background-color: #fff;
+            border: 1px solid #666;
+            border-radius: 3px;
+            box-shadow: 0 0 15px #333;
+            padding: 25px;
+            max-height: 82vh;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+            background-image: linear-gradient(to bottom, #fff, #f9f9f9);
+        }
+        .modal-header {
+            padding-bottom: 12px;
+            border-bottom: 2px solid #005ea5;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #005ea5;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        .modal-content {
+            white-space: pre-wrap; /* 替换pre-line，兼容更多场景 */
+            word-wrap: break-word;
+            word-break: break-all;
+            line-height: 1.8;
+            color: #222;
+            font-size: 14px;
+            padding: 5px 0;
+        }
+        /* 弹窗内超链接样式（修复超链接显示异常） */
+        .modal-content a {
+            color: #005ea5;
+            text-decoration: underline;
+            display: inline-block;
+            padding: 2px 0;
+        }
+        .modal-content a:hover {
+            color: #004a8a;
+            text-decoration: none;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            cursor: pointer;
+            font-size: 20px;
+            color: #666;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 50%;
+        }
+        .modal-close:hover {
+            color: #d8000c;
+            background-color: #f0f0f0;
+        }
+        /* 复古滚动条 */
+        ::-webkit-scrollbar {
+            width: 11px;
+            height: 11px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border: 2px solid #fff;
+            border-radius: 6px;
+            box-shadow: 0 0 2px #999 inset;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bbb;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 6px;
+            box-shadow: 0 0 2px #eee inset;
+        }
+        /* 兼容IE滚动条 */
+        body {
+            scrollbar-face-color: #ccc;
+            scrollbar-highlight-color: #fff;
+            scrollbar-shadow-color: #999;
+            scrollbar-3dlight-color: #eee;
+            scrollbar-arrow-color: #666;
+            scrollbar-track-color: #f0f0f0;
+            scrollbar-darkshadow-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录界面 -->
+    <div class="login-box">
+        <h2>水谷邮箱 - 用户登录</h2>
+        <div class="input-item">
+            <label for="account">账 号：</label>
+            <input type="text" id="account" placeholder="请输入邮箱账号">
+        </div>
+        <div class="input-item">
+            <label for="pwd">密 码：</label>
+            <input type="password" id="pwd" placeholder="请输入登录密码">
+        </div>
+        <button onclick="checkLogin()">登 录</button>
+        <div class="error-tip" id="errorTip">账号或密码错误，请重新输入！</div>
+    </div>
+
+    <!-- 邮箱主界面（核心：新增顶部栏） -->
+    <div class="container email-main" id="emailMain">
+        <!-- 顶部栏：不可用功能按钮 + 用户信息（必显） -->
+        <div class="email-topbar">
+            <!-- 左侧不可用功能按钮 -->
+            <div class="email-func-btn">
+                <button class="func-btn">写邮件</button>
+                <button class="func-btn">编辑邮件</button>
+                <button class="func-btn">删除邮件</button>
+                <button class="func-btn">转发邮件</button>
+            </div>
+            <!-- 右侧用户信息（登录后显示真实账号） -->
+            <div class="user-info">
+                欢迎您，<span id="showUserName">qpaxl0917</span>
+                <button class="logout-btn" onclick="logout()">退出</button>
+            </div>
+        </div>
+        
+        <!-- 左侧导航 -->
+        <div class="email-left">
+            <ul>
+                <li class="active" onclick="showMail('send', event)">已发送邮件</li>
+                <li onclick="showMail('receive', event)">收件箱</li>
+                <li onclick="showMail('draft', event)">草稿箱</li>
+            </ul>
+        </div>
+        
+        <!-- 右侧内容 -->
+        <div class="email-right">
+            <!-- 已发送邮件 -->
+            <div class="mail-tab" id="sendMail">
+                <h3>已发送邮件</h3>
+                <div class="mail-list">
+                    <!-- 邮件1 -->
+                    <div class="mail-item" onclick="openMailModal('邮件序号：1 | 发送时间：2005年10月23日 | 收件人：linxxx@gushui.com', `
+还挺开心能有个笔友的。
+
+我在网吧坐了一下午，电影看了几部，心里头有点东西堵着，不说出来闷得慌。平时也没个人能说这些，你也知道我身边没什么人。
+
+看了《阿甘正传》，就是我跟你说过的那部。阿甘这人挺傻的，傻得有点过分，但傻人有傻福吧，一辈子就认准一件事，跑，一直跑，也不管前面是什么。我有时候想，人要是都能这么活着也挺好，不用想那么多，跑就完了。但我不行，我脑子里的东西太多了，停不下来。还看了《这个杀手不太冷》，大叔带着个小姑娘，两个人都不太正常，凑一块儿反而正常了。最后大叔死了，小姑娘一个人活着。我看的时候就在想，留下那个人得多难受。电影里没怎么拍她后来怎么样了，就拍她把那盆花种在地里了。花有了根，她没了根。
+
+闲的时候也翻书。家里有几本旧的，不知道谁买的，搁在柜子底下落灰，我翻出来看了。《红楼梦》看了一半，里面的姑娘一个一个的，都挺好看的，说话也好听，但看着看着就觉得心里空落落的，好像什么东西在往下沉。有一句诗我记下来了，“花谢花飞飞满天，红消香断有谁怜”，念了几遍，觉得挺好看的，但说不出来哪里好看。我就是个没什么文化的人，那些太深的东西我看不懂，也不爱看。我就喜欢这种读着心里头有点疼的，疼完了就过去了，不费脑子。
+
+你平时看什么？有什么电影或者书你觉得好的，跟我说说，我也去看看。写信太慢了，邮件快一点，你直接发我邮箱就行。
+
+先这样，下次再说。
+                    `)">
+                        <div class="mail-header">邮件序号：1 | 发送时间：2005年10月23日 | 收件人：linxxx@gushui.com</div>
+                    </div>
+                    <!-- 邮件13 -->
+                    <div class="mail-item" onclick="openMailModal('邮件序号：13 | 发送时间：2006年8月18日 | 收件人：linxxx@gushui.com', `
+收到你邮件了。你说你也是高中生，我愣了一下，然后又觉得好像也没什么好意外的，能跟我这么有一搭没一搭聊下去的，大概也就是跟我差不多大的人。大人没这个耐心。
+
+你说想知道我同桌的事。我很少跟别人提她，不是不想提，是不知道从哪说起。但既然你问了，我就说说。
+
+她是我在这学校里唯一的朋友。说朋友也不太对，朋友这个词太轻了，搁在她身上不合适。她是我同桌，高二分班之后坐在一起的，后来换了座位又换到一起，大概命里就该挨着。
+
+她长得好看。不是那种扎眼的好看，是安安静静的那种，皮肤白，眉眼很淡，像用水墨画上去的，落笔很轻，擦一擦就没了。她不爱说话，坐在你旁边的时候像一只蜷起来的猫，存在感很低，但你伸手去摸的时候，她是暖的。我跟她完全相反，我这人你也知道，咋咋呼呼的，三天两头闯祸，迟到、旷课、被通报，什么都干过。她从来不说什么，也不劝我，就是每次我被训完了回来，她坐在座位上，把她的水杯推过来，让我喝口水。
+
+她成绩好，中上游，稳稳当当的。我是吊车尾，倒数那几个，老师懒得管的那种。有时候上课我看课外书，她拿笔戳我的手背，不重，就是轻轻点一下，然后把她的笔记推过来，字写得工工整整的，每道题都标了序号。我看不懂的数学题，她就小声给我讲，声音软得跟棉花似的，讲一遍我没听懂，她就讲第二遍，也不急，也不叹气。她皱眉的时候眉心会拧一个小小的结，我盯着那个结看，就走神了，她也不生气，就重新讲。
+
+学校管得严，军事化，校规多得背不完。我还是该干嘛干嘛，该迟到迟到，该溜出去上网吧溜出去。每次被主任抓到，站在走廊上挨训，她就站在旁边等着，不说话，就那么站着。等我挨完训了，她跟我一起走回教室，有时候会递给我一颗糖，不知道从哪弄来的，小小的，硬糖，含在嘴里能甜很久。
+
+她家里情况不好，爸妈不在身边，常住在学校，拿助学金过日子，省得很，打饭从来只打一个菜。我每周日离校，但回家也是一个人，后来就不怎么回去了，在学校陪她。课间的时候我们趴在桌上看窗外，我们学校在山边上，窗户外头就是山，山上有雾，薄薄的，飘来飘去，风一吹就散了。放学一起去食堂打饭，她走在我旁边，步子很小，安安静静的，也不说什么话，但我就是觉得踏实。一个人待着的时候心里头空的那一块，她站在旁边的时候就不空了。
+
+她话少，但心细得要命。我随口说过的东西她都能记住，我说过喜欢喝橘子味的汽水，过了好几天她从口袋里掏出一瓶给我，瓶子还是凉的，不知道什么时候去买的。我桌上乱，书堆得乱七八糟的，她有时候会帮我理一理，摞整齐了，边角对齐，不说话，理完就走。她就是这样的人，什么都不说，什么都做了。
+
+思念雨水，她的名字是这个意思。我有时候想，她这个人就像一场小雨，不大，不急，安安静静地下，你走在里面也不觉得怎么样，但走久了衣服就湿了，透进去的，贴在心口上。
+
+有她在，我更喜欢下雨天了。我的名字是个单字“岚”，她觉得好听，让人想起山岗和薄雾，我觉得一般。
+
+你在学校有没有这样一个人？可以一起趴在桌上发呆，什么都不说也不觉得尴尬的那种。有的话你也跟我说说。
+                    `)">
+                        <div class="mail-header">邮件序号：13 | 发送时间：2006年8月18日 | 收件人：linxxx@gushui.com</div>
+                    </div>
+                    <!-- 邮件67（终极修复：彻底解决字符串和超链接问题） -->
+                    <div class="mail-item" onclick="openMailModal67()">
+                        <div class="mail-header">邮件序号：67 | 发送时间：2006年10月8日 | 收件人：linxxx@gushui.com</div>
+                    </div>
+                    <!-- 邮件95 -->
+                    <div class="mail-item" onclick="openMailModal('邮件序号：95 | 发送时间：2007年5月22日 | 收件人：linxxx@gushui.com', `
+最近的心情不太好，不是因为成绩，只是一点别的事情。。所以也只能减少回信的频率。见谅。
+                    `)">
+                        <div class="mail-header">邮件序号：95 | 发送时间：2007年5月22日 | 收件人：linxxx@gushui.com</div>
+                    </div>
+                    <!-- 邮件96 -->
+                    <div class="mail-item" onclick="openMailModal('邮件序号：96 | 发送时间：2007年5月29日 | 收件人：linxxx@gushui.com', `
+对不起，可能以后没办法再给你写信了。你要过得开心！
+                    `)">
+                        <div class="mail-header">邮件序号：96 | 发送时间：2007年5月29日 | 收件人：linxxx@gushui.com</div>
+                    </div>
+                    <!-- 折叠91封 -->
+                    <div class="mail-fold">已为您折叠91封无法打开的邮件</div>
+                </div>
+            </div>
+            <!-- 收件箱 -->
+            <div class="mail-tab" id="receiveMail" style="display: none;">
+                <h3>收件箱</h3>
+                <div class="mail-list">
+                    <div class="mail-item" onclick="openMailModal('邮件序号：98 | 接收时间：2007年6月17日 | 发件人：linxxx@gushui.com', `你怎么了？`)">
+                        <div class="mail-header">邮件序号：98 | 接收时间：2007年6月17日 | 发件人：linxxx@gushui.com</div>
+                    </div>
+                    <div class="mail-fold">已为您折叠97封无法打开的邮件</div>
+                </div>
+            </div>
+            <!-- 草稿箱 -->
+            <div class="mail-tab" id="draftMail" style="display: none;">
+                <h3>草稿箱</h3>
+                <div class="mail-empty">这里是一片空白</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 邮件弹窗 -->
+    <div class="mail-modal-mask" id="mailModalMask" onclick="closeMailModal()"></div>
+    <div class="mail-modal" id="mailModal">
+        <span class="modal-close" onclick="closeMailModal()">×</span>
+        <div class="modal-header" id="modalHeader"></div>
+        <div class="modal-content" id="modalContent"></div>
+    </div>
+
+    <script>
+        // 1. 登录验证（修复用户信息显示）
+        function checkLogin() {
+            const account = document.getElementById('account').value.trim();
+            const pwd = document.getElementById('pwd').value.trim();
+            const errorTip = document.getElementById('errorTip');
+            const loginBox = document.querySelector('.login-box');
+            const emailMain = document.getElementById('emailMain');
+            const showUserName = document.getElementById('showUserName');
+            
+            errorTip.style.display = 'none';
+            
+            // 正确的登录账号密码
+            if (account === 'qpaxl0917@shuigu.com' && pwd === 'happy0917') {
+                loginBox.style.display = 'none';
+                emailMain.style.display = 'block';
+                // 显示登录的用户名（截取@前部分）
+                showUserName.innerText = account.split('@')[0];
+                // 默认显示已发送邮件
+                showMail('send', { target: document.querySelector('.email-left li.active') });
+            } else {
+                errorTip.style.display = 'block';
+                setTimeout(() => {
+                    errorTip.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // 2. 退出登录功能（正常显示+交互）
+        function logout() {
+            const confirmLogout = confirm('确定要退出登录吗？');
+            if (confirmLogout) {
+                // 重置输入框
+                document.getElementById('account').value = '';
+                document.getElementById('pwd').value = '';
+                // 显示登录页，隐藏邮箱主界面
+                document.querySelector('.login-box').style.display = 'block';
+                document.getElementById('emailMain').style.display = 'none';
+            }
+        }
+
+        // 3. 切换邮件标签（修复显示异常）
+        function showMail(type, event) {
+            // 隐藏所有标签
+            const allTabs = document.getElementsByClassName('mail-tab');
+            for (let i = 0; i < allTabs.length; i++) {
+                allTabs[i].style.display = 'none';
+            }
+            // 显示目标标签
+            const targetTab = document.getElementById(`${type}Mail`);
+            if (targetTab) {
+                targetTab.style.display = 'block';
+            }
+            // 激活当前导航项
+            const allLi = document.querySelectorAll('.email-left li');
+            allLi.forEach(li => {
+                li.classList.remove('active');
+            });
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+
+        // 4. 通用打开邮件弹窗
+        function openMailModal(header, content) {
+            document.getElementById('modalHeader').innerText = header;
+            // 关键：用innerHTML解析超链接，同时保留换行
+            document.getElementById('modalContent').innerHTML = content;
+            // 显示弹窗和遮罩
+            document.getElementById('mailModalMask').style.display = 'block';
+            document.getElementById('mailModal').style.display = 'block';
+        }
+
+        // 4-1. 67号邮件专用打开函数（彻底规避字符串冲突）
+        function openMailModal67() {
+            const header = '邮件序号：67 | 发送时间：2006年10月8日 | 收件人：linxxx@gushui.com';
+            // 把内容拆分成纯文本+超链接，避免引号冲突
+            const content = `学校最近管得越来越严了，天天军事化，大门都不让出，闷得要死。上课也听不进去，就靠看闲书、听歌熬着。
+
+语文课学了《孔雀东南飞》。那个刘兰芝和焦仲卿，一个“举身赴清池”，一个“自挂东南枝”，我看完半天没说话。“君当作磐石，妾当作蒲苇”，说得多好，结果呢，磐石会碎，蒲苇会断。原来古时候的爱情也这么难。
+
+周末在网吧把《罗马假日》看了，之前一直想看没看。赫本是真的好看，但结局看得我难受。她回去做她的公主，他走了，两个人最后见那一面，她对着满屋子的人说“我最喜欢的城市是罗马”，说完了就走了。他站在大厅里，最后一个走的，走出去的时候背影拖得老长。我觉得比死了还难受。
+
+歌还是在听老歌。《但愿人长久》我最近一直循环，王菲唱的，声音飘在天上，听着听着人就安静下来了。还有《同桌的你》，不知道你听过没有，老狼的，里面唱“谁娶了多愁善感的你，谁看了你的日记”，我听完就想到我同桌。太应景了，有点太应景了。
+
+我同桌是真的厉害。学《孔雀东南飞》的时候，老师一提问她就答出来了，什么“十三能织素，十四学裁衣”，她全背得下来。我背到“鸡鸣入机织，夜夜不得息”就卡住了，她就在旁边小声提醒我，一句一句地，声音压得很低，怕被老师听见。你说巧不巧，我们的姓氏跟诗里那两个人一样。我告诉她的时候她愣了一下，说还真是，然后也没说什么，继续看书了。但我觉得她嘴角动了一下。
+
+她就那样，什么都不说，什么都记得。我上课走神了她戳我一下，我挨骂了她站旁边等着，我有一次被李建国罚站走廊站了一节课，下课后发现她没走，靠着墙站在走廊另一头，手里拿着一瓶水。她说路过。鬼才信。
+
+你最近看什么了？有好的跟我说说，我这边实在没什么新东西可看了。
+ps：如果你对我们校庆感兴趣，可以看看我们的官网：` + 
+            '<a href="yangqi.html" target="_blank">http://yangqi.school.com</a>';
+            
+            // 调用通用弹窗函数
+            openMailModal(header, content);
+        }
+
+        // 5. 关闭邮件弹窗
+        function closeMailModal() {
+            document.getElementById('mailModalMask').style.display = 'none';
+            document.getElementById('mailModal').style.display = 'none';
+        }
+
+        // 6. 键盘事件：回车登录+ESC关弹窗
+        document.onkeydown = function(e) {
+            e = e || window.event;
+            // 回车登录（仅登录页生效）
+            if (e.keyCode === 13 && document.querySelector('.login-box').style.display !== 'none') {
+                checkLogin();
+            }
+            // ESC关闭弹窗（全局生效）
+            if (e.keyCode === 27) {
+                closeMailModal();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>阳城大学 - Victories人员名单</title>
+    <style>
+        /* 完全沿用古早橙色主题样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun;
+            background-color: #fff5e6;
+            color: #333333;
+            font-size: 14px;
+        }
+        .top-head {
+            background-color: #e67300;
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 3px solid #cc5500;
+        }
+        .top-head h1 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 3px;
+        }
+        .top-head p {
+            color: #fff;
+            margin: 5px 0 0;
+            font-size: 16px;
+        }
+        .nav {
+            background-color: #ff9933;
+            text-align: center;
+            padding: 10px 0;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 15px;
+            font-size: 15px;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        .search-box {
+            text-align: center;
+            padding: 15px;
+            background: #ffe0b3;
+        }
+        #search-input {
+            width: 250px;
+            height: 22px;
+            border: 1px solid #e67300;
+            padding-left: 5px;
+        }
+        #search-btn {
+            background-color: #e67300;
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            cursor: pointer;
+            font-family: "宋体";
+        }
+        .container {
+            width: 900px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 30px;
+            border: 1px solid #ffcc80;
+        }
+        h2 {
+            color: #cc5500;
+            font-size: 20px;
+            border-bottom: 2px solid #ff9933;
+            padding-bottom: 5px;
+            text-align: center;
+        }
+        h3 {
+            color: #e67300;
+            font-size: 17px;
+            margin-top: 20px;
+        }
+        p {
+            line-height: 1.8;
+            text-indent: 2em;
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        .foot {
+            text-align: center;
+            padding: 15px;
+            background-color: #ff9933;
+            color: #fff;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部标题（与官网统一） -->
+    <div class="top-head">
+        <h1>阳 城 大 学</h1>
+        <p>Victories优秀生源特招计划 | 人员名单</p>
+    </div>
+
+    <!-- 导航栏（与官网统一） -->
+    <div class="nav">
+        <a href="index.html">返回首页</a>
+        <a href="#">学校简介</a>
+        <a href="#">新闻公告</a>
+        <a href="#">学科建设</a>
+        <a href="#">招生就业</a>
+        <a href="#">校园概况</a>
+    </div>
+
+    <!-- 搜索框（与官网统一） -->
+    <div class="search-box">
+        <input type="text" id="search-input" placeholder="请输入关键词搜索...">
+        <button id="search-btn">站内搜索</button>
+    </div>
+
+    <!-- 主体内容：Victories人员名单 -->
+    <div class="container">
+        <h2>Victories 人员名单</h2>
+
+        <h3>1999届名单</h3>
+        <p>代莉、葛亚梅、顾洁</p>
+
+        <h3>2000届名单</h3>
+        <p>何敏、马荣、白芸</p>
+
+        <h3>2001届名单</h3>
+        <p>冯桂芝、任桂芹、唐芸、姚红、夏波</p>
+
+        <h3>2002届名单</h3>
+        <p>高菲、宋佳、卢晓雨、杨明</p>
+
+        <h3>2003届名单</h3>
+        <p>谢婷、曹颖、袁媛、姜美玲、孙浩栋</p>
+
+        <h3>2004届名单</h3>
+        <p>薛萌、史晓悦</p>
+
+        <h3>2005届名单</h3>
+        <p>魏佳、叶琳、潘悦、汪晓婷</p>
+
+        <h3>2006届名单</h3>
+        <p>毛佳、顾晓颖、江波</p>
+
+        <h3>2007届名单</h3>
+        <p>戴琳、孔倩、向薇、龙佳</p>
+    </div>
+
+    <!-- 底部版权（与官网统一） -->
+    <div class="foot">
+        阳城大学版权所有 ©2007 青山市 备案号：QS200709 
+    </div>
+
+    <!-- 搜索功能（与官网统一） -->
+    <script>
+        const input = document.getElementById('search-input');
+        const btn = document.getElementById('search-btn');
+
+        btn.onclick = function(){
+            let key = input.value.trim().toLowerCase();
+            if(key === 'victories'){
+                window.location.href = "vic-yang.html";
+            }else{
+                alert("站内暂无该关键词相关搜索结果！");
+            }
+        }
+        input.onkeydown = function(e){
+            if(e.keyCode === 13){
+                btn.click();
+            }
+        }
+    </script>
+</body>
+</html>

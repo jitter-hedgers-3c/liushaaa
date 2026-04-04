@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校医室 - 洋栖中学</title>
+    <style>
+        /* 全局样式（和全站100%统一） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        /* 古早搜索框（右上角悬浮） */
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        /* 搜索结果区（统一样式） */
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        /* 导航栏（统一样式） */
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #ffd700;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        /* 内容区样式 */
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        /* 链接模块 */
+        .score-link-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .score-link-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        .score-link-item {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        .score-link-item a {
+            color: #0000ee;
+            font-size: 15px;
+            text-decoration: underline;
+        }
+        .score-link-item a:hover {
+            color: #dd0000;
+            font-weight: bold;
+        }
+        .score-link-item p {
+            margin: 5px 0 0 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        /* 底部样式 */
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+            line-height: 1.5;
+        }
+        .footer p {
+            margin: 6px 0;
+            padding: 0;
+        }
+        /* 公告子页面样式 */
+        .victory-notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+            display: none; /* 默认隐藏 */
+        }
+        .victory-notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .victory-notice-section {
+            margin-bottom: 15px;
+        }
+        .victory-notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .victory-notice-section p {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .victory-notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+        <!-- 搜索结果区 -->
+        <div class="search-result" id="searchResult"></div>
+        <!-- 导航栏 -->
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="doctor.html" class="active">校医室 相关信息</a>
+        </div>
+        
+        <!-- 核心内容区 -->
+        <div class="content">
+            <h2 class="content-title">校医室 相关信息</h2>
+            
+            <div class="score-link-box">
+                <h3>校园健康管理通知</h3>
+                
+                <!-- 第一个可点击链接：禽流感防控通知 -->
+                <div class="score-link-item">
+                    <a href="javascript:void(0);" id="birdflu-notice-link">洋栖中学关于禽流感肆虐期间加强校园卫生管理的紧急通知</a>
+                    <p>发布部门：校医室</p>
+                </div>
+                
+                <!-- 第二个可点击链接：科学运动防损伤通知 -->
+                <div class="score-link-item">
+                    <a href="javascript:void(0);" id="sports-notice-link">洋栖中学关于科学运动、避免过度运动导致跌打损伤的通知</a>
+                    <p>发布部门：学生发展中心 体育组 校医室</p>
+                </div>
+            </div>
+            
+            <!-- 第一个公告：禽流感防控通知 -->
+            <div id="birdflu-notice" class="victory-notice-box">
+                <div class="victory-notice-title">洋栖中学关于禽流感肆虐期间加强校园卫生管理的紧急通知</div>
+                
+                <p style="text-indent: 2em;">全体师生及家长：</p>
+                <p style="text-indent: 2em;">鉴于近期周边地区禽流感疫情呈现高发态势，防控形势严峻，为切实保障全体师生身体健康与生命安全，维护正常教育教学秩序，现就禽流感肆虐期间我校基本卫生要求及相关防控措施通知如下。请全体师生及家长高度重视，严格执行。</p>
+                
+                <div class="victory-notice-section">
+                    <h4>一、加强个人防护</h4>
+                    <p>1. 佩戴口罩：即日起，全体师生在进入校园、上课期间及出入公共场所时，务必全程规范佩戴口罩。建议随身携带备用口罩，每4小时更换一次。</p>
+                    <p>2. 勤洗手：接触公共物品、饭前便后、咳嗽喷嚏后，应立即使用肥皂或含酒精的免洗洗手液彻底清洁双手，避免用手直接接触口、鼻、眼。</p>
+                    <p>3. 健康监测：每日上学前请自觉测量体温。如出现发热、咳嗽、咽痛、肌肉酸痛等流感样症状，请立即就医并居家休息，不得带病到校。痊愈后须持医院开具的复课证明方可返校。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>二、严格校园环境卫生管理</h4>
+                    <p>1. 暂停活禽接触：严禁任何人员携带活禽、禽类制品进入校园。校内暂停所有与禽类相关的饲养、观察或接触性活动。</p>
+                    <p>2. 加强通风消毒：教室、食堂、宿舍、图书馆等室内场所每日至少开窗通风3次，每次不少于30分钟。学校后勤部门将每日对重点区域（门把手、课桌椅、楼梯扶手、食堂操作间等）进行全面消毒。</p>
+                    <p>3. 食堂饮食安全：食堂采购的禽肉、蛋类必须经过检疫合格，烹饪时确保完全熟透。暂停供应白切鸡、溏心蛋等未充分加热的禽类食品。鼓励师生在校内就餐，减少校外不确定来源的饮食接触。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>三、落实晨午检与报告制度</h4>
+                    <p>1. 晨午检：各班级严格执行晨检、午检制度，班主任负责观察学生精神状态并测量体温，做好记录。发现异常情况第一时间上报校医室。</p>
+                    <p>2. 缺勤追踪：对于因病缺勤的学生，班主任须及时与家长沟通，了解具体病因并登记上报。校医室负责汇总信息并追踪病情进展，必要时启动应急预案。</p>
+                    <p>3. 及时报告：如发现同一班级或宿舍短时间内出现多例发热、呼吸道症状者，相关师生应立即报告校医室，不得瞒报、漏报、迟报。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>四、减少聚集与外出</h4>
+                    <p>1. 近期原则上暂停大型室内集会、跨班级活动及校外集体活动。如需举行，须提前报备并落实防控措施。</p>
+                    <p>2. 建议师生减少前往人群密集、通风不良的场所，避免接触野生禽鸟或参观活禽市场。周末及节假日尽量保持“家校两点一线”，降低感染风险。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>五、科学认识与正确应对</h4>
+                    <p>学校将通过健康教育课、校园广播、宣传栏等多种形式普及禽流感防控知识，引导师生科学认识疫情，做到不恐慌、不信谣、不传谣。全体师生应积极配合学校各项防控措施，以理性态度和实际行动共筑校园健康防线。</p>
+                </div>
+
+                <p style="text-indent: 2em;">本通知自发布之日起执行。后续将根据疫情发展态势及上级部门要求，动态调整防控措施。请全体师生及家长理解配合，携手打赢这场校园健康保卫战。</p>
+                <p style="text-indent: 2em;">如有任何疑问或突发情况，请及时联系班主任或校医室。</p>
+                <p style="text-indent: 2em;">特此通知。</p>
+
+                <div class="victory-notice-signature">
+                    <p>洋栖中学</p>
+                    <p>校医室</p>
+                </div>
+            </div>
+            
+            <!-- 第二个公告：科学运动防损伤通知 -->
+            <div id="sports-notice" class="victory-notice-box">
+                <div class="victory-notice-title">洋栖中学关于科学运动、避免过度运动导致跌打损伤的通知</div>
+                
+                <p style="text-indent: 2em;">全体同学：</p>
+                <p style="text-indent: 2em;">近期，学校发现部分同学在体育活动及课余锻炼中，存在运动强度过大、防护意识不足等情况，已有个别同学因过度运动导致跌打损伤，影响正常学习与生活。为保障同学们的身体健康，树立科学运动的理念，现就相关事项通知如下：</p>
+                
+                <div class="victory-notice-section">
+                    <h4>一、量力而行，避免逞强</h4>
+                    <p>1. 体育活动应根据自身身体状况和体能水平合理安排运动强度与时长，切勿盲目攀比或强行完成超出能力范围的动作。</p>
+                    <p>2. 运动前务必做好充分的热身准备（至少5-10分钟），运动后及时进行放松拉伸，切忌突然剧烈运动或运动后骤然停止。</p>
+                    <p>3. 如感到身体不适、体力透支或出现疼痛信号，应立即停止运动并向老师或校医报告，切不可强行坚持。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>二、规范运动，严守纪律</h4>
+                    <p>1. 体育课及校队训练期间，须严格听从体育老师或教练的指导，按要求使用运动器材，不得擅自进行危险动作或无保护尝试。</p>
+                    <p>2. 课间及自由活动时间，禁止在走廊、楼梯、教室内等非运动区域进行追逐打闹、投掷物品或进行对抗性运动。</p>
+                    <p>3. 进行篮球、足球、滑板等具有一定风险的运动时，建议佩戴护膝、护腕等防护装备，选择校内指定运动场地，避免在湿滑、不平整的地面活动。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>三、损伤处置与报告</h4>
+                    <p>1. 若在运动中不慎发生跌打损伤（如扭伤、挫伤、骨折等），应立即停止活动，采取“休息、冰敷、加压、抬高”的初步处理原则，第一时间前往校医室接受专业处置。</p>
+                    <p>2. 同学之间如发现他人受伤，应及时提供帮助并报告老师，切勿盲目搬动伤者或采用不当的民间偏方处理。</p>
+                    <p>3. 凡因过度运动或违规运动造成损伤的，学校将视情况进行安全警示教育；情节严重且影响校园安全秩序的，将依据校规予以相应处理。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>四、科学运动，健康为本</h4>
+                    <p>学校倡导“安全第一、循序渐进”的运动理念。体育组将结合季节特点和学生体质状况，科学安排体育课程与活动内容。希望全体同学合理安排课余锻炼时间，保证充足睡眠与营养摄入，以良好的身体状态享受运动带来的快乐与成长。</p>
+                </div>
+
+                <p style="text-indent: 2em;">生命在于运动，运动贵在科学。请全体同学增强自我保护意识，遵守运动规范，共同营造安全、健康、活力的校园体育氛围。</p>
+                <p style="text-indent: 2em;">特此通知。</p>
+
+                <div class="victory-notice-signature">
+                    <p>洋栖中学</p>
+                    <p>学生发展中心 体育组 校医室</p>
+                </div>
+            </div>
+        </div>
+        <!-- 底部 -->
+        <div class="footer">
+            <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+            <p>技术支持：洋栖中学信息技术组</p>
+        </div>
+    </div>
+    <script src="puzzle-keywords.js"></script>
+    <script>
+        // 搜索功能
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+        function doSearch() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+            if (matchedUrl) {
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+            } else {
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+        
+        // 两个公告的显示/隐藏逻辑
+        const birdfluLink = document.getElementById('birdflu-notice-link');
+        const sportsLink = document.getElementById('sports-notice-link');
+        const birdfluNotice = document.getElementById('birdflu-notice');
+        const sportsNotice = document.getElementById('sports-notice');
+
+        // 点击禽流感通知链接：显示禽流感公告，隐藏运动公告
+        birdfluLink.addEventListener('click', function () {
+            sportsNotice.style.display = 'none';
+            birdfluNotice.style.display = 'block';
+            birdfluNotice.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // 点击运动通知链接：显示运动公告，隐藏禽流感公告
+        sportsLink.addEventListener('click', function () {
+            birdfluNotice.style.display = 'none';
+            sportsNotice.style.display = 'block';
+            sportsNotice.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

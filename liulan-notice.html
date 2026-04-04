@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>刘岚违纪处分通报 - 洋栖中学</title>
+    <style>
+        /* 全局古早风格（和首页完全一致） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+
+        /* 头部样式（核心：relative定位，让搜索框悬浮右上角） */
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative; /* 关键：让搜索框绝对定位 */
+        }
+
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+
+        /* 你要的古早风格搜索框（和首页完全一致） */
+        .search-box {
+            position: absolute; /* 悬浮右上角 */
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc); /* 复古渐变按钮 */
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb); /* hover渐变 */
+        }
+
+        /* 古早风格搜索结果区（和首页一致） */
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b; /* 红色虚线边框 */
+            background-color: #fef9e7; /* 复古浅黄色背景 */
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+
+        .search-result a:hover {
+            color: #dd0000;
+        }
+
+        /* 导航栏（和首页一致） */
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+
+        .nav a:hover {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+
+        .nav a.active {
+            color: #ffd700;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        /* 内容区（和首页一致） */
+        .content {
+            padding: 20px;
+        }
+
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .info-box {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        /* 翻页样式 */
+        .page-box{text-align:center;margin:20px 0;}
+        .page-btn{
+            padding:5px 12px;
+            margin:0 4px;
+            cursor:pointer;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+        }
+        .page-item{display:none;}
+        .page-item.active{display:block;}
+        
+        /* 图片样式 */
+        .info-box img {
+            width: 350px; 
+            height: auto;
+            border: 2px solid #ddd;
+            margin: 15px 0;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        /* 底部（和首页一致） */
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <!-- 搜索框：悬浮在header右上角（你要的样式） -->
+        <div class="search-box">
+            <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+            <button class="search-btn" id="searchBtn">搜索</button>
+        </div>
+        <!-- 学校标题（居中） -->
+        <h1>洋栖中学</h1>
+        <p>博学笃行 · 明德致远</p>
+    </div>
+
+    <!-- 搜索结果区（古早风格） -->
+    <div class="search-result" id="searchResult"></div>
+
+    <!-- 导航栏 -->
+    <div class="nav">
+        <a href="yangqi.html">首页</a>
+        <a href="liulan.html">刘岚 相关信息</a>
+        <a href="#" class="active"></a>
+        <a href="#"></a>
+        <a href="#"></a>
+    </div>
+
+    <!-- 核心内容 -->
+    <div class="content">
+        <h2 class="content-title">刘岚违纪处分通报</h2>
+        <!-- 第1页 -->
+        <div class="info-box page-item active">
+            <p>全体同学：</p>
+            <p>为严肃校纪校规，规范学生课堂行为，营造良好的课堂学习秩序，现将近期一起学生违纪处分情况通报如下：</p>
+            <p>高一（3）班学生刘岚，于2006年5月9日语文课上，无视课堂纪律，上课走神、私自画画，严重违反课堂听讲要求，干扰正常课堂教学秩序，影响自身学习进度，也对班级学风造成不良影响。经学校教育处核查，该生违纪行为属实，且认错态度需进一步端正。</p>
+            <p>为教育本人、警示全体同学，依据《洋栖中学学生违纪处分管理规定》相关条款，经学校研究决定，给予刘岚同学警告处分一次。</p>
+            <p>希望刘岚同学深刻反思自身错误，认真改正，严格遵守校纪班规，将精力投入到学习中。同时，望全校同学引以为戒，自觉遵守课堂纪律，端正学习态度，专注课堂学习，共同维护优良的校园学习氛围。</p>
+            <p>特此通报。</p>
+            <p>洋栖中学教育处</p>
+            <p>2006年5月9日</p>
+            <img src="jsy.jpg" alt="2006年5月违纪通报佐证">
+        </div>
+        <!-- 第2页 -->
+        <div class="info-box page-item">
+            <p>全体同学：</p>
+            <p>为严肃校园安全纪律，强化学生安全意识，杜绝校园安全隐患，保障全体师生人身及财产安全，现将我校一起学生严重违纪处分事宜通报如下：</p>
+            <p>高二（3）班学生刘岚，无视学校宿舍安全管理规定，于2006年10月18日携带【违规电器】进入学生寝室并违规使用，导致一名同学受伤，严重扰乱了校园正常的生活秩序，对校园安全造成了极大威胁，产生了极其恶劣的影响。</p>
+            <p>事件发生后，学校教育处、后勤安保处第一时间介入调查，核实该生违纪行为属实。该生的行为不仅违反了《洋栖中学学生宿舍安全管理条例》《洋栖中学学生违纪处分管理办法》中关于严禁学生违规携带、使用电器的相关规定，更漠视自身及他人生命安全，性质严重，教训深刻。</p>
+            <p>为教育本人、警示全体同学，牢固树立校园安全红线意识，经学校研究决定，给予刘岚同学记过处分一次。</p>
+            <p>希望刘岚同学深刻反思自身严重错误，汲取惨痛教训，切实增强安全意识，严格遵守学校各项规章制度，主动改正错误。同时，望全校同学引以为戒，高度重视校园安全，严格遵守宿舍管理及校园安全各项规定，坚决杜绝各类违规违纪行为，共同营造安全、有序、和谐的校园学习生活环境。</p>
+            <p>特此通报。</p>
+            <p>洋栖中学教育处</p>
+            <p>2006年10月18日</p>
+        </div>
+        <!-- 第3页 -->
+        <div class="info-box page-item">
+            <p>全体同学：</p>
+            <p>为严肃校纪校规，加强校园文明建设，引导学生爱护校园公共财物与绿化环境，现将学生违纪处分情况通报如下：</p>
+            <p>高二（3）班学生刘岚，于2007年5月9日，擅自采摘校园花圃内的花朵，并将花朵带入教室，该行为违反了《洋栖中学学生日常行为规范》中爱护校园环境、严禁破坏校园绿化的相关规定，不仅破坏了校园的整体美观，也损害了公共财物，造成了不良的影响。</p>
+            <p>为教育本人，警示全体同学，引导大家树立爱护校园、文明守纪的意识，经学校教育处研究决定，给予刘岚同学严重警告处分一次。</p>
+            <p>希望刘岚同学深刻认识自身错误，认真反思整改，自觉遵守校纪校规，爱护校园一草一木。同时，希望全校同学引以为戒，严格约束自身行为，争做文明守纪的中学生，共同维护整洁、优美、文明的校园环境。</p>
+            <p>特此通报。</p>
+            <p>洋栖中学教育处</p>
+            <p>2007年5月9日</p>
+            <img src="cornpoppy.jpg" alt="2007年5月违纪通报佐证">
+        </div>
+        <!-- 翻页按钮 -->
+        <div class="page-box">
+            <button class="page-btn" onclick="switchPage(0)">第1页</button>
+            <button class="page-btn" onclick="switchPage(1)">第2页</button>
+            <button class="page-btn" onclick="switchPage(2)">第3页</button>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer">
+        <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+        <p>技术支持：洋栖中学信息技术组</p>
+    </div>
+</div>
+
+<!-- 解谜搜索逻辑（和首页一致） -->
+<script src="puzzle-keywords.js"></script>
+<script>
+    // 翻页功能
+    function switchPage(index) {
+        let items = document.querySelectorAll('.page-item');
+        items.forEach(item => item.classList.remove('active'));
+        items[index].classList.add('active');
+    }
+
+    // 搜索逻辑（和首页完全一致）
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const searchResult = document.getElementById('searchResult');
+
+    function doSearch() {
+        const keyword = searchInput.value.trim().toLowerCase();
+        searchInput.value = '';
+        searchResult.style.display = 'none';
+
+        if (!keyword) {
+            searchResult.innerHTML = '请输入搜索关键词！';
+            searchResult.style.display = 'block';
+            return;
+        }
+
+        let matchedUrl = '';
+        let matchedKey = '';
+        for (const key in puzzleKeywords) {
+            if (key.toLowerCase() === keyword) {
+                matchedUrl = puzzleKeywords[key];
+                matchedKey = key;
+                break;
+            }
+        }
+
+        if (matchedUrl) {
+            searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+        } else {
+            searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+        }
+        searchResult.style.display = 'block';
+    }
+
+    // 绑定事件
+    searchBtn.addEventListener('click', doSearch);
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            doSearch();
+        }
+    });
+</script>
+</body>
+</html>

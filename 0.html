@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>详细档案 - 洋栖中学</title>
+    <style>
+        /* 全字体兼容 | 黑红荧光暗黑阴森风 | 宋体标配 */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "SimSun", "宋体", serif;
+            box-sizing: border-box;
+        }
+        /* 纯黑底色 极致暗黑 */
+        html,body {
+            height: 100%;
+            background-color: #000000;
+            padding: 0;
+            position: relative;
+        }
+        /* 主容器 暗黑哑光 + 荧光红边框 */
+        .container {
+            width: 750px;
+            margin: 30px auto;
+            background: #111111;
+            border: 3px solid #FF0033; /* 荧光红主边框 */
+            padding: 25px;
+            box-shadow: 0 0 15px #FF0033; /* 荧光红阴影 */
+        }
+        /* 主标题 荧光红 阴森醒目 */
+        .page-title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #FF0033;
+            border-bottom: 2px solid #FF0033;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 8px #FF0033; /* 荧光发光效果 */
+        }
+        /* 精品商品小标题 荧光红 */
+        .sub-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FF0033;
+            margin-bottom: 25px;
+            padding-left: 10px;
+            border-left: 4px solid #FF0033;
+            text-shadow: 0 0 5px #FF0033;
+        }
+        /* 商品卡片容器 */
+        .goods-box {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        /* 商品卡片 纯黑底 + 红边框 阴森档案 */
+        .goods-card {
+            width: 220px;
+            background: #000000;
+            border: 2px solid #FF0033;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 0 8px #FF0033;
+        }
+        /* 商品图片 红边框 证件照规格 */
+        .goods-img {
+            width: 120px;
+            height: 160px;
+            object-fit: cover;
+            border: 2px solid #FF0033;
+            margin-bottom: 15px;
+            filter: grayscale(80%); /* 灰度滤镜 更阴森 */
+        }
+        /* 商品信息 浅灰文字 */
+        .goods-info {
+            font-size: 14px;
+            line-height: 24px;
+            text-align: left;
+            margin-bottom: 15px;
+            color: #CCCCCC;
+        }
+        /* 姓名 荧光红高亮 */
+        .goods-info strong {
+            font-size: 15px;
+            color: #FF0033;
+            text-shadow: 0 0 5px #FF0033;
+        }
+        /* 统一按钮 荧光红 暗黑交互 */
+        .buy-btn, .more-btn {
+            width: 110px;
+            height: 30px;
+            background: #FF0033;
+            border: 1px solid #990022;
+            color: #000;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: "宋体";
+            font-weight: bold;
+            box-shadow: 0 0 5px #FF0033;
+        }
+        .buy-btn:hover, .more-btn:hover {
+            background: #990022;
+            color: #FFF;
+        }
+        /* 查看更多 居中 */
+        .more-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        /* 购物车 黑底红虚线 阴森 */
+        .cart-box {
+            text-align: center;
+            font-size: 15px;
+            color: #FF0033;
+            padding: 10px;
+            border: 1px dashed #FF0033;
+            width: 220px;
+            margin: 0 auto 20px;
+            background: #000000;
+            text-shadow: 0 0 5px #FF0033;
+        }
+        /* 版权 暗红色 固定底部 */
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #990022;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主标题 -->
+        <h1 class="page-title">详细档案</h1>
+
+        <!-- 精品商品 小标题 -->
+        <h2 class="sub-title">精品商品</h2>
+
+        <!-- 商品区域 -->
+        <div class="goods-box">
+            <!-- 沈曼婷 -->
+            <div class="goods-card">
+                <img src="smt.jpg" class="goods-img" alt="沈曼婷">
+                <div class="goods-info">
+                    <strong>姓名：沈曼婷</strong><br>
+                    性别：女<br>
+                    身体状态：状态完好 | 无外观瑕疵
+                </div>
+                <button class="buy-btn" onclick="selectGoods('沈曼婷')">加入选购</button>
+            </div>
+
+            <!-- 周敏 -->
+            <div class="goods-card">
+                <img src="zm.jpg" class="goods-img" alt="周敏">
+                <div class="goods-info">
+                    <strong>姓名：周敏</strong><br>
+                    性别：女<br>
+                    身体状态：轻微瑕疵 | 可快速修复
+                </div>
+                <button class="buy-btn" onclick="selectGoods('周敏')">加入选购</button>
+            </div>
+
+            <!-- 高远 -->
+            <div class="goods-card">
+                <img src="gy.jpg" class="goods-img" alt="高远">
+                <div class="goods-info">
+                    <strong>姓名：高远</strong><br>
+                    性别：男<br>
+                    身体状态：状态稳定 | 标准规格
+                </div>
+                <button class="buy-btn" onclick="selectGoods('高远')">加入选购</button>
+            </div>
+        </div>
+
+        <!-- 点击查看更多 -->
+        <div class="more-box">
+            <button class="more-btn" onclick="showMore()">点击查看更多</button>
+        </div>
+
+        <!-- 购物车计数 -->
+        <div class="cart-box">
+            购物车商品数量：<span id="cartCount">0</span>
+        </div>
+    </div>
+
+    <!-- 统一版权 -->
+    <div class="footer">洋栖中学 校内管理系统 </div>
+
+    <script>
+        // 购物车初始数量
+        let cartCount = 0;
+        
+        // 选购功能 + 购物车+1
+        function selectGoods(name) {
+            cartCount++;
+            document.getElementById("cartCount").innerText = cartCount;
+            alert("已选购：" + name + "\n购物车商品+1");
+        }
+
+        // 查看更多 无实际功能
+        function showMore() {
+            alert("暂无更多商品");
+        }
+    </script>
+</body>
+</html>

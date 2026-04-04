@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>洋栖中学-丁伟强管理中心</title>
+    <style>
+        /* 延续登录页古早官方风格 | 灰色为主 | 宋体字体 */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial;
+        }
+        body {
+            background-color: #E8E8E8;
+            padding: 30px 0;
+        }
+        /* 页面主容器 */
+        .container {
+            width: 750px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border: 3px solid #666666;
+            padding: 25px;
+            box-shadow: 2px 2px 4px #999;
+        }
+        /* 顶部标题 */
+        .top-title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: bold;
+            color: #333333;
+            border-bottom: 2px solid #999;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        /* 功能导航栏 */
+        .nav-box {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .nav-btn {
+            width: 130px;
+            height: 36px;
+            background: #888888;
+            border: 1px solid #555;
+            color: #FFF;
+            font-size: 14px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .nav-btn:hover {
+            background: #666666;
+        }
+        /* 内容区域 */
+        .content-box {
+            min-height: 450px;
+            padding: 15px;
+            border: 1px solid #999;
+            background: #F9F9F9;
+        }
+        /* 工作日志样式 */
+        .log-item {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #999;
+        }
+        .log-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 10px;
+        }
+        .log-info {
+            font-size: 14px;
+            line-height: 22px;
+            margin-bottom: 10px;
+        }
+        .log-content {
+            font-size: 14px;
+            line-height: 24px;
+            text-indent: 2em;
+            margin-bottom: 10px;
+        }
+        .log-sign {
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+        }
+        /* 日志图片 */
+        .log-img {
+            display: block;
+            margin: 10px auto;
+            max-width: 600px;
+            border: 1px solid #666;
+        }
+        /* 无内容提示 */
+        .empty-tip {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+            line-height: 400px;
+        }
+        /* 底部版权 */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 顶部标题 -->
+        <div class="top-title">洋栖中学-丁伟强管理中心</div>
+
+        <!-- 功能导航按钮 -->
+        <div class="nav-box">
+            <button class="nav-btn" onclick="showContent('log')">工作日志</button>
+            <button class="nav-btn" onclick="showContent('chat')">交流对话</button>
+            <button class="nav-btn" onclick="window.location.href='excellent.html'">优秀学生</button>
+            <button class="nav-btn" onclick="showContent('file')">详细档案</button>
+        </div>
+
+        <!-- 内容展示区域 -->
+        <div class="content-box">
+            <!-- 1. 工作日志模块 默认显示 -->
+            <div id="log" style="display:block;">
+                <!-- 工作日志1 -->
+                <div class="log-item">
+                    <div class="log-title">工作日志1</div>
+                    <div class="log-info">
+                        姓名：丁伟强<br>
+                        岗位：洋栖学院保安<br>
+                        日期：2007年3月12日
+                    </div>
+                    <div class="log-content">
+                        今天主要就是看门、巡逻、收货。<br>
+                        白天学生进出挺多，离校的都按要求签了到，请假的也都查了假条，没乱出去的。<br>
+                        上午送来了一批物资，我点了数量，学校“亲花节”要用的花，挺漂亮的，看了东西没问题，签收收好，登记进台账。<br>
+                        中间在校园里转了几圈，一切正常，没出啥乱子。<br>
+                        一天下来没什么意外，按规矩把事都做完了。
+                    </div>
+                    <div class="log-sign">记录人：丁伟强</div>
+                    <img src="dwq.jpg" class="log-img" alt="丁伟强工作照片">
+                </div>
+
+                <!-- 工作日志2 -->
+                <div class="log-item">
+                    <div class="log-title">工作日志2</div>
+                    <div class="log-info">
+                        姓名：丁伟强<br>
+                        岗位：洋栖学院保安<br>
+                        日期：2007年5月7日
+                    </div>
+                    <div class="log-content">
+                        今天上午没什么特别的事，正常守着校门，盯着学生离校签到、查请假单，一切都挺顺当的。<br>
+                        中途教导主任李建国找我，让我帮忙把他的工牌和一些文件资料送到会议室门口，我拿着东西赶紧送过去了。递东西的时候瞅了一眼他的工牌号，看着一串数字怪怪的，跟普通工牌号不一样，我就随口说了句：“李主任，你这工牌号看着挺特别啊，跟我们的都不一样。”<br>
+                        李主任听完笑了，跟我说这是斐波那契数列，我听着这名儿就懵懵懂懂的，压根没听懂是啥意思。他还跟我介绍，说学校官网有个数学天地板块，每天都会自动上传一道高考数学题，学生没事就能上去练习刷题。说着还建议我，平时执勤不忙的时候也可以点开看看，学着做点题提升提升。<br>
+                        我心里直犯嘀咕，我本身文化程度就低，上学的时候数学就一窍不通，这些高考题看着就头疼，哪学得会啊，根本就不想碰这些东西。但也不好驳主任的面子，就随口应了两声，没再多说啥。<br>
+                        送完东西回去继续值守，下午巡了巡校园，整理了下离校登记的本子，一天的工作就结束了，没出啥差错。
+                    </div>
+                    <div class="log-sign">记录人：丁伟强</div>
+                    <img src="sequence.jpg" class="log-img" alt="斐波那契数列">
+                </div>
+
+                <!-- 工作日志3 -->
+                <div class="log-item" style="border-bottom:none;">
+                    <div class="log-title">工作日志3</div>
+                    <div class="log-info">
+                        姓名：丁伟强<br>
+                        岗位：洋栖学院保安<br>
+                        日期：2007年7月9日
+                    </div>
+                    <div class="log-content">
+                        最近听说陈敬山校长左肩受伤，行动不方便，这几天我们安保部要负责把校长的午饭、晚饭送到他办公室，不让他再跑食堂了。<br>
+                        我今天主要还是在门口值班，查学生请假单、登记离校，没出什么问题。<br>
+                        到了饭点，我按要求去食堂把校长的饭菜拿好，小心端到校长办公室，放下之后又简单收拾了一下桌面，确认校长这边没别的吩咐，我才回到岗位继续执勤。<br>
+                        校长行动看着确实不太方便，我们多跑几趟也是应该的。<br>
+                        今天整体秩序正常，没有突发情况，该做的都做完了。
+                    </div>
+                    <div class="log-sign">记录人：丁伟强</div>
+                </div>
+            </div>
+
+            <!-- 2. 交流对话模块 -->
+            <div id="chat" style="display:none;">
+                <div class="empty-tip">暂时没有对话记录</div>
+            </div>
+
+            <!-- 3. 详细档案模块 -->
+            <div id="file" style="display:none;">
+                <div class="empty-tip">仅校长可查看</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部版权 -->
+    <div class="footer">洋栖中学 校内管理系统 </div>
+
+    <script>
+        // 模块切换功能
+        function showContent(id) {
+            // 隐藏所有内容
+            document.getElementById('log').style.display = 'none';
+            document.getElementById('chat').style.display = 'none';
+            document.getElementById('file').style.display = 'none';
+            // 显示选中的内容
+            document.getElementById(id).style.display = 'block';
+        }
+    </script>
+</body>
+</html>

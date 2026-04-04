@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>临天崖景区坠崖事件_盛夏浏览器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", "微软雅黑", Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f2f2;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .browser-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .browser-toolbar {
+            background: #e9e9e9;
+            padding: 6px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 4px;
+            border: 1px solid #999;
+        }
+        .btn-close { background: #ff6666; }
+        .btn-min { background: #ffff66; }
+        .btn-max { background: #66ff66; }
+
+        .search-bar {
+            width: 100%;
+            max-width: 500px;
+            margin: 15px auto;
+            display: flex;
+            border: 1px solid #b8b8b8;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+        .search-btn {
+            background: #3366cc;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-left: 1px solid #2d59aa;
+        }
+        .search-btn:hover {
+            background: #2d59aa;
+        }
+
+        .result-container {
+            flex: 1;
+            padding: 0 30px;
+            overflow-y: auto;
+        }
+        .result-count {
+            font-size: 14px;
+            color: #666666;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .result-title {
+            font-size: 18px;
+            color: #0000cc;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .result-title:hover {
+            color: #cc0000;
+        }
+        .clickable-result {
+            margin-bottom: 25px;
+        }
+        .clickable-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .clickable-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+        .fake-link-result {
+            margin-bottom: 25px;
+        }
+        .fake-link-result .url {
+            font-size: 14px;
+            color: #008000;
+            margin-bottom: 5px;
+        }
+        .fake-link-result .desc {
+            font-size: 14px;
+            color: #333333;
+            line-height: 1.5;
+        }
+
+        .pagination {
+            margin: 30px 0;
+            padding: 10px 0;
+            border-top: 1px solid #e5e5e5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .page-btn {
+            padding: 4px 10px;
+            color: #0000cc;
+            border: 1px solid #cccccc;
+            border-radius: 2px;
+            cursor: not-allowed;
+            background: #f9f9f9;
+        }
+        .page-btn.disabled {
+            color: #999999;
+            border-color: #e5e5e5;
+            background: #f2f2f2;
+        }
+        .page-num {
+            padding: 4px 8px;
+            color: #000;
+            background: #3366cc;
+            color: #fff;
+            border: 1px solid #2d59aa;
+            border-radius: 2px;
+        }
+
+        .browser-status {
+            background: #e9e9e9;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <div class="browser-toolbar">
+            <div class="window-controls">
+                <div class="window-btn btn-close"></div>
+                <div class="window-btn btn-min"></div>
+                <div class="window-btn btn-max"></div>
+            </div>
+        </div>
+
+        <!-- 搜索框默认值改为“临天崖景区坠崖事件” -->
+        <div class="search-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容" value="临天崖景区坠崖事件">
+            <button class="search-btn" onclick="searchPage()">搜索</button>
+        </div>
+
+        <div class="result-container">
+            <div class="result-count">为您找到约 100,500 条关于临天崖景区坠崖事件的结果</div>
+
+            <!-- 第一个可点击链接：严格按要求修改 -->
+            <div class="clickable-result">
+                <div class="result-title" onclick="window.location.href='drop-inner.html'">父亲节惨剧：少女坠崖面目全非，父亲当场请求“立即火化”</div>
+                <div class="url">xinwen365.com/emergency/20070617 - 民生新闻网 - 2007年6月17日发布</div>
+                <div class="desc">2007年6月17日父亲节当天，临天崖景区发生一起令人痛心的悲剧：一名17岁少女在景区观景台边缘拍照时不慎失足坠崖，救援人员找到时已无生命体征且面部损毁严重，其父亲赶到现场后悲痛欲绝，当场向警方请求对女儿遗体进行立即火化。</div>
+            </div>
+
+            <!-- 其余不可点击链接：时间控制在2007.6.18 - 2008.5，全部替换内容 -->
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">临天崖景区坠崖事件后续：涉事观景台加装防护栏</a>
+                <div class="url">lingtianya.gov.cn/notice/20070618 - 临天崖景区管理处 - 2007年6月18日</div>
+                <div class="desc">针对6月17日发生的少女坠崖悲剧，临天崖景区管理处连夜启动安全整改，对景区所有观景台加装防护栏和警示标识，安排专人在危险区域巡逻提醒游客注意安全。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">警方通报临天崖坠崖事件：排除他杀 系意外失足</a>
+                <div class="url">police-xiangshui.gov.cn/tongbao/20070702 - 湘水市公安局 - 2007年7月2日</div>
+                <div class="desc">湘水市公安局发布临天崖坠崖事件调查通报，经现场勘查、调取监控及走访证人，确认少女坠崖系意外失足，无外力介入，排除他杀及自杀可能。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">临天崖坠崖少女家属与景区协商赔偿 初步达成一致</a>
+                <div class="url">falv360.com/case/20070815 - 法治在线网 - 2007年8月15日</div>
+                <div class="desc">临天崖坠崖少女家属与景区就赔偿事宜进行多轮协商，最终景区基于人道主义原则给予家属一次性补偿，双方已签署和解协议，家属表示不再追究景区其他责任。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">湘水市文旅局开展景区安全大检查 覆盖临天崖等12个景区</a>
+                <div class="url">wlxj-xiangshui.gov.cn/safety/20071020 - 湘水市文旅局 - 2007年10月20日</div>
+                <div class="desc">湘水市文旅局以临天崖坠崖事件为警示，在全市范围内开展景区安全专项大检查，重点排查观景设施、警示标识、应急措施等，共发现安全隐患38处并限期整改。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">临天崖景区半年安全报告：整改后未再发生坠崖事故</a>
+                <div class="url">lingtianya.gov.cn/report/20080110 - 临天崖景区运营部 - 2008年1月10日</div>
+                <div class="desc">临天崖景区发布2007年下半年安全运营报告，自6月整改加装防护设施后，景区游客安全事件发生率下降90%，半年内未再发生坠崖类安全事故。</div>
+            </div>
+
+            <div class="fake-link-result">
+                <a href="javascript:void(0);" class="result-title">游客讲述临天崖游玩经历：防护栏加装后安全感提升</a>
+                <div class="url">traveler-story.cn/lingtianya/20080508 - 驴友分享网 - 2008年5月8日</div>
+                <div class="desc">多名近期前往临天崖景区的游客表示，景区加装防护栏和增设安全提示后，游玩时安全感明显提升，同时提醒其他游客仍需遵守景区规定，勿翻越防护设施。</div>
+            </div>
+
+            <div class="pagination">
+                <div class="page-btn disabled">上一页</div>
+                <div class="page-num">1</div>
+                <div class="page-btn">2</div>
+                <div class="page-btn">3</div>
+                <div class="page-btn">4</div>
+                <div class="page-btn">5</div>
+                <div class="page-btn">6</div>
+                <div class="page-btn">7</div>
+                <div class="page-btn">8</div>
+                <div class="page-btn">9</div>
+                <div class="page-btn">10</div>
+                <div class="page-btn">下一页</div>
+                <div style="margin-left: 15px; color: #666;">共89页&nbsp;&nbsp;到第<input type="text" style="width: 30px; height: 20px; text-align: center;" value="1">页&nbsp;&nbsp;<span class="page-btn disabled">确定</span></div>
+            </div>
+        </div>
+
+        <div class="browser-status" id="statusText">就绪</div>
+    </div>
+
+    <script src="puzzle-seek.js"></script>
+    <script>
+        function searchPage() {
+            const input = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusText');
+
+            if (!input) {
+                status.textContent = "请输入搜索内容";
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+                return;
+            }
+
+            if (puzzleSeek.hasOwnProperty(input)) {
+                const targetUrl = puzzleSeek[input];
+                status.textContent = `正在跳转至：${targetUrl}`;
+                window.location.href = targetUrl;
+            } else {
+                status.textContent = `未找到「${input}」的相关页面`;
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+            }
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') searchPage();
+        });
+
+        window.onload = function() {
+            const pageBtns = document.querySelectorAll('.page-btn');
+            pageBtns.forEach(btn => {
+                btn.onclick = function(e) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

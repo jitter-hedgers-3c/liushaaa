@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>洋栖中学-数学天地</title>
+    <style>
+        /* 千禧年Y2K核心风格：炫彩渐变、霓虹、复古网格、卡通字体 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Y2K复古渐变背景 + 网格底纹 */
+            background: linear-gradient(45deg, #ff6ec7, #7b68ee, #00ffff, #ffd700);
+            background-size: 400% 400%;
+            animation: bgGradient 8s ease infinite;
+            /* 复古网格 */
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            font-family: "Comic Sans MS", "微软雅黑", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* 背景动画 */
+        @keyframes bgGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 主容器复古卡片 */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border: 5px solid #ff00ff;
+            outline: 3px solid #00ffff;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 30px #ff00ff, 0 0 50px #00ffff;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        /* 主标题霓虹效果 */
+        .main-title {
+            font-size: 42px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff1493, #9932cc, #1e90ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+            margin-bottom: 20px;
+            animation: textFlash 2s infinite alternate;
+        }
+
+        /* 文字闪烁动画 */
+        @keyframes textFlash {
+            from { text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff; }
+            to { text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff, 0 0 60px #ffd700; }
+        }
+
+        /* 欢迎词 */
+        .welcome {
+            font-size: 20px;
+            color: #ff4500;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-weight: bold;
+        }
+
+        /* 每日一题标题 */
+        .daily-title {
+            font-size: 26px;
+            color: #0000ff;
+            text-shadow: 2px 2px 0px #ffff00;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        /* 题目图片 */
+        .math-img {
+            max-width: 100%;
+            height: auto;
+            border: 4px solid #ffff00;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #ffff00;
+            margin: 20px 0;
+        }
+
+        /* 提示语 */
+        .tip {
+            font-size: 18px;
+            color: #ff0000;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        /* 输入框区域 */
+        .input-box {
+            margin: 30px 0;
+        }
+
+        /* 答案输入框 */
+        #answer {
+            width: 200px;
+            height: 50px;
+            font-size: 22px;
+            text-align: center;
+            border: 3px solid #7b68ee;
+            border-radius: 10px;
+            outline: none;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* 提交按钮 */
+        #submitBtn {
+            height: 50px;
+            padding: 0 20px;
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff69b4, #4b0082);
+            color: white;
+            border: 3px solid white;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff69b4;
+            transition: 0.3s;
+        }
+
+        #submitBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ff69b4, 0 0 30px #4b0082;
+        }
+
+        /* 结果显示 */
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 25px;
+            min-height: 30px;
+        }
+
+        /* 错误样式 */
+        .error {
+            color: #ff0000;
+            text-shadow: 0 0 5px #ff0000;
+        }
+
+        /* 正确样式 */
+        .success {
+            color: #008000;
+            text-shadow: 0 0 10px #00ff00;
+            animation: successJump 1s ease;
+        }
+
+        /* 正确提示跳动动画 */
+        @keyframes successJump {
+            0%,100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主标题 -->
+        <h1 class="main-title">洋栖中学-数学天地</h1>
+        
+        <!-- 趣味欢迎词 -->
+        <p class="welcome">
+            🎉 哈喽各位小数学家！欢迎来到超有趣的数学乐园～<br>
+            抛开枯燥公式，玩转趣味数学，解锁专属秘密信息吧！✨
+        </p>
+
+        <!-- 每日一题 -->
+        <h2 class="daily-title">今日每日一题：</h2>
+        <img src="math.jpg" alt="趣味数学题" class="math-img">
+        
+        <!-- 提示语 -->
+        <p class="tip">若回答出第三问答案可获得秘密信息哦~</p>
+
+        <!-- 答案输入区域 -->
+        <div class="input-box">
+            <input type="text" id="answer" placeholder="输入答案">
+            <button id="submitBtn" onclick="checkAnswer()">提交答案</button>
+        </div>
+
+        <!-- 结果显示 -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        // 答案验证函数
+        function checkAnswer() {
+            // 获取输入框内容并去除空格
+            let userAnswer = document.getElementById('answer').value.trim();
+            let resultBox = document.getElementById('result');
+            
+            // 正确答案
+            const rightAnswer = "-2/3";
+            
+            // 判断答案
+            if(userAnswer === rightAnswer) {
+                // 正确：显示秘密信息
+                resultBox.className = "success";
+                resultBox.innerText = "✅ 秘密信息：荆轲刺秦王的别名是 螺旋赶君！";
+            } else {
+                // 错误：提示错误
+                resultBox.className = "error";
+                resultBox.innerText = "❌ 答案错误！再开动脑筋想一想吧~";
+            }
+        }
+    </script>
+</body>
+</html>

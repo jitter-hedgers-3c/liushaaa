@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>花圃 - 洋栖中学</title>
+    <style>
+        /* 全局样式（和全站100%统一） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        /* 古早搜索框（右上角悬浮） */
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        /* 搜索结果区（统一样式） */
+        .search-result {
+            width: 940px;
+            margin: 10px auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        /* 导航栏（统一样式） */
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #ffd700;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        /* 内容区样式 */
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        /* 花圃相关链接模块 */
+        .flower-link-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .flower-link-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        .flower-link-item {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        .flower-link-item a {
+            color: #0000ee;
+            font-size: 15px;
+            text-decoration: underline;
+        }
+        .flower-link-item a:hover {
+            color: #dd0000;
+            font-weight: bold;
+        }
+        .flower-link-item p {
+            margin: 5px 0 0 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        /* 底部样式（排版完全正常） */
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+            line-height: 1.5;
+        }
+        .footer p {
+            margin: 6px 0;
+            padding: 0;
+        }
+
+        /* ========== 亲花节公告子页面样式（带图） ========== */
+        .notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .notice-img {
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid #999;
+            display: block;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .notice-section {
+            margin-bottom: 15px;
+        }
+        .notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .notice-section p, .notice-section li {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .notice-section ul {
+            margin: 0;
+            padding-left: 4em;
+        }
+        .notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+
+        /* ========== 花圃修整通知子页面样式 ========== */
+        .trim-notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .trim-notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .trim-notice-section {
+            margin-bottom: 15px;
+        }
+        .trim-notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .trim-notice-section p {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .trim-notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部（带搜索框，全站统一） -->
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+
+        <!-- 搜索结果区 -->
+        <div class="search-result" id="searchResult"></div>
+
+        <!-- 导航栏（统一样式） -->
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="flower.html" class="active">花圃 相关信息</a>
+        </div>
+        
+        <!-- 核心内容区（花圃主页面：两处可点击链接） -->
+        <div class="content">
+            <h2 class="content-title">花圃相关公告</h2>
+            
+            <div class="flower-link-box">
+                <h3>花圃管理与活动通知</h3>
+                
+                <!-- 链接1：亲花节公告（带图） -->
+                <div class="flower-link-item">
+                    <a href="javascript:void(0);" id="flower-festival-link">湘水市洋栖中学关于举办2007年第十四届“亲花节”的通告</a>
+                    <p>发布时间：2007年3月10日 | 发布部门：教育处</p>
+                </div>
+
+                <!-- 链接2：花圃定期修整通知 -->
+                <div class="flower-link-item">
+                    <a href="javascript:void(0);" id="flower-trim-link">湘水市洋栖中学关于校园花圃定期修整的通知</a>
+                    <p>发布时间：1994年11月 | 发布部门：安全部</p>
+                </div>
+            </div>
+
+            <!-- 亲花节公告内容（默认隐藏，点击链接显示） -->
+            <div id="flower-festival-notice" class="notice-box" style="display: none;">
+                <div class="notice-title">湘水市洋栖中学关于举办2007年第十四届“亲花节”的通告</div>
+                
+                <!-- 亲花节配图 -->
+                <img src="flower-festival.jpg" alt="洋栖中学亲花节种植虞美人现场" class="notice-img">
+                
+                <p style="text-indent: 2em;">全体同学：</p>
+                <p style="text-indent: 2em;">自1994年我校首创“亲花节”以来，该活动已陪伴学子走过十三载春秋，成为我校特色校园文化活动。2007年3月12日，我们将迎来第十四届“亲花节”。为丰富校园文化生活，有效缓解同学们的学习压力，践行活动初心，现将本届“亲花节”相关事宜通告如下：</p>
+
+                <div class="notice-section">
+                    <h4>一、活动时间</h4>
+                    <p>2007年3月12日（植树节）当天</p>
+                </div>
+
+                <div class="notice-section">
+                    <h4>二、活动主题</h4>
+                    <p>亲手植花，悦享校园，纾解压力，共赴春光</p>
+                </div>
+
+                <div class="notice-section">
+                    <h4>三、活动要求</h4>
+                    <ul>
+                        <li>本届“亲花节”延续传统，全体在校学生需全员参与，在学校指定花圃区域，亲手种植虞美人，不得无故缺席、请假。</li>
+                        <li>各班需提前组织，有序带领学生前往种植区域，遵守校园花圃管理规定，文明种植，爱护校园绿植与公共设施。</li>
+                        <li>种植过程中请注意安全，听从班主任及现场工作人员引导，有序开展活动。</li>
+                    </ul>
+                </div>
+
+                <p style="text-indent: 2em;">愿同学们以花为媒，在亲手栽种的过程中放松身心，感受自然之美，以更饱满的精神状态投入到学习生活中。</p>
+
+                <div class="notice-signature">
+                    <p>湘水市洋栖中学教育处教导主任李建国</p>
+                    <p>2007年3月10日</p>
+                </div>
+            </div>
+
+            <!-- 花圃修整通知内容（默认隐藏，点击链接显示） -->
+            <div id="flower-trim-notice" class="trim-notice-box" style="display: none;">
+                <div class="trim-notice-title">湘水市洋栖中学关于校园花圃定期修整的通知</div>
+                
+                <p style="text-indent: 2em;">全校师生：</p>
+                <p style="text-indent: 2em;">我校自1994年设立“亲花节”、统一种植虞美人以来，因虞美人为一年生植物，为规范校园花圃养护管理，学校特作如下长期固定安排：</p>
+
+                <div class="trim-notice-section">
+                    <h4>一、固定修整时间</h4>
+                    <p>每年11月10日—11月25日。</p>
+                </div>
+
+                <div class="trim-notice-section">
+                    <h4>二、修整安排</h4>
+                    <p>学校将聘请专业人员对校园虞美人花圃进行统一清理、修整。</p>
+                </div>
+
+                <div class="trim-notice-section">
+                    <h4>三、相关要求</h4>
+                    <p>修整期间，禁止任何学生进入花圃及周边区域，不得靠近、逗留、围观，以免影响作业并确保人身安全。</p>
+                </div>
+
+                <p style="text-indent: 2em;">本规定自1994年起长期执行，请全体同学自觉遵守，各班班主任务必传达提醒。</p>
+
+                <div class="trim-notice-signature">
+                    <p>湘水市洋栖中学安全部</p>
+                    <p>1994年11月</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部（排版完全正常） -->
+        <div class="footer">
+            <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+            <p>技术支持：洋栖中学信息技术组</p>
+        </div>
+    </div>
+
+    <!-- 搜索功能 + 链接点击显示内容逻辑 -->
+    <script src="puzzle-keywords.js"></script>
+    <script>
+        // 搜索功能（全站统一逻辑）
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+
+        function doSearch() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+
+            if (matchedUrl) {
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+            } else {
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+
+        // 花圃链接点击逻辑
+        const flowerFestivalLink = document.getElementById('flower-festival-link');
+        const flowerTrimLink = document.getElementById('flower-trim-link');
+        const flowerFestivalNotice = document.getElementById('flower-festival-notice');
+        const flowerTrimNotice = document.getElementById('flower-trim-notice');
+
+        // 点击亲花节公告链接
+        flowerFestivalLink.addEventListener('click', function() {
+            // 隐藏另一则通知，显示当前通知
+            flowerTrimNotice.style.display = 'none';
+            flowerFestivalNotice.style.display = 'block';
+            // 滚动到通知位置
+            flowerFestivalNotice.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // 点击花圃修整通知链接
+        flowerTrimLink.addEventListener('click', function() {
+            // 隐藏另一则通知，显示当前通知
+            flowerFestivalNotice.style.display = 'none';
+            flowerTrimNotice.style.display = 'block';
+            // 滚动到通知位置
+            flowerTrimLink.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盛夏浏览器 - Summer Seek</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "宋体", "微软雅黑", Arial, sans-serif;
+        }
+
+        body {
+            background: #f2f2f2; /* 古早网页经典浅灰背景 */
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* 浏览器容器（复古圆角+浅边框） */
+        .browser-window {
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            background: #ffffff;
+            border: 1px solid #cccccc; /* 复古边框 */
+            border-radius: 6px; /* 比现代圆角小，更复古 */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 顶部简易工具栏（古早风格） */
+        .browser-toolbar {
+            background: #e9e9e9;
+            padding: 6px 12px;
+            border-bottom: 1px solid #cccccc;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 复古窗口按钮 */
+        .window-controls {
+            display: flex;
+            gap: 6px;
+        }
+        .window-btn {
+            width: 10px;
+            height: 10px;
+            border-radius: 4px; /* 方形圆角，更复古 */
+            border: 1px solid #999;
+        }
+        .btn-close { background: #ff6666; }
+        .btn-min { background: #ffff66; }
+        .btn-max { background: #66ff66; }
+
+        /* 核心搜索区域（仿老百度布局） */
+        .search-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            background: #ffffff;
+        }
+
+        /* 自定义logo（避开百度，复古风格） */
+        .custom-logo {
+            font-size: 48px;
+            color: #3366cc; /* 仿百度蓝但微调，避免侵权 */
+            margin-bottom: 30px;
+            font-weight: bold;
+            letter-spacing: 2px; /* 复古字体间距 */
+        }
+
+        /* 复古搜索框 */
+        .search-box {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            border: 1px solid #b8b8b8; /* 老百度搜索框边框 */
+            border-radius: 3px; /* 小圆角，复古 */
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            line-height: 22px;
+        }
+        /* 复古搜索按钮 */
+        .search-btn {
+            background: #3366cc;
+            color: #ffffff;
+            border: none;
+            padding: 0 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-left: 1px solid #2d59aa; /* 按钮边框分隔 */
+        }
+        .search-btn:hover {
+            background: #2d59aa; /* hover深色，老网页风格 */
+        }
+
+        /* 底部状态栏（复古灰色） */
+        .browser-status {
+            background: #e9e9e9;
+            padding: 4px 12px;
+            font-size: 12px;
+            color: #666666;
+            border-top: 1px solid #cccccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="browser-window">
+        <!-- 顶部简易工具栏 -->
+        <div class="browser-toolbar">
+            <div class="window-controls">
+                <div class="window-btn btn-close"></div>
+                <div class="window-btn btn-min"></div>
+                <div class="window-btn btn-max"></div>
+            </div>
+        </div>
+
+        <!-- 核心搜索区（仿老百度首页） -->
+        <div class="search-container" id="searchHome">
+            <div class="custom-logo">盛夏浏览器</div>
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="请输入搜索内容">
+                <button class="search-btn" onclick="searchPage()">搜索</button>
+            </div>
+        </div>
+
+        <!-- 底部状态栏 -->
+        <div class="browser-status" id="statusText">就绪</div>
+    </div>
+
+    <!-- 导入关键词数据 -->
+    <script src="puzzle-seek.js"></script>
+    <script>
+        // 搜索核心逻辑：直接跳转目标页面（移除alert，跳失败页）
+        function searchPage() {
+            const input = document.getElementById('searchInput').value.trim();
+            const status = document.getElementById('statusText');
+
+            // 空输入提示
+            if (!input) {
+                status.textContent = "请输入搜索内容";
+                // 跳失败页，携带空关键词
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+                return;
+            }
+
+            // 匹配关键词并直接跳转
+            if (puzzleSeek.hasOwnProperty(input)) {
+                const targetUrl = puzzleSeek[input];
+                status.textContent = `正在跳转至：${targetUrl}`;
+                window.location.href = targetUrl;
+            } else {
+                // 无匹配结果：跳失败页，携带关键词
+                status.textContent = `未找到「${input}」的相关页面`;
+                window.location.href = "search-fail.html?keyword=" + encodeURIComponent(input);
+            }
+        }
+
+        // 回车触发搜索
+        document.getElementById('searchInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') searchPage();
+        });
+    </script>
+</body>
+</html>

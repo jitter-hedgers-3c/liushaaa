@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 页面标题：严格按照要求设置 -->
+    <title>洋栖中学-管理员登录</title>
+    <style>
+        /* 古早官方风格样式 | 灰色为主 | 简洁不简陋 */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial; /* 老式网页标准字体 */
+        }
+        body {
+            background-color: #E8E8E8; /* 浅灰色页面背景 */
+            padding-top: 100px;
+        }
+        /* 登录容器：复古边框+居中布局，官方质感 */
+        .login-container {
+            width: 450px;
+            margin: 0 auto;
+            background: #FFFFFF;
+            border: 3px solid #666666; /* 深灰色边框 */
+            padding: 35px 25px;
+            box-shadow: 2px 2px 4px #999; /* 轻微阴影，提升质感不花哨 */
+        }
+        /* 标题样式 */
+        .page-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #999;
+            padding-bottom: 12px;
+        }
+        /* 表格布局：老式网页标配登录布局 */
+        .login-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .login-table td {
+            padding: 15px 8px;
+            font-size: 14px;
+            color: #222;
+        }
+        /* 输入框样式 */
+        .input-item {
+            width: 240px;
+            height: 24px;
+            border: 1px solid #666;
+            padding: 2px 6px;
+            font-size: 14px;
+        }
+        /* 登录按钮 */
+        .login-btn {
+            width: 110px;
+            height: 32px;
+            background: #888888;
+            border: 1px solid #555;
+            color: #FFFFFF;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .login-btn:hover {
+            background: #666666;
+        }
+        /* 底部版权：增加真实官方感 */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="page-title">洋栖中学-管理员登录</div>
+        <!-- 登录表单 -->
+        <form id="loginForm" onsubmit="return checkLogin()">
+            <table class="login-table">
+                <tr>
+                    <td align="right">管理员账号：</td>
+                    <td><input type="text" id="account" class="input-item" placeholder="请输入管理员账号" required></td>
+                </tr>
+                <tr>
+                    <td align="right">登录密码：</td>
+                    <td><input type="password" id="pwd" class="input-item" placeholder="请输入登录密码" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" class="login-btn" value="登录系统">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <!-- 底部版权信息 -->
+    <div class="footer">初始密码：yqxy 0=1 2=9756 5=6009305 ?=190924 ?=15140 ?=236890 ?=1427</div>
+
+    <script>
+        // 登录验证核心逻辑（修正版，删除了换行符bug）
+function checkLogin() {
+    // 获取输入内容（去除首尾空格）
+    let account = document.getElementById("account").value.trim();
+    let password = document.getElementById("pwd").value.trim();
+    // 1. 账号YQAB90727 + 密码yqxy0253150 → 跳转
+    if (account === "YQAB90727" && password === "yqxy0253150") {
+        window.location.href = "mnt-dingweiqiang.html";
+    }
+    // 2. 账号YQJD12358 + 密码yqxy0253150 → 跳转（已删换行符）
+    else if (account === "YQJD12358" && password === "yqxy0253150") {
+        window.location.href = "mnt-lijianguo.html";
+    }
+    // 3. 账号chenjingshan@ydsx.com + 密码yqxy0253150 → 跳转
+    else if (account === "chenjingshan@ydsx.com" && password === "yqxy0253150") {
+        window.location.href = "mnt-chenjingshan.html";
+    }
+    // 4. 其他情况：提示错误
+    else {
+        alert("账号或密码不正确，请重新输入！");
+        // 清空密码框，提升体验
+        document.getElementById("pwd").value = "";
+    }
+    // 阻止表单默认刷新
+    return false;
+}
+    </script>
+</body>
+</html>

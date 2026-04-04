@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vitamin营养药 - 洋栖中学</title>
+    <style>
+        /* 全局样式（和全站100%统一） */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "宋体", SimSun, Arial, sans-serif;
+            font-size: 14px;
+            background: linear-gradient(to bottom, #f9f6e8, #ffffff);
+            background-attachment: fixed;
+            color: #333333;
+        }
+        .container {
+            width: 980px;
+            margin: 0 auto;
+            border: 1px solid #cccccc;
+            box-shadow: 0 0 5px #eeeeee;
+            background-color: white;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(to right, #4a7ba7, #6fa8d1);
+            color: white;
+            border-bottom: 3px solid #c0392b;
+            position: relative;
+        }
+        .header h1 {
+            font-size: 36px;
+            text-shadow: 2px 2px 3px #333;
+            margin: 0;
+        }
+        .header p {
+            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-style: italic;
+        }
+        /* 古早搜索框（右上角悬浮） */
+        .search-box {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .search-input {
+            width: 180px;
+            height: 24px;
+            border: 1px solid #999;
+            padding: 2px 5px;
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            background-color: #fefefe;
+        }
+        .search-btn {
+            height: 28px;
+            padding: 0 10px;
+            border: 1px solid #666;
+            background: linear-gradient(to bottom, #eaeaea, #cccccc);
+            font-family: "宋体", SimSun;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: linear-gradient(to bottom, #dddddd, #bbbbbb);
+        }
+        /* 搜索结果区（统一样式） */
+        .search-result {
+            width: 940px;
+            margin: 10 auto;
+            padding: 10px;
+            border: 1px dashed #c0392b;
+            background-color: #fef9e7;
+            font-family: "宋体", SimSun;
+            font-size: 14px;
+            display: none;
+        }
+        .search-result a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+        .search-result a:hover {
+            color: #dd0000;
+        }
+        /* 导航栏（统一样式） */
+        .nav {
+            background-color: #333;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+        }
+        .nav a:hover, .nav a.active {
+            color: #ffd700;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        /* 内容区样式 */
+        .content {
+            padding: 20px;
+        }
+        .content-title {
+            color: #4a7ba7;
+            border-bottom: 2px solid #eeeeee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        /* 链接模块 */
+        .score-link-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            margin-bottom: 20px;
+        }
+        .score-link-box h3 {
+            color: #c0392b;
+            border-bottom: 1px dashed #cccccc;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 16px;
+        }
+        .score-link-item {
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+        .score-link-item a {
+            color: #0000ee;
+            font-size: 15px;
+            text-decoration: underline;
+        }
+        .score-link-item a:hover {
+            color: #dd000;
+            font-weight: bold;
+        }
+        .score-link-item p {
+            margin: 5px 0 0 20px;
+            color: #666;
+            font-size: 13px;
+        }
+        /* 底部样式 */
+        .footer {
+            background-color: #333;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 12px;
+            border-top: 3px solid #c0392b;
+            line-height: 1.5;
+        }
+        .footer p {
+            margin: 6px 0;
+            padding: 0;
+        }
+        /* 公告子页面样式 */
+        .victory-notice-box {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            box-shadow: 2px 2px 3px #eeeeee;
+            font-family: "宋体", SimSun;
+            line-height: 1.8;
+        }
+        .victory-notice-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .notice-img {
+            max-width: 600px;
+            width: 100%;
+            border: 2px solid #999;
+            display: block;
+            margin: 0 auto 20px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+        .victory-notice-section {
+            margin-bottom: 15px;
+        }
+        .victory-notice-section h4 {
+            color: #4a7ba7;
+            font-size: 15px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .victory-notice-section p {
+            text-indent: 2em;
+            margin: 5px 0;
+        }
+        .victory-notice-signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="输入关键词搜索...">
+                <button class="search-btn" id="searchBtn">搜索</button>
+            </div>
+            <h1>洋栖中学</h1>
+            <p>博学笃行 · 明德致远</p>
+        </div>
+        <!-- 搜索结果区 -->
+        <div class="search-result" id="searchResult"></div>
+        <!-- 导航栏 -->
+        <div class="nav">
+            <a href="yangqi.html">首页</a>
+            <a href="vitamin.html" class="active">vitamin营养药 相关信息</a>
+        </div>
+        
+        <!-- 核心内容区 -->
+        <div class="content">
+            <h2 class="content-title">vitamin营养药 相关信息</h2>
+            
+            <div class="score-link-box">
+                <h3>营养药管理规定</h3>
+                
+                <!-- 管理规定链接 -->
+                <div class="score-link-item">
+                    <a href="javascript:void(0);" id="victory-policy-link">洋栖中学关于“vitamin”营养药的发放与使用管理规定</a>
+                    <p>发布部门：学生发展中心 校医室</p>
+                </div>
+            </div>
+            <!-- 营养药管理规定内容（默认隐藏，点击显示） -->
+            <div id="victory-policy-notice" class="victory-notice-box" style="display: none;">
+                <div class="victory-notice-title">洋栖中学关于“vitamin”营养药的发放与使用管理规定</div>
+                
+                <!-- 插入vitamin图片 -->
+                <img src="vitamin.jpg" alt="vitamin营养药" class="notice-img">
+                
+                <p style="text-indent: 2em;">致全体同学：</p>
+                <p style="text-indent: 2em;">为贯彻落实“健康第一，全面发展”的育人理念，切实关注每一位学生的成长需求，学校现就“vitamin”营养药的使用事宜，制定并发布本规定。请全体同学知悉并严格遵守。</p>
+                
+                <div class="victory-notice-section">
+                    <h4>一、发放依据与目的</h4>
+                    <p>学校始终坚持全体同学均衡发展的原则。为帮助部分身体或学业综合状态有待提升的学生更好地适应校园生活、夯实健康成长基础，学校将为前一学期综合评分不足25分的同学统一配备“vitamin”营养药。本药物旨在通过科学补充，助力相关同学改善身体机能，以更佳状态投入学习与生活。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>二、使用规范与纪律</h4>
+                    <p>凡分配到“vitamin”营养药的同学，必须严格遵守以下使用要求：</p>
+                    <p>1. 按时按量：须在学校规定的时间、地点，按照规定的计量标准服用，不得擅自增减剂量或改变服用时间。</p>
+                    <p>2. 严禁课堂玩弄：药物仅供服用使用，严禁在课堂等学习场所玩弄、摆弄药品，避免影响教学秩序及自身安全。</p>
+                    <p>3. 严禁随意分享：本药物为根据个人情况定向配备，严禁私自转赠、分享或交换给其他同学。如有违规，将按校规严肃处理。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>三、健康监测与保障</h4>
+                    <p>为确保营养药发挥应有成效，并全程保障用药安全，请分配到药物的同学每隔2天（即每48小时）自行前往校医室进行一次例行健康检查。校医将根据个人身体反应与指标变化，适时记录并评估用药效果。未按时前往检查者，学校有权暂停其用药资格并进行复核。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>四、违规处理</h4>
+                    <p>对于违反上述规定的同学，学校将视情节轻重，给予口头警告、通报批评，直至取消营养药使用资格等处理。如因私自转借、滥用药物等行为对他人或自身造成不良后果，相关责任由涉事学生本人承担。</p>
+                </div>
+                <div class="victory-notice-section">
+                    <h4>五、补充说明</h4>
+                    <p>“vitamin”营养药为学校专项健康管理措施，仅面向符合条件的学生发放。其他同学未经允许，不得擅自接触或索要。如有任何疑问或不适，请第一时间联系班主任或前往校医室咨询反馈。</p>
+                </div>
+
+                <p style="text-indent: 2em;">健康是成长之基，纪律是成人之始。希望全体同学以对自己负责、对集体负责的态度，正确理解学校的良苦用心，严格遵守管理规定，共同营造科学、健康、有序的校园环境。</p>
+                <p style="text-indent: 2em;">特此告知。</p>
+
+                <div class="victory-notice-signature">
+                    <p>洋栖中学</p>
+                    <p>学生发展中心 校医室</p>
+                </div>
+            </div>
+        </div>
+        <!-- 底部 -->
+        <div class="footer">
+            <p>版权所有 © 1988-2008 洋栖中学 保留所有权利</p>
+            <p>技术支持：洋栖中学信息技术组</p>
+        </div>
+    </div>
+    <script src="puzzle-keywords.js"></script>
+    <script>
+        // 搜索功能
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+        function doSearch() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            searchInput.value = '';
+            searchResult.style.display = 'none';
+            if (!keyword) {
+                searchResult.innerHTML = '请输入搜索关键词！';
+                searchResult.style.display = 'block';
+                return;
+            }
+            let matchedUrl = '';
+            let matchedKey = '';
+            for (const key in puzzleKeywords) {
+                if (key.toLowerCase() === keyword) {
+                    matchedUrl = puzzleKeywords[key];
+                    matchedKey = key;
+                    break;
+                }
+            }
+            if (matchedUrl) {
+                searchResult.innerHTML = `搜索结果：<a href="${matchedUrl}" target="_blank">${matchedKey}</a>`;
+            } else {
+                searchResult.innerHTML = '未找到相关结果，请尝试其他关键词。';
+            }
+            searchResult.style.display = 'block';
+        }
+        searchBtn.addEventListener('click', doSearch);
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                doSearch();
+            }
+        });
+        // 点击显示公告内容
+        const victoryLink = document.getElementById('victory-policy-link');
+        const victoryNotice = document.getElementById('victory-policy-notice');
+        victoryLink.addEventListener('click', function () {
+            victoryNotice.style.display = 'block';
+            victoryNotice.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
