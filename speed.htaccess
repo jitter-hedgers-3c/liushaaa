@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# 图片自动走 jsDelivr CDN
+RewriteRule ^(.+)\.(png|jpg|jpeg|gif|webp|svg)$ https://cdn.jsdelivr.net/gh/你的GitHub用户名/你的仓库名/$1.$2 [R=301,L]
